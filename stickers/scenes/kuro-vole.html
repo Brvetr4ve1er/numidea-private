@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kūro — vole</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  .shadow { position: absolute; left: 0; top: 0; width: 460px; height: 44px; margin-left: -230px; margin-top: -22px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, 0)); will-change: transform; }
+  /* the cat works in asset pixels (467 x 513) and is scaled by K in the transform.
+     .fig pivots at his centre of mass (asset 250, 300) for the pitch of the gallop;
+     .sq squashes and stretches from the ground line under the front paw (asset y 505) */
+  .fig { position: absolute; left: -250px; top: 326px; width: 467px; height: 513px; transform-origin: 250px 300px; will-change: transform; }
+  .sq { position: absolute; left: 0; top: 0; width: 467px; height: 513px; transform-origin: 250px 505px; will-change: transform; }
+  .sq img { display: block; width: 467px; height: 513px; }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow" id="shadow"></div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080"></svg>
+  <div class="fig" id="fig"><div class="sq" id="sq"><img src="../assets/k-stylus.png" alt=""></div></div>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, set } = Motion;
+  const TAU = Math.PI * 2;
+  const NS = 'http://www.w3.org/2000/svg';
+  const INK = '#1b1712', BONE = '#efe6d6';
+
+  const K = 1.36;                        // asset px to stage px: 635 px wide, about 59 % of the frame
+  const CX = 250, CY = 300, GY = 505;    // centre of mass and ground line, asset px
+  const COMY = 626;                      // stage y of the centre of mass at rest
+  const GROUND = COMY + (GY - CY) * K;   // stage ground line, about 905
+  const FR = 60, PC = 0.8;               // frames per loop; share of the loop the crossing takes (the rest is the empty beat)
+  const FPT = FR * PC;                   // frames per unit of crossing time t
+
+  // crossing: centre of mass from just off the right edge to just off the left edge.
+  // fast at the edges, slower through the middle so his face reads, then gone.
+  const X0 = 1425, X1 = -450, A = 0.5;
+  const f = (t) => (t < 0 ? t * (1 + A) : t > 1 ? 1 + (t - 1) * (1 + A) : t + (A / TAU) * Math.sin(TAU * t));
+  const X = (t) => X0 + (X1 - X0) * f(t);
+
+  // gallop: four strides per crossing. A stride is a short ground contact (squash, nose
+  // snaps from down to up) and a parabolic hop (stretch, nose follows the arc down).
+  const G = 0.16, H = 46, R = 4, B0 = 0.58;   // B0 puts the middle of the crossing at the top of a hop
+  function gait(t) {
+    const b = 4 * t + B0, u = b - Math.floor(b);
+    let lift, r, sy;
+    if (u < G) {
+      const k = Math.sin(Math.PI * u / G);
+      lift = 0; r = -R * Math.cos(Math.PI * u / G); sy = 1.025 - 0.095 * k;
+    } else {
+      const v = (u - G) / (1 - G);
+      lift = H * 4 * v * (1 - v); r = R * Math.cos(Math.PI * v); sy = 1 + 0.025 * (1 - 2 * v) * (1 - 2 * v);
+    }
+    return { b, lift, r, sy, sx: 1 + (1 - sy) * 0.7 };
+  }
+
+  // where an asset point of the cat lands on the stage at crossing time t
+  function onStage(ax, ay, t, g) {
+    const qx = CX + (ax - CX) * g.sx, qy = GY + (ay - GY) * g.sy;
+    const vx = (qx - CX) * K, vy = (qy - CY) * K;
+    const a = g.r * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+    return { x: X(t) + vx * c - vy * s, y: COMY - g.lift + vx * s + vy * c };
+  }
+
+  const fx = document.getElementById('fx');
+  function el(tag, attrs, parent = fx) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e);
+    return e;
+  }
+
+  // speed lines: each is the path his outline traced over the last few frames (from l0 to
+  // l1 frames ago), so they are long while he zips and short while he slows down (capped so
+  // they stay inside the frame on the poster). Drawn as bone strokes that taper away from
+  // him, with the ink outline of the drawing.
+  const LINES = [
+    { ax: 428, ay: 128, l0: 1, l1: 5, cap: 120, w: 0.85 },   // behind the tail
+    { ax: 414, ay: 238, l0: 0, l1: 8, cap: 230, w: 1 },      // behind the back
+    { ax: 456, ay: 302, l0: 2, l1: 6.5, cap: 150, w: 0.85 }, // behind the rump
+    { ax: 484, ay: 368, l0: 0, l1: 9, cap: 190, w: 1 },      // behind the hind paw
+  ].map((L) => {
+    L.path = el('path', { fill: BONE, stroke: INK, 'stroke-width': 11, 'paint-order': 'stroke', 'stroke-linejoin': 'round' });
+    return L;
+  });
+  function streak(xh, xt, y, rh, rt) {
+    const f1 = (v) => v.toFixed(1);
+    return `M${f1(xh)} ${f1(y - rh)} L${f1(xt)} ${f1(y - rt)} A${rt} ${rt} 0 0 1 ${f1(xt)} ${f1(y + rt)} L${f1(xh)} ${f1(y + rh)} A${rh} ${rh} 0 0 1 ${f1(xh)} ${f1(y - rh)} Z`;
+  }
+
+  // dust puffs: two at each landing, one where the front paw hits and one kicked back from
+  // the hind feet a couple of frames later. They stay where they were kicked up while he
+  // runs on, pop out, drift back and shrink away: the side lobes first, pulling in to the
+  // middle one, so a puff ends as one dot and not a row of dots.
+  const CIRC = [[0, 0, 1, 0.2], [-0.95, 0.3, 0.68, 0], [0.92, 0.24, 0.74, 0.08]];
+  const LIFE = 10;                                   // frames
+  const puffs = [];
+  for (let n = 1; n <= 4; n++) {
+    const tc = (n - B0) / 4;                          // crossing time of the landing
+    for (const kind of [{ ax: 150, delay: 0, r: 19, dx: 18, dy: 10 }, { ax: 370, delay: 2, r: 27, dx: 46, dy: 22 }]) {
+      const t0 = tc + kind.delay / FPT;
+      const g = el('g', {});
+      const inks = CIRC.map(() => el('circle', { fill: INK }, g));
+      const bones = CIRC.map(() => el('circle', { fill: BONE }, g));
+      puffs.push({ f0: t0 * FPT, x: X(t0) + (kind.ax - CX) * K, y: GROUND - kind.r * 0.55, ...kind, g, inks, bones });
+    }
+  }
+  function drawPuff(P, frame) {
+    const a = (frame - P.f0) / LIFE;
+    if (a <= 0 || a >= 1) { P.g.setAttribute('visibility', 'hidden'); return; }
+    P.g.setAttribute('visibility', 'visible');
+    const drift = ease.out(a);
+    const cx = P.x + P.dx * drift, cy = P.y - P.dy * drift;
+    const grow = 0.3 + 0.7 * ease.out(a / 0.28);
+    CIRC.forEach(([dx, dy, rr, d], i) => {
+      const shrink = 1 - ease.in((a - 0.3 - d) / (0.68 - d));
+      const r = Math.max(0, P.r * rr * grow * shrink);
+      const pull = 0.35 + 0.65 * shrink;
+      const x = cx + dx * P.r * (1 + 0.25 * drift) * pull, y = cy + dy * P.r * pull;
+      for (const [c, rad] of [[P.inks[i], r + 5.5 * Math.min(1, r / 8)], [P.bones[i], r]]) {
+        c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', rad.toFixed(2));
+      }
+    });
+  }
+
+  const fig = document.getElementById('fig'), sq = document.getElementById('sq'), shadow = document.getElementById('shadow');
+
+  Sticker({
+    seconds: 2, fps: 30, poster: 24,
+    draw(p) {
+      const frame = p * FR, t = frame / FPT;
+      const g = gait(t);
+      set(fig, { x: X(t), y: -g.lift, r: g.r, s: K });
+      set(sq, { sx: g.sx, sy: g.sy });
+
+      const up = g.lift / H;
+      shadow.style.transform = `translate(${(X(t) - 10).toFixed(1)}px, ${GROUND.toFixed(1)}px) scale(${(1 - 0.22 * up).toFixed(4)})`;
+      shadow.style.opacity = (1 - 0.45 * up).toFixed(3);
+
+      LINES.forEach((L, i) => {
+        const head = onStage(L.ax, L.ay, t, g);
+        const xh = head.x + X(t - L.l0 / FPT) - X(t);
+        const raw = X(t - L.l1 / FPT) - X(t - L.l0 / FPT);
+        const len = Math.min(raw, L.cap) * (1 + 0.15 * Math.sin(TAU * (g.b + i * 0.27)));
+        L.path.setAttribute('d', streak(xh, xh + len, head.y, 6.5 * L.w, 2 * L.w));
+      });
+
+      puffs.forEach((P) => drawPuff(P, frame));
+    },
+  });
+</script>
+</body>
+</html>

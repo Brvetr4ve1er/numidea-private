@@ -1,0 +1,202 @@
+{
+  "_meta": {
+    "built": "2026-10-27",
+    "video": "V02 « Méthode » (the method: the site's five-step path, from the first message to the decision)",
+    "site_commit": "ed1e6ad",
+    "site_keys": "assets/app.js prev.tl1..prev.tl5 (+ tl1p, tl2p, tl3d, tl4d, tl5p), prev.name, prev.brief, prev.terms, nav.about; index.html #apercu .ptl (l. 553-562)",
+    "ar_marker": "à relire par un arabophone natif",
+    "rule": "No new facts. Every string is the site's own (verbatim, trimmed or restated, as `edit` says), with its fact ID (`src`, scripts-method.md §2) and site key (`key`). Re-check every string against assets/app.js at the render commit. No URL, email, phone number, ref code, price figure or call to action on screen. « Payé jusqu'ici : 0 DA » (prev.tl5d + .ptl-zero) is a price figure and is never used.",
+    "source": "scripts-method.md, Appendix A (edit the script first, then this file)",
+    "ar_status": "Every ar value is a draft: à relire par un arabophone natif. arReviewed stays false until a native reviewer signs off (gate G1). AR masters are laid out but not rendered before that.",
+    "cuts": {
+      "v02-s-n": "short cut, 9:16 (and the 4:5 crop of its pointer=li render), variant N, 970 frames, 32.333 s",
+      "v02-s-a": "short cut, 9:16 (and the 4:5 crop), variant A, 1200 frames, 40.000 s; not to be posted until the lawyer answers A8",
+      "v02-y-n": "YouTube cut, 16:9, variant N, 1570 frames, 52.333 s, five chapters",
+      "v02-y-a": "YouTube cut, 16:9, variant A, 1800 frames, 60.000 s, five chapters; not to be posted until the lawyer answers A8"
+    },
+    "use_rule": "`use` names cut prefixes: v02 = every cut; v02-s = the 9:16 short cut (both variants); v02-y = the 16:9 YouTube cut (both variants); v02-s-a / v02-y-a = variant A only. The copy loader refuses a block whose `use` does not match the cut.",
+    "forbid_all": [
+      "https?:|www\\.|\\.(?:io|com|dz|fr|tech|app|net)\\b|github",
+      "@",
+      "\\+?\\d[\\d .]{7,}\\d",
+      "\\d\\s?(?:DA|DZD|€|\\$|USD|EUR)\\b|[€$]\\s?\\d|\\bHT\\b|excl\\. tax|دج",
+      "Pay[ée] jusqu|Paid so far|المدفوع حتى",
+      "→|←|Demander|Request my|اطلب"
+    ],
+    "forbid_n": [
+      "Aper[çc]u|\\bPreview\\b|معاين",
+      "[Gg]ratuit|\\b[Ff]ree\\b|مجّان|مجان",
+      "avant tout paiement|avant de payer|before any payment|before you pay|قبل أيّ دفع|قبل أي دفع|قبل أن تدفع",
+      "sans engagement|no obligation|دون التزام",
+      "immatricul|registered|المسجّلة|المسجلة",
+      "par mois|a month|في الشهر"
+    ],
+    "forbid_a_note": "Variant A applies forbid_all only; the Aperçu, « gratuit » and the terms may appear in T67 and T68 alone (their `use` limits them to the -a cuts).",
+    "typography": "French strings keep the site's own no-break spaces: U+00A0 in « 24\u00a0h », « 5\u00a0jours », « 30\u00a0min » and U+202F before « : » (prev.tl5p), so a line never breaks inside them.",
+    "nobreak": {
+      "note": "Fixed phrases kept on one line at render time (copy.js keepTogether: span.nobr, white-space: nowrap; the strings are unchanged). V02's own list, passed to applyNobreak(); V01's list is not affected. T67 also uses data-keep=\"·\" so it breaks at its separator, which is then hidden (markSeparatorBreaks).",
+      "fr": ["le projet", "24\u00a0h ouvrées", "on construit", "un prix ferme", "la page d'accueil", "ou arabe", "sans engagement", "4 Aperçus", "le cadrage"],
+      "en": ["the project", "24 working hours", "we build", "a firm price", "or Arabic", "at most 4 Previews"],
+      "ar": ["24 ساعة عمل", "بنطاق عمل مكتوب", "فالصفحة الرئيسية", "كحدّ أقصى", "أو العربية"]
+    },
+    "words": "Words are whitespace-separated tokens; « · », « — », « & » and « : » standing alone are not counted (the V01 convention, scripts-trailer.md §4.3)."
+  },
+  "TTL": {
+    "src": "F52", "key": "nav.about", "lines": "app.js:18 / :106 / :197",
+    "use": ["captions"], "edit": "verbatim",
+    "note": "The video's title, from the site's own menu label for #apercu. Captions, YouTube title, carousel name and file metadata only: never on screen.",
+    "fr": "Méthode", "en": "Process", "ar": "المنهج",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T60": {
+    "src": "F40", "key": "prev.tl1", "lines": "app.js:289 / :399 / :512",
+    "use": ["v02"], "edit": "verbatim",
+    "note": "Hook line 1 (hook size, set at f0), then station 1's label (header size): one block, two states.",
+    "fr": "Vous décrivez le projet", "en": "You describe the project", "ar": "تصف المشروع",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T61": {
+    "src": "F48", "key": "prev.tl5", "lines": "app.js:293 / :403 / :516",
+    "use": ["v02"], "edit": "verbatim",
+    "note": "Hook line 2, set at f0, in the swash face; leaves at the end of S1 and returns as T71.",
+    "fr": "Vous décidez", "en": "You decide", "ar": "أنت تقرّر",
+    "swash": { "fr": "Vous décidez", "en": "You decide" },
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T62a": {
+    "src": "F41", "key": "prev.tl1p", "lines": "app.js:289 / :399 / :512",
+    "use": ["v02"], "edit": "trimmed: the first sentence of prev.tl1p",
+    "fr": "Deux minutes, par écrit ou de vive voix.", "en": "Two minutes, in writing or out loud.", "ar": "دقيقتان، كتابةً أو مشافهة.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T62b": {
+    "src": "F41", "key": "prev.tl1p", "lines": "app.js:289 / :399 / :512",
+    "use": ["v02-y"], "edit": "trimmed: the second sentence of prev.tl1p (16:9 only; in 9:16 it goes to the caption)",
+    "fr": "En français, anglais ou arabe.", "en": "In French, English or Arabic.", "ar": "بالفرنسية أو الإنجليزية أو العربية.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T63": {
+    "src": "F42", "key": "prev.tl2", "lines": "app.js:290 / :400 / :513",
+    "use": ["v02"], "edit": "verbatim",
+    "note": "« 24 h ouvrées » is a reply, nothing more (flag T7): no weekday, no hours.",
+    "fr": "On revient sous 24\u00a0h ouvrées", "en": "We reply within 24 working hours", "ar": "نعود إليك خلال 24 ساعة عمل",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T64": {
+    "src": "F43", "key": "prev.tl2p", "lines": "app.js:290 / :400 / :513",
+    "use": ["v02-s"],
+    "edit": "trimmed (FR, AR): the first sentence without its last clause « dès que le cadrage est validé ensemble » / «بمجرّد أن نتّفق معاً على هذا النطاق»; restated (EN): « First with our questions. Then, once we have agreed on what to build, with a written scope and a firm price. » shortened to one sentence. « puis » / \"then\" / «ثم» keeps the scope and the price after the questions, never inside the 24 h.",
+    "fr": "Avec nos questions, puis un périmètre écrit et un prix ferme.",
+    "en": "First our questions, then a written scope and a firm price.",
+    "ar": "بأسئلتنا أولاً، ثم بنطاق عمل مكتوب وسعر نهائي.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T64y": {
+    "src": "F43", "key": "prev.tl2p", "lines": "app.js:290 / :400 / :513",
+    "use": ["v02-y"], "edit": "trimmed: prev.tl2p without its last sentence « Pas une fourchette, un chiffre. » (that sentence goes to the captions)",
+    "fr": "Avec nos questions, puis un périmètre écrit et un prix ferme dès que le cadrage est validé ensemble.",
+    "en": "First with our questions. Then, once we have agreed on what to build, with a written scope and a firm price.",
+    "ar": "بأسئلتنا أولاً، ثم بنطاق عمل مكتوب وسعر نهائي بمجرّد أن نتّفق معاً على هذا النطاق.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T65": {
+    "src": "F44", "key": "prev.tl3", "lines": "app.js:291 / :401 / :514",
+    "use": ["v02"], "edit": "verbatim",
+    "note": "Its own words carry the content hand-off (« Vous envoyez votre contenu ») that must go with « 5 jours ouvrés »: T66 is never on screen, or in a still, without T65.",
+    "fr": "Vous envoyez votre contenu, on construit votre page d'accueil", "en": "You send your content and we build your homepage", "ar": "ترسل إلينا محتواك، ونبني صفحتك الرئيسية",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T66": {
+    "src": "F45", "key": "prev.tl3d", "lines": "app.js:291 / :401 / :514",
+    "use": ["v02"], "edit": "verbatim",
+    "fr": "5\u00a0jours ouvrés", "en": "5 working days", "ar": "5 أيام عمل",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T67": {
+    "src": "F50", "key": "prev.name + prev.brief", "lines": "app.js:370-371 / :480-481 / :593-594",
+    "use": ["v02-s-a", "v02-y-a"], "edit": "restated: the offer's name (prev.name) and the opening words of prev.brief « Avant tout paiement » / \"Before any payment\" / «قبل أيّ دفع», joined by the site's separator",
+    "gate": "Variant A only; not to be posted until the lawyer answers A8",
+    "fr": "L'Aperçu · avant tout paiement", "en": "The Preview · before any payment", "ar": "المعاينة · قبل أيّ دفع",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T68": {
+    "src": "F51", "key": "prev.terms", "lines": "app.js:371 / :481 / :594",
+    "use": ["v02-s-a", "v02-y-a"], "edit": "verbatim (the Aperçu's conditions, exactly as the site states them)",
+    "gate": "Variant A only; not to be posted until the lawyer answers A8",
+    "fr": "Gratuit et sans engagement · réservé aux entreprises immatriculées · 4 Aperçus par mois au maximum, tous clients confondus.",
+    "en": "Free, no obligation · registered businesses only · at most 4 Previews a month, across all clients.",
+    "ar": "مجّاناً ودون التزام · للشركات المسجّلة فقط · 4 معاينات في الشهر كحدّ أقصى لجميع العملاء.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T69": {
+    "src": "F46", "key": "prev.tl4", "lines": "app.js:292 / :402 / :515",
+    "use": ["v02"], "edit": "verbatim",
+    "fr": "On vous la présente", "en": "We walk you through it", "ar": "نعرضها عليك",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T70": {
+    "src": "F47", "key": "prev.tl4d", "lines": "app.js:292 / :402 / :515",
+    "use": ["v02"], "edit": "verbatim (FR, EN); trimmed (AR): «في مكالمة فيديو من 30 دقيقة» without its opening «في», so the line holds in S5's 3.67 s",
+    "fr": "visio de 30\u00a0min", "en": "30-minute video call", "ar": "مكالمة فيديو من 30 دقيقة",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T71": {
+    "src": "F48", "key": "prev.tl5", "lines": "app.js:293 / :403 / :516",
+    "use": ["v02"], "edit": "verbatim",
+    "note": "Station 5's label, in the swash face like T61 (the hook's second line comes back). prev.tl5d « Payé jusqu'ici : » and the 0 DA figure are NOT used (a price figure).",
+    "fr": "Vous décidez", "en": "You decide", "ar": "أنت تقرّر",
+    "swash": { "fr": "Vous décidez", "en": "You decide" },
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T72": {
+    "src": "F49", "key": "prev.tl5p", "lines": "app.js:293 / :403 / :516",
+    "use": ["v02-s"], "edit": "trimmed: prev.tl5p without « : on enchaîne sur le reste » / \": we move straight on to the rest\" / «: ننتقل مباشرة إلى بقية العمل» (9:16 only)",
+    "fr": "Si c'est oui, la page d'accueil est déjà faite.", "en": "If it's yes, the homepage is already done.", "ar": "إن كان الجواب نعم، فالصفحة الرئيسية جاهزة بالفعل.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T72y": {
+    "src": "F49", "key": "prev.tl5p", "lines": "app.js:293 / :403 / :516",
+    "use": ["v02-y"], "edit": "verbatim",
+    "fr": "Si c'est oui, la page d'accueil est déjà faite\u202f: on enchaîne sur le reste.",
+    "en": "If it's yes, the homepage is already done: we move straight on to the rest.",
+    "ar": "إن كان الجواب نعم، فالصفحة الرئيسية جاهزة بالفعل: ننتقل مباشرة إلى بقية العمل.",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T50": {
+    "src": "F07", "key": "hero.eyebrow", "lines": "app.js:20 / :108 / :199",
+    "use": ["v02"], "edit": "verbatim (the series end card, as V01)",
+    "fr": "Studio web & logiciel · Bordj Bou Arréridj, Algérie", "en": "Web & software studio · Bordj Bou Arréridj, Algeria", "ar": "استوديو ويب وبرمجيات · برج بوعريريج، الجزائر",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T51": {
+    "src": "F29", "key": "footer.tag", "lines": "app.js:100 / :188 / :279",
+    "use": ["v02"], "edit": "verbatim (the series end card, as V01)",
+    "fr": "Enraciné en Numidie · bâti sur des idées", "en": "Rooted in Numidia · built on ideas", "ar": "جذورها في نوميديا · مبنيّة على الأفكار",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "T52": {
+    "src": "F30", "key": "(label, not a site string)", "lines": "strategy.md §3.4; scripts-trailer.md F30",
+    "use": ["v02"], "edit": "label per placement, as V01",
+    "note": "none in 16:9 and in story=1 renders",
+    "fr": "Lien en bio", "fr_li": "Lien en commentaire", "en": "Link in bio", "en_li": "Link in comments", "ar": "الرابط في الملف التعريفي",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "M01": {
+    "src": "F25", "key": "(mock-up placeholder, campaign kit)", "lines": "notes/campaign/campaign-copy-fr.md:21 (vault)",
+    "use": ["v02"], "edit": "picture text, not a claim (as V01)",
+    "fr": "Votre logo", "en": "Your logo", "ar": "شعارك هنا",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "M02": {
+    "src": "F25", "key": "(mock-up placeholder, campaign kit)", "lines": "notes/campaign/campaign-copy-fr.md:21 (vault)",
+    "use": ["v02"], "edit": "picture text, not a claim (as V01)",
+    "fr": "Votre entreprise", "en": "Your business", "ar": "اسم نشاطك",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  },
+  "M03": {
+    "src": "F31", "key": "(the site's language switch, restated per master)", "lines": "index.html language switch; scripts-trailer.md F31",
+    "use": ["v02"], "edit": "UI picture (the mock-up's tab row, as V01)",
+    "fr": "FR · EN · AR", "en": "FR · EN · AR", "ar": "الفرنسية · الإنجليزية · العربية",
+    "ar_review": "à relire par un arabophone natif", "arReviewed": false
+  }
+}

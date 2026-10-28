@@ -1,0 +1,146 @@
+{
+ "band-design.png": {
+  "w": 2752,
+  "h": 1536,
+  "alpha": false,
+  "kb": 5697
+ },
+ "band-diary.png": {
+  "w": 2752,
+  "h": 1536,
+  "alpha": false,
+  "kb": 5663
+ },
+ "diary-4am.png": {
+  "w": 2528,
+  "h": 1696,
+  "alpha": false,
+  "kb": 6785
+ },
+ "diary-art-director.png": {
+  "w": 1264,
+  "h": 848,
+  "alpha": false,
+  "kb": 1928
+ },
+ "diary-buried.png": {
+  "w": 1264,
+  "h": 848,
+  "alpha": false,
+  "kb": 2002
+ },
+ "diary-miniature.png": {
+  "w": 2528,
+  "h": 1696,
+  "alpha": false,
+  "kb": 6434
+ },
+ "diary-morning.png": {
+  "w": 1376,
+  "h": 768,
+  "alpha": false,
+  "kb": 1914
+ },
+ "diary-second-brain.png": {
+  "w": 1264,
+  "h": 848,
+  "alpha": false,
+  "kb": 1993
+ },
+ "diary-traveler.png": {
+  "w": 2528,
+  "h": 1696,
+  "alpha": false,
+  "kb": 7362
+ },
+ "diary-wandering.png": {
+  "w": 1264,
+  "h": 848,
+  "alpha": false,
+  "kb": 2064
+ },
+ "hero-bg.png": {
+  "w": 2752,
+  "h": 1536,
+  "alpha": false,
+  "kb": 4500
+ },
+ "hero-kuro.png": {
+  "w": 2752,
+  "h": 1536,
+  "alpha": true,
+  "kb": 1233
+ },
+ "hero-yasser.png": {
+  "w": 2752,
+  "h": 1536,
+  "alpha": true,
+  "kb": 1252
+ },
+ "kuro-paw.png": {
+  "w": 525,
+  "h": 744,
+  "alpha": true,
+  "kb": 342
+ },
+ "kuro-sit.png": {
+  "w": 445,
+  "h": 664,
+  "alpha": true,
+  "kb": 298
+ },
+ "loops/kuro-sleep-still.png": {
+  "w": 705,
+  "h": 785,
+  "alpha": true,
+  "kb": 357
+ },
+ "loops/kuro-sleep.webp": {
+  "w": 705,
+  "h": 785,
+  "alpha": true,
+  "kb": 1206
+ },
+ "loops/yasser-lost-still.png": {
+  "w": 1080,
+  "h": 994,
+  "alpha": true,
+  "kb": 784
+ },
+ "loops/yasser-lost.webp": {
+  "w": 1080,
+  "h": 994,
+  "alpha": true,
+  "kb": 1642
+ },
+ "loops/yasser-wave-still.png": {
+  "w": 517,
+  "h": 963,
+  "alpha": true,
+  "kb": 428
+ },
+ "loops/yasser-wave.webp": {
+  "w": 517,
+  "h": 963,
+  "alpha": true,
+  "kb": 1461
+ },
+ "make-artist.png": {
+  "w": 981,
+  "h": 804,
+  "alpha": true,
+  "kb": 1424
+ },
+ "make-designer.png": {
+  "w": 1036,
+  "h": 1023,
+  "alpha": true,
+  "kb": 1902
+ },
+ "make-developer.png": {
+  "w": 903,
+  "h": 776,
+  "alpha": true,
+  "kb": 1238
+ }
+}

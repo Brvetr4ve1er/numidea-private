@@ -1,0 +1,194 @@
+[
+  {
+    "file": "../out/v01/v01__9x16__fr__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "file": "../out/v01/v01__16x9__fr__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "file": "../out/v01/v01__4x5__fr__li__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "file": "../out/v01/v01__9x16__en__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "file": "../out/v01/v01__16x9__en__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  {
+    "file": "../out/v01/v01__4x5__en__li__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  }
+]

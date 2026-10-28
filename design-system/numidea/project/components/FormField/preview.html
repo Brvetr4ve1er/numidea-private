@@ -1,0 +1,57 @@
+<!-- @dsCard group="Controls" height=720 width=900 subtitle="Static rendition · styles.css › .field, .field label, .field input, .err, .invalid" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FormField — preview</title></head>
+<body>
+<div class="ds-stage">
+  <form class="form" action="#" novalidate>
+    <span class="ds-label">At rest · keyboard focus · FR</span>
+    <div class="form-row">
+      <div class="field">
+        <label for="f1-name">Nom</label>
+        <input id="f1-name" name="name" type="text" placeholder="Votre nom">
+        <span class="err"></span>
+      </div>
+      <div class="field">
+        <label for="f1-email">Email</label>
+        <input id="f1-email" name="email" type="email" class="is-focus" placeholder="vous@entreprise.com">
+        <span class="err"></span>
+      </div>
+    </div>
+    <span class="ds-label">Invalid, after an empty or malformed submit</span>
+    <div class="form-row">
+      <div class="field invalid">
+        <label for="f2-name">Nom</label>
+        <input id="f2-name" name="name" type="text" placeholder="Votre nom" aria-invalid="true" aria-describedby="f2-name-err">
+        <span class="err" id="f2-name-err">Ajoutez un nom pour qu'on sache à qui parler.</span>
+      </div>
+      <div class="field invalid">
+        <label for="f2-email">Email</label>
+        <input id="f2-email" name="email" type="email" value="vous@entreprise" aria-invalid="true" aria-describedby="f2-email-err">
+        <span class="err" id="f2-email-err">Cet email a l'air incomplet — vérifiez-le.</span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="f1-msg">Message</label>
+      <textarea id="f1-msg" name="message" rows="3" placeholder="Qu'est-ce qu'on construit&#8239;?"></textarea>
+      <span class="err"></span>
+    </div>
+  </form>
+  <form class="form" action="#" novalidate dir="rtl" lang="ar">
+    <span class="ds-label">AR · RTL · awaiting a native speaker's review</span>
+    <div class="form-row">
+      <div class="field invalid">
+        <label for="f3-name">الاسم</label>
+        <input id="f3-name" name="name" type="text" placeholder="اسمك" aria-invalid="true" aria-describedby="f3-name-err">
+        <span class="err" id="f3-name-err">أدخِل اسمك لنعرف مع من نتحدّث.</span>
+      </div>
+      <div class="field">
+        <label for="f3-email">البريد</label>
+        <input id="f3-email" name="email" type="email" placeholder="you@company.com">
+        <span class="err"></span>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

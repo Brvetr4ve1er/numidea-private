@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Yasser — voilà</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* the bust works in asset pixels (758 x 776) and is scaled by K = 1.04 about its pivot, which lands
+     it at stage x 244..1032, y 227..1034 (element offset = stage pivot - asset pivot);
+     the pivot is the middle of the bottom cut, so breathing grows up from it */
+  .fig { position: absolute; left: 260.8px; top: 258px; width: 758px; height: 776px; transform-origin: 420px 776px; will-change: transform; }
+  .fig img { position: absolute; left: 0; top: 0; width: 758px; height: 776px; display: block; }
+  /* the open hand is its own cut-out, behind the body, turning on the wrist inside the dark cuff */
+  #hand { transform-origin: 188px 605px; will-change: transform;
+    clip-path: polygon(0 430px, 200px 430px, 200px 562px, 203px 600px, 198px 622px, 186px 633px, 170px 636px, 150px 627px, 140px 622px, 128px 662px, 0 662px); }
+  /* the body with the hand cut away; the seam runs through the dark cuff and along the palm's lower edge */
+  #body { clip-path: polygon(205px 0, 758px 0, 758px 776px, 0 776px, 0 662px, 126px 662px, 139px 618px, 150px 622px, 170px 632px, 184px 629px, 195px 619px, 200px 600px, 197px 568px, 205px 540px); }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="fig" id="fig">
+    <img id="hand" src="../assets/y-present.png" alt="">
+    <img id="body" src="../assets/y-present.png" alt="">
+  </div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080"></svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, osc, set } = Motion;
+  const K = 1.04;                         // asset px to stage px
+  const FIG = { left: 244, top: 227 };
+  const fig = document.getElementById('fig'), hand = document.getElementById('hand'), fx = document.getElementById('fx');
+  const NS = 'http://www.w3.org/2000/svg';
+  const INK = '#1b1712', BONE = '#efe6d6', BRASS = '#e6b450';
+
+  // keyframes: [[t, value, easeIntoThisKey], ...], first and last at rest
+  function kf(q, keys) {
+    for (let i = 1; i < keys.length; i++) {
+      if (q <= keys[i][0]) {
+        const [t0, v0] = keys[i - 1], [t1, v1, e = ease.inOut] = keys[i];
+        return v0 + (v1 - v0) * e((q - t0) / (t1 - t0));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+  const clamp = (v) => Math.min(Math.max(v, 0), 1);
+
+  // the burst leaves from just above the cupped palm (asset px -> stage px)
+  const O = { x: FIG.left + 116 * K, y: FIG.top + 488 * K };
+
+  // four-point sparkle, drawn at radius 50 (taller than wide), ink outline under the fill
+  const STAR = 'M0 -50 Q8 -8 38 0 Q8 8 0 50 Q-8 8 -38 0 Q-8 -8 0 -50 Z';
+  function sparkle(fill) {
+    const g = document.createElementNS(NS, 'g');
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', STAR); path.setAttribute('fill', fill);
+    path.setAttribute('stroke', INK); path.setAttribute('stroke-width', '13');
+    path.setAttribute('stroke-linejoin', 'round'); path.setAttribute('paint-order', 'stroke');
+    g.appendChild(path); fx.appendChild(g);
+    return g;
+  }
+
+  // two bursts per loop, each a fan up and to the left of the palm; the second is turned
+  // half a step and swaps the colours so the pair does not read as a copy. Few and large,
+  // so they still read at phone sticker size (about 160 px on screen)
+  const FAN = [
+    { a: -190, r: 170, R: 32 },
+    { a: -160, r: 250, R: 58 },
+    { a: -130, r: 185, R: 38 },
+    { a: -102, r: 262, R: 66 },
+    { a: -76,  r: 196, R: 40 },
+    { a: -52,  r: 160, R: 28 },
+  ];
+  const bursts = [0, 1].map((b) => FAN.map((d, i) => {
+    const big = d.R >= 50;
+    const fill = (big ? b === 0 : b === 1) ? BRASS : BONE;
+    const r = b === 0 ? d.r : FAN[(i + 2) % FAN.length].r;
+    return { a: d.a + (b ? 12 : 0), r, R: d.R, i, el: sparkle(fill), spin: (i % 2 ? 1 : -1) * (10 + 3 * i) };
+  }));
+  // the release glint: one bone sparkle that flashes right on the palm and is gone
+  const glint = sparkle(BONE);
+  fx.insertBefore(glint, fx.firstChild);
+
+  function drawGlint(q) {
+    const t = q - 0.12;
+    if (t <= 0 || t >= 0.2) { glint.style.opacity = '0'; glint.setAttribute('transform', 'scale(0)'); return; }
+    const k = 0.95 * ease.back(clamp(t / 0.07)) * (1 - ease.in(clamp((t - 0.06) / 0.14)));
+    glint.style.opacity = '1';
+    glint.setAttribute('transform', `translate(${O.x.toFixed(2)} ${(O.y + 6).toFixed(2)}) rotate(${(40 * ease.out(clamp(t / 0.2))).toFixed(2)}) scale(${Math.max(k, 0).toFixed(4)})`);
+  }
+
+  function drawSparkle(s, q) {
+    const d = 0.14 + 0.012 * s.i;           // small stagger, about three frames across the fan
+    const t = q - d;
+    if (t <= 0 || t >= 0.62) { s.el.style.opacity = '0'; s.el.setAttribute('transform', 'scale(0)'); return; }
+    const travel = ease.house(clamp(t / 0.42));
+    const rad = s.a * Math.PI / 180;
+    const dist = 40 + (s.r - 40) * travel;
+    const x = O.x + dist * Math.cos(rad), y = O.y + dist * Math.sin(rad);
+    const pop = ease.back(clamp(t / 0.13));                 // out with a little overshoot
+    // holds, then twinkles out by shrinking to nothing (no half-transparent stage: a see-through
+    // brass reads muddy on coloured chat backgrounds)
+    const gone = ease.in(clamp((t - 0.34) / 0.28));
+    const k = (s.R / 50) * pop * (1 - gone);
+    const rot = s.spin * ease.out(clamp(t / 0.6));
+    s.el.style.opacity = '1';
+    s.el.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${Math.max(k, 0).toFixed(4)})`);
+  }
+
+  Sticker({
+    seconds: 2.4, fps: 30, poster: 14,
+    draw(p) {
+      const half = p < 0.5 ? 0 : 1;
+      const q = (p * 2) % 1;                 // two presentations per loop, the same beat each time
+      // one slow breath per loop, growing up from the bottom cut
+      const b = 0.5 - 0.5 * osc(p, 1, 0.25);
+      // the offer: a small dip, then the palm lifts as the sparkles leave, overshoots and settles
+      const h = kf(q, [[0, 0], [0.11, -2.2], [0.23, 5.2, ease.out], [0.38, -1.0], [0.54, 0.4], [0.66, 0], [1, 0]]);
+      const lean = kf(q, [[0, 0], [0.11, 0.25], [0.24, -0.8, ease.out], [0.70, 0], [1, 0]]);
+      const pop = kf(q, [[0, 0], [0.11, -0.006], [0.22, 0.008, ease.out], [0.40, 0], [1, 0]]);
+      const sy = 1 + 0.013 * b + pop, sx = 1 + 0.004 * b - pop * 0.4;
+      set(fig, { r: lean, s: K, sx, sy });
+      set(hand, { r: h });
+      drawGlint(q);
+      bursts[half].forEach((s) => drawSparkle(s, q));
+      bursts[1 - half].forEach((s) => drawSparkle(s, -1));
+    },
+  });
+</script>
+</body>
+</html>

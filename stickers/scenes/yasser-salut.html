@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Yasser — salut</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  .shadow { position: absolute; left: 618px; top: 978px; width: 330px; height: 46px; margin-left: -165px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, 0)); }
+  /* the figure works in asset pixels (375 x 1000) and is scaled down by the transform;
+     the pivot is the middle of the shoes, on the ground line */
+  .fig { position: absolute; left: 413px; top: 5px; width: 375px; height: 1000px; transform-origin: 205px 995px; will-change: transform; }
+  .fig img { position: absolute; left: 0; top: 0; width: 375px; height: 1000px; display: block; }
+  /* the raised hand is its own cut-out, behind the body, turning on the wrist inside the dark cuff */
+  #hand { transform-origin: 48px 258px; will-change: transform;
+    clip-path: polygon(0 100px, 96px 100px, 96px 232px, 66px 240px, 64px 249px, 62px 262px, 52px 274px, 38px 280px, 33px 262px, 31px 252px, 0 249px); }
+  /* the body with the hand cut away above the seam (the seam runs through the dark cuff) */
+  #body { clip-path: polygon(90px 0, 375px 0, 375px 1000px, 0 1000px, 0 248px, 31px 251px, 34px 264px, 58px 256px, 63px 247px, 65px 240px, 90px 234px); }
+  svg.arcs { position: absolute; left: 0; top: 0; width: 375px; height: 1000px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow" id="shadow"></div>
+  <div class="fig" id="fig">
+    <img id="hand" src="../assets/y-wave.png" alt="">
+    <img id="body" src="../assets/y-wave.png" alt="">
+    <svg class="arcs" viewBox="0 0 375 1000" id="arcs"></svg>
+  </div>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, set } = Motion;
+  const K = 0.88; // asset px to stage px
+  const fig = document.getElementById('fig'), hand = document.getElementById('hand'), shadow = document.getElementById('shadow');
+
+  // keyframes: [[t, value, easeIntoThisKey], ...], t from 0 to 1, first and last at rest
+  function kf(q, keys) {
+    for (let i = 1; i < keys.length; i++) {
+      if (q <= keys[i][0]) {
+        const [t0, v0] = keys[i - 1], [t1, v1, e = ease.inOut] = keys[i];
+        return v0 + (v1 - v0) * e((q - t0) / (t1 - t0));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+
+  // wave arcs: three short strokes left of the raised hand, curved around the palm, drawn as
+  // an ink stroke under a bone stroke so they match the hand-drawn outline
+  const C = { x: 38, y: 182 };           // palm centre, asset px
+  const NS = 'http://www.w3.org/2000/svg';
+  const arcs = [
+    { r: 80, a0: 154, a1: 214 },
+    { r: 110, a0: 150, a1: 222 },
+    { r: 140, a0: 158, a1: 212 },
+  ].map((d, i) => {
+    const pt = (a) => [C.x + d.r * Math.cos(a * Math.PI / 180), C.y + d.r * Math.sin(a * Math.PI / 180)];
+    // drawn from the lower end upward, the way the fingers travel on the first swing
+    const [x0, y0] = pt(d.a0), [x1, y1] = pt(d.a1);
+    const dAttr = `M${x0.toFixed(1)} ${y0.toFixed(1)} A${d.r} ${d.r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+    const g = document.createElementNS(NS, 'g');
+    const ink = document.createElementNS(NS, 'path'), bone = document.createElementNS(NS, 'path');
+    for (const [el, col, w] of [[ink, '#1b1712', 21], [bone, '#efe6d6', 9]]) {
+      el.setAttribute('d', dAttr); el.setAttribute('fill', 'none'); el.setAttribute('stroke', col);
+      el.setAttribute('stroke-width', w); el.setAttribute('stroke-linecap', 'round');
+      g.appendChild(el);
+    }
+    document.getElementById('arcs').appendChild(g);
+    const len = d.r * (d.a1 - d.a0) * Math.PI / 180;
+    return { g, ink, bone, len, i };
+  });
+
+  function drawArc(a, q) {
+    const d = 0.022 * a.i;
+    const head = ease.out((q - (0.17 + d)) / 0.09);          // draws on with the first swing
+    const tail = ease.inOut((q - (0.44 + d)) / 0.12);        // tail chases the head and the stroke is gone
+    const start = a.len * Math.max(0, Math.min(1, tail)), end = a.len * Math.max(0, Math.min(1, head));
+    const vis = end - start;
+    if (vis < 0.5) { a.g.style.opacity = '0'; return; }
+    a.g.style.opacity = '1';
+    for (const el of [a.ink, a.bone]) {
+      el.setAttribute('stroke-dasharray', `${vis.toFixed(2)} ${(a.len * 3).toFixed(1)}`);
+      el.setAttribute('stroke-dashoffset', (-start).toFixed(2));
+    }
+    // a small outward flick while the stroke is on screen
+    const s = 1 + 0.06 * ease.out((q - (0.17 + d)) / 0.3);
+    a.g.setAttribute('transform', `translate(${C.x} ${C.y}) scale(${s.toFixed(4)}) translate(${-C.x} ${-C.y})`);
+  }
+
+  Sticker({
+    seconds: 2.4, fps: 30, poster: 10,
+    draw(p) {
+      const q = (p * 2) % 1;   // two waves per loop, each wave is the same beat
+      // the hand: wind back, then two quick swings that settle
+      const h = kf(q, [[0, 0], [0.10, -10], [0.24, 15, ease.out], [0.38, -11], [0.52, 9], [0.66, -4], [0.78, 0], [1, 0]]);
+      // the body rocks from the shoes towards the waving side, a touch of the hand's swing on top
+      const rock = kf(q, [[0, 0], [0.10, 1.0], [0.25, -3.2, ease.out], [0.40, -2.6], [0.56, -2.9], [0.86, 0], [1, 0]]) + 0.05 * h;
+      // the bounce: a dip, a little lift with a stretch, a soft landing
+      const sy = kf(q, [[0, 1], [0.10, 0.978], [0.22, 1.022, ease.out], [0.35, 0.99, ease.in], [0.46, 1], [1, 1]]);
+      const lift = kf(q, [[0, 0], [0.10, 0], [0.22, -11, ease.out], [0.35, 0, ease.in], [1, 0]]);
+      const sx = 1 - (sy - 1) * 0.5;
+      set(fig, { y: lift, r: rock, s: K, sx, sy });
+      set(hand, { r: h });
+      shadow.style.transform = `scaleX(${(1 + lift / 11 * 0.08).toFixed(4)})`;
+      shadow.style.opacity = (1 + lift / 11 * 0.25).toFixed(3);
+      arcs.forEach((a) => drawArc(a, q));
+    },
+  });
+</script>
+</body>
+</html>

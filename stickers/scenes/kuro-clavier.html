@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kūro — clavier</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* soft contact shadow under the laptop base */
+  .shadow { position: absolute; left: 450px; top: 972px; width: 700px; height: 112px; margin-left: -350px; margin-top: -56px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .28), rgba(20, 16, 12, 0)); }
+  /* the cat on the laptop works in asset pixels (660 x 735) and is scaled by the transform;
+     the pivot is the bottom corner of the laptop base (asset 330, 728), at stage (450, 1012) */
+  .fig { position: absolute; left: 120px; top: 284px; width: 660px; height: 735px; transform-origin: 330px 728px; will-change: transform; }
+  .fig img { position: absolute; left: 0; top: 0; width: 660px; height: 735px; display: block; }
+  /* the cut-out left the screen and the palm rest see-through: bone fills sit under the drawing,
+     masked to those holes (grown 3 px under the inner edge, never past the outer outline) */
+  .fig .screen { will-change: opacity; }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow"></div>
+  <div class="fig" id="fig">
+    <img class="deck" src="data:image/png;base64,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" alt="">
+    <img class="screen" id="screen" src="data:image/png;base64,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" alt="">
+    <img src="../assets/k-laptop.png" alt="">
+  </div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080">
+    <!-- keystroke ticks beside the front paws, ink under bone like the hand-drawn outline -->
+    <g id="ticks" fill="none" stroke-linecap="round"></g>
+    <!-- the chat bubble the cat is typing into: bone pill, ink outline, tail toward his face -->
+    <g id="bubble">
+      <path d="M -75 -75 L 75 -75 A 75 75 0 0 1 75 75 L -28 75 Q -70 104 -158 122 Q -108 94 -100.6 70.5 A 75 75 0 0 1 -75 -75 Z"
+        fill="#efe6d6" stroke="#1b1712" stroke-width="12" stroke-linejoin="round"/>
+      <g fill="#7a2430" stroke="#1b1712" stroke-width="13" paint-order="stroke">
+        <circle id="d0" r="23"/>
+        <circle id="d1" r="23"/>
+        <circle id="d2" r="23"/>
+      </g>
+    </g>
+  </svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, win, set } = Motion;
+  const F = 72;                           // frames per loop (2.4 s at 30 fps); keys below are in frames
+  const K = 1.08;                         // asset px to stage px
+  const fig = document.getElementById('fig'), screen = document.getElementById('screen');
+  const bubble = document.getElementById('bubble');
+  const dots = [0, 1, 2].map((i) => document.getElementById('d' + i));
+  const BUB = { x: 854, y: 182, r: -4 }; // bubble centre on the stage
+  const KEYS = [4, 11, 18];               // the three keystrokes: one dot each
+
+  // keyframes: [[frame, value, easeIntoThisKey], ...], first and last at rest
+  function kf(f, keys) {
+    for (let i = 1; i < keys.length; i++) {
+      if (f <= keys[i][0]) {
+        const [t0, v0] = keys[i - 1], [t1, v1, e = ease.inOut] = keys[i];
+        return v0 + (v1 - v0) * e((f - t0) / (t1 - t0));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+
+  // each dot pops in on its keystroke (overshoot), joins one wave hop, then all three
+  // get deleted right to left, like a backspace, so the loop restarts on an empty bubble
+  function drawDot(el, i, f) {
+    const k = KEYS[i];
+    const j = 2 - i;                      // backspace order: the last dot typed goes first
+    const s = kf(f, [[0, 0], [k, 0], [k + 5, 1, ease.back], [58 + 2 * j, 1], [60 + 2 * j, 1.12, ease.out], [63 + 2 * j, 0, ease.in], [F, 0]]);
+    const hop = kf(f, [[0, 0], [30 + 3 * i, 0], [34 + 3 * i, -13, ease.out], [39 + 3 * i, 0, ease.in], [F, 0]]);
+    el.setAttribute('cx', String(-70 + 70 * i));
+    el.setAttribute('cy', hop.toFixed(2));
+    el.setAttribute('r', (23 * s).toFixed(2));
+    el.setAttribute('opacity', s > 0.01 ? '1' : '0');
+  }
+
+  // little tap marks fan out from the front paws on each keystroke, then retract
+  const NS = 'http://www.w3.org/2000/svg';
+  const ticksG = document.getElementById('ticks');
+  const PAW = { x: 576, y: 862 };         // at the tip of the right front paw, on the keys
+  const TICK = [-78, -40, -4];             // stroke angles, degrees (up-right fan)
+  const ticks = TICK.map((a) => {
+    const g = document.createElementNS(NS, 'g');
+    const ink = document.createElementNS(NS, 'line'), bone = document.createElementNS(NS, 'line');
+    for (const [el, col, w] of [[ink, '#1b1712', 19], [bone, '#efe6d6', 8]]) {
+      el.setAttribute('stroke', col); el.setAttribute('stroke-width', w); g.appendChild(el);
+    }
+    ticksG.appendChild(g);
+    return { a: a * Math.PI / 180, g, ink, bone };
+  });
+  function drawTicks(f) {
+    // the most recent keystroke within 6 frames drives the marks
+    let t = -1;
+    for (const k of KEYS) if (f >= k && f < k + 6) t = (f - k) / 6;
+    if (t < 0) { ticks.forEach((tk) => tk.g.setAttribute('opacity', '0')); return; }
+    const head = ease.out(Math.min(t / 0.45, 1)), tail = ease.inOut(win(t, 0.4, 1));
+    ticks.forEach((tk) => {
+      const r0 = 22 + 40 * tail, r1 = 22 + 40 * head;
+      const c = Math.cos(tk.a), s = Math.sin(tk.a);
+      for (const el of [tk.ink, tk.bone]) {
+        el.setAttribute('x1', (PAW.x + r0 * c).toFixed(1)); el.setAttribute('y1', (PAW.y + r0 * s).toFixed(1));
+        el.setAttribute('x2', (PAW.x + r1 * c).toFixed(1)); el.setAttribute('y2', (PAW.y + r1 * s).toFixed(1));
+      }
+      tk.g.setAttribute('opacity', tail >= 0.98 ? '0' : '1');
+    });
+  }
+
+  // two soft screen pulses per loop: a quick brighten, a slower fade back to the resting glow
+  function screenGlow(p) {
+    const t = (2 * p) % 1;
+    const v = Math.min(ease.out(win(t, 0.04, 0.14)), 1 - ease.inOut(win(t, 0.14, 0.62)));
+    return 0.62 + 0.3 * v;
+  }
+
+  Sticker({
+    seconds: 2.4, fps: 30, poster: 28,
+    draw(p) {
+      const f = p * F;
+      // one slow breath per loop, swelling up from the ground line
+      const b = 0.5 - 0.5 * Math.cos(2 * Math.PI * p);
+      set(fig, { s: K, sx: 1 + 0.006 * b, sy: 1 + 0.016 * b });
+      screen.style.opacity = screenGlow(p).toFixed(3);
+      // the bubble gives a tiny bump on each keystroke
+      let bump = 0;
+      for (const k of KEYS) bump = Math.max(bump, kf(f, [[0, 0], [k, 0], [k + 2, 1, ease.out], [k + 6, 0, ease.inOut], [F, 0]]));
+      bubble.setAttribute('transform', `translate(${BUB.x} ${BUB.y}) rotate(${BUB.r}) scale(${(1 + 0.03 * bump).toFixed(4)})`);
+      dots.forEach((el, i) => drawDot(el, i, f));
+      drawTicks(f);
+    },
+  });
+</script>
+</body>
+</html>

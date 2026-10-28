@@ -1,0 +1,2882 @@
+{
+  "env": {
+    "rendered_at": "2026-10-27T03:29:27.410Z",
+    "site_assets_commit": "076c991 2026-10-26 22:48:08 +0000",
+    "ffmpeg": "ffmpeg version 7.0.2-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2024 the FFmpeg developers",
+    "ffprobe": "ffprobe version N-66595-gc2b38619c0-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2007-2023 the FFmpeg developers",
+    "chromium": "/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell",
+    "browser_version": "141.0.7390.37",
+    "cpus": 4
+  },
+  "jobs": [
+    {
+      "video": "videos/v01.html",
+      "ratio": "9x16",
+      "lang": "fr",
+      "theme": "arcanum",
+      "file": "../out/v01/src/v01__9x16__fr__li__music-s7.mp4",
+      "settings": {
+        "workers": 4,
+        "frames": "png",
+        "browser": "shell",
+        "crf": 18,
+        "preset": "slow",
+        "audio": "../music-lab/out/v01-30-s7.wav",
+        "audio_chain": "atrim=0:30,afade=t=out:st=28.800:d=1.2,volume=-0.17dB,aresample=48000",
+        "audio_bitrate": "384k"
+      },
+      "meta": {
+        "frames": 900,
+        "fps": 30,
+        "duration": 30,
+        "width": 1080,
+        "height": 1920,
+        "checkpoints": [
+          {
+            "frame": 0,
+            "label": "S1 f0: T40 set, Plate I and the blueprint outline on screen, the thumbnail frame (f0)"
+          },
+          {
+            "frame": 54,
+            "label": "S1: stars and constellation set (f54)"
+          },
+          {
+            "frame": 78,
+            "label": "S1: blueprint drawn (f78)"
+          },
+          {
+            "frame": 99,
+            "label": "S1 last frame (f99)"
+          },
+          {
+            "frame": 115,
+            "label": "T40 header and blueprint in the mock-up frame (f115)"
+          },
+          {
+            "frame": 133,
+            "label": "S2: « Votre site » filled, state 1 (f133)"
+          },
+          {
+            "frame": 134,
+            "label": "S2: T41 settled (f134)"
+          },
+          {
+            "frame": 219,
+            "label": "S2: state 2 (grey bars) (f219)"
+          },
+          {
+            "frame": 239,
+            "label": "S2: mid-mirror glide (f239)"
+          },
+          {
+            "frame": 248,
+            "label": "S2: state 3, Arabic layout mirrored (f248)"
+          },
+          {
+            "frame": 319,
+            "label": "S2 last frame (f319)"
+          },
+          {
+            "frame": 315,
+            "label": "S2 -> S3 wipe, halfway (f315)"
+          },
+          {
+            "frame": 338,
+            "label": "S3: T42 settled (f338)"
+          },
+          {
+            "frame": 341,
+            "label": "S3: coin-horse inked (f341)"
+          },
+          {
+            "frame": 358,
+            "label": "S3: T09 settled (f358)"
+          },
+          {
+            "frame": 376,
+            "label": "S3: both coins turned (f376)"
+          },
+          {
+            "frame": 459,
+            "label": "S3 last frame (f459)"
+          },
+          {
+            "frame": 455,
+            "label": "S3 -> S4 wipe, halfway (f455)"
+          },
+          {
+            "frame": 469,
+            "label": "S4: founder card wiping in (f469)"
+          },
+          {
+            "frame": 480,
+            "label": "S4: ring drawn (f480)"
+          },
+          {
+            "frame": 488,
+            "label": "S4: T30 settled (f488)"
+          },
+          {
+            "frame": 483,
+            "label": "S4: monogram settled (f483)"
+          },
+          {
+            "frame": 508,
+            "label": "S4: T31 settled (f508)"
+          },
+          {
+            "frame": 516,
+            "label": "S4: bench inked (f516)"
+          },
+          {
+            "frame": 584,
+            "label": "S4: T32 settled (f584)"
+          },
+          {
+            "frame": 679,
+            "label": "S4 last frame (f679)"
+          },
+          {
+            "frame": 675,
+            "label": "S4 -> S5 wipe, halfway (f675)"
+          },
+          {
+            "frame": 329,
+            "label": "S3: T42 wiping in (f329)"
+          },
+          {
+            "frame": 689,
+            "label": "S5: wordmark wiping in (f689)"
+          },
+          {
+            "frame": 698,
+            "label": "S5: wordmark set (f698)"
+          },
+          {
+            "frame": 708,
+            "label": "S5: T50 settled (f708)"
+          },
+          {
+            "frame": 718,
+            "label": "S5: T51 settled (f718)"
+          },
+          {
+            "frame": 726,
+            "label": "S5: Plate V inked (f726)"
+          },
+          {
+            "frame": 750,
+            "label": "S5: beam swept, still (f750)"
+          },
+          {
+            "frame": 788,
+            "label": "S5: T52 settled (f788)"
+          },
+          {
+            "frame": 899,
+            "label": "S5 last frame (held) (f899)"
+          }
+        ]
+      },
+      "timing_s": {
+        "open_and_ready": 5.01,
+        "capture": 43.21,
+        "encode_tail": 0.71,
+        "verify": 9.51,
+        "total": 48.93,
+        "capture_fps": 20.8,
+        "realtime_factor": 0.613
+      },
+      "ready": {
+        "fontChecks": [
+          {
+            "font": "700 120px \"Cinzel\"",
+            "ok": true
+          },
+          {
+            "font": "700 76px \"Cinzel Decorative\"",
+            "ok": true
+          },
+          {
+            "font": "700 113px \"IBM Plex Sans Arabic\"",
+            "ok": true
+          },
+          {
+            "font": "600 56px \"IBM Plex Sans Arabic\"",
+            "ok": true
+          },
+          {
+            "font": "400 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "500 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "600 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "700 48px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "500 46px \"Geist Mono\"",
+            "ok": true
+          }
+        ],
+        "loadedFaces": [
+          "Cinzel 700",
+          "Cinzel Decorative 700",
+          "Geist 400",
+          "Geist 500",
+          "Geist 600",
+          "Geist 700",
+          "Geist Mono 500",
+          "IBM Plex Sans Arabic 600",
+          "IBM Plex Sans Arabic 700",
+          "Cinzel Fallback 700",
+          "Geist Fallback normal",
+          "Geist Fallback 600"
+        ],
+        "fetchedFonts": [
+          "cinzel-700-latin.woff2",
+          "geist-latin.woff2",
+          "cinzel-decorative-700-latin.woff2",
+          "ibm-plex-sans-arabic-700-arabic.woff2",
+          "ibm-plex-sans-arabic-700-latin.woff2",
+          "ibm-plex-sans-arabic-600-latin.woff2",
+          "ibm-plex-sans-arabic-600-arabic.woff2",
+          "geist-mono-latin.woff2"
+        ],
+        "images": [
+          {
+            "src": "/site/illus/vista-far.webp",
+            "ok": true,
+            "w": 1600,
+            "h": 679
+          },
+          {
+            "src": "/site/illus/vista-mid.webp",
+            "ok": true,
+            "w": 1600,
+            "h": 679
+          },
+          {
+            "src": "/site/illus/vista-near.webp",
+            "ok": true,
+            "w": 1500,
+            "h": 636
+          },
+          {
+            "src": "/site/illus/faq3.png",
+            "ok": true,
+            "w": 512,
+            "h": 512
+          },
+          {
+            "src": "/site/illus/px-contour.webp",
+            "ok": true,
+            "w": 1400,
+            "h": 594
+          },
+          {
+            "src": "/site/illus/coin-horse.webp",
+            "ok": true,
+            "w": 320,
+            "h": 320
+          },
+          {
+            "src": "/site/illus/coin-palm.webp",
+            "ok": true,
+            "w": 320,
+            "h": 320
+          },
+          {
+            "src": "/site/illus/bench.webp",
+            "ok": true,
+            "w": 1100,
+            "h": 614
+          },
+          {
+            "src": "/site/illus/lighthouse.webp",
+            "ok": true,
+            "w": 1100,
+            "h": 595
+          }
+        ],
+        "steps": {
+          "copy": [
+            {
+              "key": "M01",
+              "src": "F25",
+              "lang": "fr",
+              "variant": null,
+              "text": "Votre logo",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "M02",
+              "src": "F25",
+              "lang": "fr",
+              "variant": null,
+              "text": "Votre entreprise",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "M03",
+              "src": "F31",
+              "lang": "fr",
+              "variant": null,
+              "text": "FR · EN · AR",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T40",
+              "src": "F06",
+              "lang": "fr",
+              "variant": null,
+              "text": "Votre site sur mesure,",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T41",
+              "src": "F06",
+              "lang": "fr",
+              "variant": null,
+              "text": "en français, anglais ou arabe.",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T42",
+              "src": "F28",
+              "lang": "fr",
+              "variant": null,
+              "text": "Un prix avant le devis.",
+              "swash": "avant le devis.",
+              "arReviewed": null
+            },
+            {
+              "key": "T09",
+              "src": "F12",
+              "lang": "fr",
+              "variant": null,
+              "text": "Essentiel · Studio · Moteur",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T30",
+              "src": "F17",
+              "lang": "fr",
+              "variant": null,
+              "text": "Yasser Hamisse",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T31",
+              "src": "F18",
+              "lang": "fr",
+              "variant": null,
+              "text": "Designer graphique & développeur web · Fondateur",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T32",
+              "src": "F19",
+              "lang": "fr",
+              "variant": null,
+              "text": "Je reste à vos côtés après le lancement.",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T50",
+              "src": "F07",
+              "lang": "fr",
+              "variant": null,
+              "text": "Studio web & logiciel · Bordj Bou Arréridj, Algérie",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T51",
+              "src": "F29",
+              "lang": "fr",
+              "variant": null,
+              "text": "Enraciné en Numidie · bâti sur des idées",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T52",
+              "src": "F30",
+              "lang": "fr",
+              "variant": "fr_li",
+              "text": "Lien en commentaire",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "mark:wordmark",
+              "src": "F20",
+              "lang": null,
+              "text": "Numidea Labs",
+              "ref": "index.html a.logo (fact F20 cites l. 1256; l. 1265 at site 076c991); styles.css:43, :139-142, :2464"
+            },
+            {
+              "key": "mark:monogram",
+              "src": "F17",
+              "lang": null,
+              "text": "Y",
+              "ref": "index.html .fd-photo .mono (scripts-trailer.md §3.4 cites l. 1050; l. 1053 at site 076c991); facts-bank.md §1.2"
+            }
+          ],
+          "siteCss": {
+            "far": {
+              "points": 163,
+              "fill": "color-mix(in srgb,var(--navy) 62%,var(--void))",
+              "ink": "var(--muted)",
+              "opacity": "calc(.32 * var(--ink-k))"
+            },
+            "mid": {
+              "points": 163,
+              "fill": "color-mix(in srgb,var(--navy) 30%,var(--void))",
+              "ink": "var(--teal-text)",
+              "opacity": "calc(.42 * var(--ink-k))"
+            },
+            "near": {
+              "points": 163,
+              "fill": "var(--void)",
+              "ink": "var(--body-strong)",
+              "opacity": "calc(.26 * var(--ink-k))"
+            },
+            "beam": {
+              "left": "79.6%",
+              "top": "13%",
+              "width": "150%",
+              "height": "56%",
+              "translate": "0px -50%",
+              "transform-origin": "0px 50%",
+              "background": "linear-gradient(90deg,color-mix(in srgb,var(--crimson-text) 30%,transparent),transparent 70%)",
+              "clip-path": "polygon(0px 48%, 100% 0px, 100% 100%, 0px 52%)",
+              "opacity": "0.5"
+            }
+          },
+          "fit": [
+            {
+              "id": "T40",
+              "state": "hook",
+              "role": "hook",
+              "lang": "fr",
+              "box": "800x340",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Votre site sur mesure,",
+              "size": 120,
+              "lh": 1.1,
+              "lines": 2,
+              "h": 264,
+              "range": [
+                84,
+                120
+              ],
+              "floor": 84,
+              "status": "ok"
+            },
+            {
+              "id": "T40",
+              "state": "header",
+              "role": "header",
+              "lang": "fr",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": 72,
+              "text": "Votre site sur mesure,",
+              "size": 65,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 72,
+              "range": [
+                56,
+                72
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T41",
+              "state": null,
+              "role": "header",
+              "lang": "fr",
+              "box": "800x260",
+              "maxLines": 3,
+              "cap": null,
+              "text": "en français, anglais ou arabe.",
+              "size": 78,
+              "lh": 1.1,
+              "lines": 3,
+              "h": 257,
+              "range": [
+                56,
+                96
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "M01",
+              "state": "mock",
+              "role": "mockLabel",
+              "lang": "fr",
+              "box": "240x48",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Votre logo",
+              "size": 32,
+              "lh": 1.2,
+              "lines": 1,
+              "h": 38,
+              "range": [
+                26,
+                32
+              ],
+              "floor": 22,
+              "status": "ok"
+            },
+            {
+              "id": "M02",
+              "state": "mock",
+              "role": "mockHead",
+              "lang": "fr",
+              "box": "410x92",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Votre entreprise",
+              "size": 51,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 56,
+              "range": [
+                40,
+                56
+              ],
+              "floor": 34,
+              "status": "ok"
+            },
+            {
+              "id": "M03",
+              "state": "mock",
+              "role": "mockLabel",
+              "lang": "fr",
+              "box": "320x48",
+              "maxLines": 1,
+              "cap": null,
+              "text": "FR · EN · AR",
+              "size": 32,
+              "lh": 1.2,
+              "lines": 1,
+              "h": 38,
+              "range": [
+                26,
+                32
+              ],
+              "floor": 22,
+              "status": "ok"
+            },
+            {
+              "id": "T42",
+              "state": null,
+              "role": "header",
+              "lang": "fr",
+              "box": "800x300",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Un prix avant le devis.",
+              "size": 96,
+              "lh": 1.1,
+              "lines": 2,
+              "h": 211,
+              "range": [
+                56,
+                96
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T09",
+              "state": null,
+              "role": "label",
+              "lang": "fr",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Essentiel · Studio · Moteur",
+              "size": 48,
+              "lh": 1.25,
+              "lines": 1,
+              "h": 72,
+              "range": [
+                46,
+                56
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T30",
+              "state": null,
+              "role": "header",
+              "lang": "fr",
+              "box": "800x105",
+              "maxLines": 1,
+              "cap": 80,
+              "text": "Yasser Hamisse",
+              "size": 80,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 88,
+              "range": [
+                56,
+                80
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T31",
+              "state": null,
+              "role": "body",
+              "lang": "fr",
+              "box": "800x150",
+              "maxLines": 2,
+              "cap": 56,
+              "text": "Designer graphique & développeur web · Fondateur",
+              "size": 56,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 140,
+              "range": [
+                52,
+                56
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T32",
+              "state": null,
+              "role": "body",
+              "lang": "fr",
+              "box": "800x180",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Je reste à vos côtés après le lancement.",
+              "size": 72,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 180,
+              "range": [
+                52,
+                72
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "wordmark",
+              "state": null,
+              "role": "wordmark",
+              "lang": "zxx",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Numidea Labs",
+              "size": 88,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 102,
+              "range": [
+                88,
+                88
+              ],
+              "floor": 80,
+              "status": "ok"
+            },
+            {
+              "id": "T50",
+              "state": null,
+              "role": "label",
+              "lang": "fr",
+              "box": "800x170",
+              "maxLines": 2,
+              "cap": 52,
+              "text": "Studio web & logiciel · Bordj Bou Arréridj, Algérie",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 130,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T51",
+              "state": null,
+              "role": "label",
+              "lang": "fr",
+              "box": "800x130",
+              "maxLines": 2,
+              "cap": 52,
+              "text": "Enraciné en Numidie · bâti sur des idées",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 130,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T52",
+              "state": null,
+              "role": "label",
+              "lang": "fr",
+              "box": "800x90",
+              "maxLines": 1,
+              "cap": 52,
+              "text": "Lien en commentaire",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 1,
+              "h": 65,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            }
+          ],
+          "layout": {
+            "cut": {
+              "name": "full",
+              "frames": [
+                0,
+                900
+              ]
+            },
+            "blueprint": [
+              {
+                "part": "bp-frame",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-chrome",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-dots",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-address",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-logo",
+                "from": 0.1,
+                "to": 0.429
+              },
+              {
+                "part": "bp-nav",
+                "from": 0.229,
+                "to": 0.525
+              },
+              {
+                "part": "bp-h1",
+                "from": 0.325,
+                "to": 0.665
+              },
+              {
+                "part": "bp-h2",
+                "from": 0.465,
+                "to": 0.786
+              },
+              {
+                "part": "bp-p1",
+                "from": 0.586,
+                "to": 0.921
+              },
+              {
+                "part": "bp-p2",
+                "from": 0.721,
+                "to": 1.04
+              },
+              {
+                "part": "bp-button",
+                "from": 0.84,
+                "to": 1.182
+              },
+              {
+                "part": "bp-image",
+                "from": 0.982,
+                "to": 1.43
+              },
+              {
+                "part": "bp-hatch",
+                "from": 1.23,
+                "to": 2.028
+              },
+              {
+                "part": "bp-card1",
+                "from": 1.828,
+                "to": 2.219
+              },
+              {
+                "part": "bp-card2",
+                "from": 2.019,
+                "to": 2.409
+              },
+              {
+                "part": "bp-card3",
+                "from": 2.209,
+                "to": 2.6
+              }
+            ],
+            "t40": {
+              "a": {
+                "size": 120,
+                "top": 418
+              },
+              "b": {
+                "size": 65,
+                "top": 309
+              },
+              "words": 4
+            },
+            "mock": {
+              "scale": 1,
+              "order": [
+                "fr",
+                "en",
+                "ar"
+              ],
+              "slots": [
+                {
+                  "copy": "M01",
+                  "size": 32,
+                  "x": 40,
+                  "w": 169,
+                  "bars": [
+                    "40,76,166x16"
+                  ]
+                },
+                {
+                  "copy": "M02",
+                  "size": 51,
+                  "x": 40,
+                  "w": 406,
+                  "bars": [
+                    "40,159,404x26"
+                  ]
+                },
+                {
+                  "copy": "M03",
+                  "size": 32,
+                  "x": 512,
+                  "w": 248,
+                  "bars": []
+                }
+              ],
+              "mirror": [
+                "image 470->40",
+                "card1 40->40",
+                "card2 285->285",
+                "card3 530->530",
+                "button 40->590",
+                "p1 40->400",
+                "p2 40->470",
+                "c40a 62->98",
+                "c40b 62->148",
+                "c285a 307->343",
+                "c285b 307->393",
+                "c530a 552->588",
+                "c530b 552->638"
+              ],
+              "yields": [
+                "logo slot under the tab row",
+                "image under the text column"
+              ]
+            },
+            "coins": {
+              "coin_horse": {
+                "box": "216,860,328,300",
+                "inAt": 10.667,
+                "turn": [
+                  11,
+                  12.2
+                ],
+                "depth": "near"
+              },
+              "coin_palm": {
+                "box": "544,860,312,300",
+                "inAt": 11,
+                "turn": [
+                  11.333,
+                  12.533
+                ],
+                "depth": "far"
+              }
+            },
+            "plateScale": {
+              "far": 0.713,
+              "mid": 0.609,
+              "near": 0.76,
+              "contour": 1,
+              "coin_horse": 0.994,
+              "coin_palm": 0.994,
+              "bench": 0.713,
+              "light": 0.771
+            },
+            "founder": {
+              "box": "140,300,800,200",
+              "roundel": 200,
+              "mark": {
+                "text": "Y",
+                "src": "F17",
+                "ref": "index.html .fd-photo .mono (scripts-trailer.md §3.4 cites l. 1050; l. 1053 at site 076c991); facts-bank.md §1.2"
+              }
+            },
+            "wordmark": {
+              "box": "140,340,800,110",
+              "size": 88,
+              "mark": {
+                "parts": [
+                  "Num",
+                  "idea",
+                  " Labs"
+                ],
+                "src": "F20",
+                "ref": "index.html a.logo (fact F20 cites l. 1256; l. 1265 at site 076c991); styles.css:43, :139-142, :2464"
+              }
+            },
+            "pointer": "li",
+            "light": {
+              "fl": 14,
+              "fr": 0,
+              "fb": 14
+            },
+            "crop45": {
+              "window": [
+                90,
+                1440
+              ],
+              "9x16": {
+                "faq3": null,
+                "light": [
+                  280,
+                  1000,
+                  800,
+                  433
+                ],
+                "bench": [
+                  170,
+                  1012,
+                  740,
+                  413
+                ]
+              }
+            },
+            "nobreak": [
+              {
+                "key": "T40",
+                "phrase": "sur mesure"
+              }
+            ],
+            "separatorsHiddenAtBreak": {
+              "T50": 1,
+              "T51": 1
+            }
+          }
+        }
+      },
+      "warm": [
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 4,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 4,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 4,
+          "stable": true
+        }
+      ],
+      "safe_checked": [
+        {
+          "frame": 0,
+          "label": "S1 f0: T40 set, Plate I and the blueprint outline on screen, the thumbnail frame (f0)",
+          "violations": 0
+        },
+        {
+          "frame": 54,
+          "label": "S1: stars and constellation set (f54)",
+          "violations": 0
+        },
+        {
+          "frame": 78,
+          "label": "S1: blueprint drawn (f78)",
+          "violations": 0
+        },
+        {
+          "frame": 99,
+          "label": "S1 last frame (f99)",
+          "violations": 0
+        },
+        {
+          "frame": 115,
+          "label": "T40 header and blueprint in the mock-up frame (f115)",
+          "violations": 0
+        },
+        {
+          "frame": 133,
+          "label": "S2: « Votre site » filled, state 1 (f133)",
+          "violations": 0
+        },
+        {
+          "frame": 134,
+          "label": "S2: T41 settled (f134)",
+          "violations": 0
+        },
+        {
+          "frame": 219,
+          "label": "S2: state 2 (grey bars) (f219)",
+          "violations": 0
+        },
+        {
+          "frame": 239,
+          "label": "S2: mid-mirror glide (f239)",
+          "violations": 0
+        },
+        {
+          "frame": 248,
+          "label": "S2: state 3, Arabic layout mirrored (f248)",
+          "violations": 0
+        },
+        {
+          "frame": 319,
+          "label": "S2 last frame (f319)",
+          "violations": 0
+        },
+        {
+          "frame": 315,
+          "label": "S2 -> S3 wipe, halfway (f315)",
+          "violations": 0
+        },
+        {
+          "frame": 338,
+          "label": "S3: T42 settled (f338)",
+          "violations": 0
+        },
+        {
+          "frame": 341,
+          "label": "S3: coin-horse inked (f341)",
+          "violations": 0
+        },
+        {
+          "frame": 358,
+          "label": "S3: T09 settled (f358)",
+          "violations": 0
+        },
+        {
+          "frame": 376,
+          "label": "S3: both coins turned (f376)",
+          "violations": 0
+        },
+        {
+          "frame": 459,
+          "label": "S3 last frame (f459)",
+          "violations": 0
+        },
+        {
+          "frame": 455,
+          "label": "S3 -> S4 wipe, halfway (f455)",
+          "violations": 0
+        },
+        {
+          "frame": 469,
+          "label": "S4: founder card wiping in (f469)",
+          "violations": 0
+        },
+        {
+          "frame": 480,
+          "label": "S4: ring drawn (f480)",
+          "violations": 0
+        },
+        {
+          "frame": 488,
+          "label": "S4: T30 settled (f488)",
+          "violations": 0
+        },
+        {
+          "frame": 483,
+          "label": "S4: monogram settled (f483)",
+          "violations": 0
+        },
+        {
+          "frame": 508,
+          "label": "S4: T31 settled (f508)",
+          "violations": 0
+        },
+        {
+          "frame": 516,
+          "label": "S4: bench inked (f516)",
+          "violations": 0
+        },
+        {
+          "frame": 584,
+          "label": "S4: T32 settled (f584)",
+          "violations": 0
+        },
+        {
+          "frame": 679,
+          "label": "S4 last frame (f679)",
+          "violations": 0
+        },
+        {
+          "frame": 675,
+          "label": "S4 -> S5 wipe, halfway (f675)",
+          "violations": 0
+        },
+        {
+          "frame": 329,
+          "label": "S3: T42 wiping in (f329)",
+          "violations": 0
+        },
+        {
+          "frame": 689,
+          "label": "S5: wordmark wiping in (f689)",
+          "violations": 0
+        },
+        {
+          "frame": 698,
+          "label": "S5: wordmark set (f698)",
+          "violations": 0
+        },
+        {
+          "frame": 708,
+          "label": "S5: T50 settled (f708)",
+          "violations": 0
+        },
+        {
+          "frame": 718,
+          "label": "S5: T51 settled (f718)",
+          "violations": 0
+        },
+        {
+          "frame": 726,
+          "label": "S5: Plate V inked (f726)",
+          "violations": 0
+        },
+        {
+          "frame": 750,
+          "label": "S5: beam swept, still (f750)",
+          "violations": 0
+        },
+        {
+          "frame": 788,
+          "label": "S5: T52 settled (f788)",
+          "violations": 0
+        },
+        {
+          "frame": 899,
+          "label": "S5 last frame (held) (f899)",
+          "violations": 0
+        },
+        {
+          "frame": 899,
+          "label": "last frame",
+          "violations": 0
+        }
+      ],
+      "determinism": {
+        "checked": 7,
+        "identical": 7,
+        "results": [
+          {
+            "frame": 450,
+            "same": true
+          },
+          {
+            "frame": 0,
+            "same": true
+          },
+          {
+            "frame": 899,
+            "same": true
+          },
+          {
+            "frame": 7,
+            "same": true
+          },
+          {
+            "frame": 450,
+            "same": true
+          },
+          {
+            "frame": 1,
+            "same": true
+          },
+          {
+            "frame": 898,
+            "same": true
+          }
+        ],
+        "probe_warm": {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        }
+      },
+      "page_errors": [],
+      "verify": {
+        "file": "../out/v01/src/v01__9x16__fr__li__music-s7.mp4",
+        "ok": true,
+        "checks": [
+          {
+            "name": "video codec h264",
+            "ok": true,
+            "value": "h264"
+          },
+          {
+            "name": "profile High",
+            "ok": true,
+            "value": "High"
+          },
+          {
+            "name": "pix_fmt yuv420p",
+            "ok": true,
+            "value": "yuv420p"
+          },
+          {
+            "name": "size",
+            "ok": true,
+            "value": "1080x1920"
+          },
+          {
+            "name": "fps",
+            "ok": true,
+            "value": "30/1"
+          },
+          {
+            "name": "frame count",
+            "ok": true,
+            "value": "900"
+          },
+          {
+            "name": "colour tags bt709",
+            "ok": true,
+            "value": "bt709/bt709/bt709"
+          },
+          {
+            "name": "audio aac",
+            "ok": true,
+            "value": "aac"
+          },
+          {
+            "name": "audio 48 kHz stereo",
+            "ok": true,
+            "value": "48000 Hz, 2 ch"
+          },
+          {
+            "name": "faststart (moov before mdat)",
+            "ok": true,
+            "value": "ftyp > moov > free > mdat"
+          },
+          {
+            "name": "container duration",
+            "ok": true,
+            "value": "30.000000"
+          },
+          {
+            "name": "MP4 frame 500 vs browser frame 500: colour shift < 1.5/255 per channel",
+            "ok": true,
+            "value": "mean shift R,G,B = 0.02, 0.04, -0.82"
+          },
+          {
+            "name": "MP4 frame 500 vs browser frame 500: PSNR >= 32 dB",
+            "ok": true,
+            "value": "42.40 dB"
+          },
+          {
+            "name": "MP4 frame 500 is closest to browser frame 500 (not 499 / 501)",
+            "ok": true,
+            "value": "42.40 dB vs f499 41.16 dB, f501 40.90 dB"
+          },
+          {
+            "name": "text blocks and key visuals inside the safe area and their boxes (37 checkpoint frames)",
+            "ok": true,
+            "value": "all inside at f0, f54, f78, f99, f115, f133, f134, f219, f239, f248, f319, f315, f338, f341, f358, f376, f459, f455, f469, f480, f488, f483, f508, f516, f584, f679, f675, f329, f689, f698, f708, f718, f726, f750, f788, f899, f899"
+          },
+          {
+            "name": "no page errors",
+            "ok": true,
+            "value": "none"
+          },
+          {
+            "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+            "ok": true,
+            "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+          },
+          {
+            "name": "true peak <= -1 dBTP (encoded file)",
+            "ok": true,
+            "value": "-5.4 dBTP"
+          },
+          {
+            "name": "loudness range <= 4 LU",
+            "ok": true,
+            "value": "1.2 LU"
+          },
+          {
+            "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+            "ok": true,
+            "value": "-17.9 LUFS (-3.9 LU)"
+          }
+        ],
+        "bytes": 7019690,
+        "bitrate_kbps": 1872,
+        "video": {
+          "codec": "h264",
+          "profile": "High",
+          "level": 41,
+          "pix_fmt": "yuv420p"
+        }
+      },
+      "loudness": {
+        "file": "../out/v01/src/v01__9x16__fr__li__music-s7.mp4",
+        "integrated_lufs": -14,
+        "integrated_lufs_bs1770": -14,
+        "loudness_range_lu": 1.2,
+        "true_peak_dbtp": -5.4,
+        "phone_lufs": -17.9,
+        "phone_loss_lu": 3.9,
+        "checks": [
+          {
+            "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+            "ok": true,
+            "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+          },
+          {
+            "name": "true peak <= -1 dBTP (encoded file)",
+            "ok": true,
+            "value": "-5.4 dBTP"
+          },
+          {
+            "name": "loudness range <= 4 LU",
+            "ok": true,
+            "value": "1.2 LU"
+          },
+          {
+            "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+            "ok": true,
+            "value": "-17.9 LUFS (-3.9 LU)"
+          }
+        ],
+        "ok": true
+      },
+      "contact": null
+    },
+    {
+      "video": "videos/v01.html",
+      "ratio": "9x16",
+      "lang": "en",
+      "theme": "arcanum",
+      "file": "../out/v01/src/v01__9x16__en__li__music-s7.mp4",
+      "settings": {
+        "workers": 4,
+        "frames": "png",
+        "browser": "shell",
+        "crf": 18,
+        "preset": "slow",
+        "audio": "../music-lab/out/v01-30-s7.wav",
+        "audio_chain": "atrim=0:30,afade=t=out:st=28.800:d=1.2,volume=-0.17dB,aresample=48000",
+        "audio_bitrate": "384k"
+      },
+      "meta": {
+        "frames": 900,
+        "fps": 30,
+        "duration": 30,
+        "width": 1080,
+        "height": 1920,
+        "checkpoints": [
+          {
+            "frame": 0,
+            "label": "S1 f0: T40 set, Plate I and the blueprint outline on screen, the thumbnail frame (f0)"
+          },
+          {
+            "frame": 54,
+            "label": "S1: stars and constellation set (f54)"
+          },
+          {
+            "frame": 78,
+            "label": "S1: blueprint drawn (f78)"
+          },
+          {
+            "frame": 99,
+            "label": "S1 last frame (f99)"
+          },
+          {
+            "frame": 115,
+            "label": "T40 header and blueprint in the mock-up frame (f115)"
+          },
+          {
+            "frame": 133,
+            "label": "S2: « Votre site » filled, state 1 (f133)"
+          },
+          {
+            "frame": 134,
+            "label": "S2: T41 settled (f134)"
+          },
+          {
+            "frame": 219,
+            "label": "S2: state 2 (grey bars) (f219)"
+          },
+          {
+            "frame": 239,
+            "label": "S2: mid-mirror glide (f239)"
+          },
+          {
+            "frame": 248,
+            "label": "S2: state 3, Arabic layout mirrored (f248)"
+          },
+          {
+            "frame": 319,
+            "label": "S2 last frame (f319)"
+          },
+          {
+            "frame": 315,
+            "label": "S2 -> S3 wipe, halfway (f315)"
+          },
+          {
+            "frame": 338,
+            "label": "S3: T42 settled (f338)"
+          },
+          {
+            "frame": 341,
+            "label": "S3: coin-horse inked (f341)"
+          },
+          {
+            "frame": 358,
+            "label": "S3: T09 settled (f358)"
+          },
+          {
+            "frame": 376,
+            "label": "S3: both coins turned (f376)"
+          },
+          {
+            "frame": 459,
+            "label": "S3 last frame (f459)"
+          },
+          {
+            "frame": 455,
+            "label": "S3 -> S4 wipe, halfway (f455)"
+          },
+          {
+            "frame": 469,
+            "label": "S4: founder card wiping in (f469)"
+          },
+          {
+            "frame": 480,
+            "label": "S4: ring drawn (f480)"
+          },
+          {
+            "frame": 488,
+            "label": "S4: T30 settled (f488)"
+          },
+          {
+            "frame": 483,
+            "label": "S4: monogram settled (f483)"
+          },
+          {
+            "frame": 508,
+            "label": "S4: T31 settled (f508)"
+          },
+          {
+            "frame": 516,
+            "label": "S4: bench inked (f516)"
+          },
+          {
+            "frame": 584,
+            "label": "S4: T32 settled (f584)"
+          },
+          {
+            "frame": 679,
+            "label": "S4 last frame (f679)"
+          },
+          {
+            "frame": 675,
+            "label": "S4 -> S5 wipe, halfway (f675)"
+          },
+          {
+            "frame": 329,
+            "label": "S3: T42 wiping in (f329)"
+          },
+          {
+            "frame": 689,
+            "label": "S5: wordmark wiping in (f689)"
+          },
+          {
+            "frame": 698,
+            "label": "S5: wordmark set (f698)"
+          },
+          {
+            "frame": 708,
+            "label": "S5: T50 settled (f708)"
+          },
+          {
+            "frame": 718,
+            "label": "S5: T51 settled (f718)"
+          },
+          {
+            "frame": 726,
+            "label": "S5: Plate V inked (f726)"
+          },
+          {
+            "frame": 750,
+            "label": "S5: beam swept, still (f750)"
+          },
+          {
+            "frame": 788,
+            "label": "S5: T52 settled (f788)"
+          },
+          {
+            "frame": 899,
+            "label": "S5 last frame (held) (f899)"
+          }
+        ]
+      },
+      "timing_s": {
+        "open_and_ready": 3.65,
+        "capture": 45.47,
+        "encode_tail": 0.72,
+        "verify": 9.75,
+        "total": 49.84,
+        "capture_fps": 19.8,
+        "realtime_factor": 0.602
+      },
+      "ready": {
+        "fontChecks": [
+          {
+            "font": "700 120px \"Cinzel\"",
+            "ok": true
+          },
+          {
+            "font": "700 76px \"Cinzel Decorative\"",
+            "ok": true
+          },
+          {
+            "font": "700 113px \"IBM Plex Sans Arabic\"",
+            "ok": true
+          },
+          {
+            "font": "600 56px \"IBM Plex Sans Arabic\"",
+            "ok": true
+          },
+          {
+            "font": "400 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "500 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "600 52px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "700 48px \"Geist\"",
+            "ok": true
+          },
+          {
+            "font": "500 46px \"Geist Mono\"",
+            "ok": true
+          }
+        ],
+        "loadedFaces": [
+          "Cinzel 700",
+          "Cinzel Decorative 700",
+          "Geist 400",
+          "Geist 500",
+          "Geist 600",
+          "Geist 700",
+          "Geist Mono 500",
+          "IBM Plex Sans Arabic 600",
+          "IBM Plex Sans Arabic 700",
+          "Cinzel Fallback 700",
+          "Geist Fallback normal",
+          "Geist Fallback 600"
+        ],
+        "fetchedFonts": [
+          "cinzel-700-latin.woff2",
+          "geist-latin.woff2",
+          "cinzel-decorative-700-latin.woff2",
+          "ibm-plex-sans-arabic-700-arabic.woff2",
+          "ibm-plex-sans-arabic-700-latin.woff2",
+          "ibm-plex-sans-arabic-600-arabic.woff2",
+          "ibm-plex-sans-arabic-600-latin.woff2",
+          "geist-mono-latin.woff2"
+        ],
+        "images": [
+          {
+            "src": "/site/illus/vista-far.webp",
+            "ok": true,
+            "w": 1600,
+            "h": 679
+          },
+          {
+            "src": "/site/illus/vista-mid.webp",
+            "ok": true,
+            "w": 1600,
+            "h": 679
+          },
+          {
+            "src": "/site/illus/vista-near.webp",
+            "ok": true,
+            "w": 1500,
+            "h": 636
+          },
+          {
+            "src": "/site/illus/faq3.png",
+            "ok": true,
+            "w": 512,
+            "h": 512
+          },
+          {
+            "src": "/site/illus/px-contour.webp",
+            "ok": true,
+            "w": 1400,
+            "h": 594
+          },
+          {
+            "src": "/site/illus/coin-horse.webp",
+            "ok": true,
+            "w": 320,
+            "h": 320
+          },
+          {
+            "src": "/site/illus/coin-palm.webp",
+            "ok": true,
+            "w": 320,
+            "h": 320
+          },
+          {
+            "src": "/site/illus/bench.webp",
+            "ok": true,
+            "w": 1100,
+            "h": 614
+          },
+          {
+            "src": "/site/illus/lighthouse.webp",
+            "ok": true,
+            "w": 1100,
+            "h": 595
+          }
+        ],
+        "steps": {
+          "copy": [
+            {
+              "key": "M01",
+              "src": "F25",
+              "lang": "en",
+              "variant": null,
+              "text": "Your logo",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "M02",
+              "src": "F25",
+              "lang": "en",
+              "variant": null,
+              "text": "Your business",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "M03",
+              "src": "F31",
+              "lang": "en",
+              "variant": null,
+              "text": "FR · EN · AR",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T40",
+              "src": "F06",
+              "lang": "en",
+              "variant": null,
+              "text": "Custom websites,",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T41",
+              "src": "F06",
+              "lang": "en",
+              "variant": null,
+              "text": "in English, French and Arabic.",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T42",
+              "src": "F28",
+              "lang": "en",
+              "variant": null,
+              "text": "A price before the quote.",
+              "swash": "before the quote.",
+              "arReviewed": null
+            },
+            {
+              "key": "T09",
+              "src": "F12",
+              "lang": "en",
+              "variant": null,
+              "text": "Essential · Studio · Engine",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T30",
+              "src": "F17",
+              "lang": "en",
+              "variant": null,
+              "text": "Yasser Hamisse",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T31",
+              "src": "F18",
+              "lang": "en",
+              "variant": null,
+              "text": "Graphic designer & web developer · Founder",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T32",
+              "src": "F19",
+              "lang": "en",
+              "variant": null,
+              "text": "I stay once it's live.",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T50",
+              "src": "F07",
+              "lang": "en",
+              "variant": null,
+              "text": "Web & software studio · Bordj Bou Arréridj, Algeria",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T51",
+              "src": "F29",
+              "lang": "en",
+              "variant": null,
+              "text": "Rooted in Numidia · built on ideas",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "T52",
+              "src": "F30",
+              "lang": "en",
+              "variant": "en_li",
+              "text": "Link in comments",
+              "swash": null,
+              "arReviewed": null
+            },
+            {
+              "key": "mark:wordmark",
+              "src": "F20",
+              "lang": null,
+              "text": "Numidea Labs",
+              "ref": "index.html a.logo (fact F20 cites l. 1256; l. 1265 at site 076c991); styles.css:43, :139-142, :2464"
+            },
+            {
+              "key": "mark:monogram",
+              "src": "F17",
+              "lang": null,
+              "text": "Y",
+              "ref": "index.html .fd-photo .mono (scripts-trailer.md §3.4 cites l. 1050; l. 1053 at site 076c991); facts-bank.md §1.2"
+            }
+          ],
+          "siteCss": {
+            "far": {
+              "points": 163,
+              "fill": "color-mix(in srgb,var(--navy) 62%,var(--void))",
+              "ink": "var(--muted)",
+              "opacity": "calc(.32 * var(--ink-k))"
+            },
+            "mid": {
+              "points": 163,
+              "fill": "color-mix(in srgb,var(--navy) 30%,var(--void))",
+              "ink": "var(--teal-text)",
+              "opacity": "calc(.42 * var(--ink-k))"
+            },
+            "near": {
+              "points": 163,
+              "fill": "var(--void)",
+              "ink": "var(--body-strong)",
+              "opacity": "calc(.26 * var(--ink-k))"
+            },
+            "beam": {
+              "left": "79.6%",
+              "top": "13%",
+              "width": "150%",
+              "height": "56%",
+              "translate": "0px -50%",
+              "transform-origin": "0px 50%",
+              "background": "linear-gradient(90deg,color-mix(in srgb,var(--crimson-text) 30%,transparent),transparent 70%)",
+              "clip-path": "polygon(0px 48%, 100% 0px, 100% 100%, 0px 52%)",
+              "opacity": "0.5"
+            }
+          },
+          "fit": [
+            {
+              "id": "T40",
+              "state": "hook",
+              "role": "hook",
+              "lang": "en",
+              "box": "800x340",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Custom websites,",
+              "size": 120,
+              "lh": 1.1,
+              "lines": 2,
+              "h": 264,
+              "range": [
+                84,
+                120
+              ],
+              "floor": 84,
+              "status": "ok"
+            },
+            {
+              "id": "T40",
+              "state": "header",
+              "role": "header",
+              "lang": "en",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": 72,
+              "text": "Custom websites,",
+              "size": 72,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 79,
+              "range": [
+                56,
+                72
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T41",
+              "state": null,
+              "role": "header",
+              "lang": "en",
+              "box": "800x260",
+              "maxLines": 3,
+              "cap": null,
+              "text": "in English, French and Arabic.",
+              "size": 78,
+              "lh": 1.1,
+              "lines": 3,
+              "h": 257,
+              "range": [
+                56,
+                96
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "M01",
+              "state": "mock",
+              "role": "mockLabel",
+              "lang": "en",
+              "box": "240x48",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Your logo",
+              "size": 32,
+              "lh": 1.2,
+              "lines": 1,
+              "h": 38,
+              "range": [
+                26,
+                32
+              ],
+              "floor": 22,
+              "status": "ok"
+            },
+            {
+              "id": "M02",
+              "state": "mock",
+              "role": "mockHead",
+              "lang": "en",
+              "box": "410x92",
+              "maxLines": 2,
+              "cap": null,
+              "text": "Your business",
+              "size": 56,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 62,
+              "range": [
+                40,
+                56
+              ],
+              "floor": 34,
+              "status": "ok"
+            },
+            {
+              "id": "M03",
+              "state": "mock",
+              "role": "mockLabel",
+              "lang": "en",
+              "box": "320x48",
+              "maxLines": 1,
+              "cap": null,
+              "text": "FR · EN · AR",
+              "size": 32,
+              "lh": 1.2,
+              "lines": 1,
+              "h": 38,
+              "range": [
+                26,
+                32
+              ],
+              "floor": 22,
+              "status": "ok"
+            },
+            {
+              "id": "T42",
+              "state": null,
+              "role": "header",
+              "lang": "en",
+              "box": "800x300",
+              "maxLines": 2,
+              "cap": null,
+              "text": "A price before the quote.",
+              "size": 96,
+              "lh": 1.1,
+              "lines": 2,
+              "h": 211,
+              "range": [
+                56,
+                96
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T09",
+              "state": null,
+              "role": "label",
+              "lang": "en",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Essential · Studio · Engine",
+              "size": 48,
+              "lh": 1.25,
+              "lines": 1,
+              "h": 72,
+              "range": [
+                46,
+                56
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T30",
+              "state": null,
+              "role": "header",
+              "lang": "en",
+              "box": "800x105",
+              "maxLines": 1,
+              "cap": 80,
+              "text": "Yasser Hamisse",
+              "size": 80,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 88,
+              "range": [
+                56,
+                80
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T31",
+              "state": null,
+              "role": "body",
+              "lang": "en",
+              "box": "800x150",
+              "maxLines": 2,
+              "cap": 56,
+              "text": "Graphic designer & web developer · Founder",
+              "size": 56,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 140,
+              "range": [
+                52,
+                56
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "T32",
+              "state": null,
+              "role": "body",
+              "lang": "en",
+              "box": "800x180",
+              "maxLines": 2,
+              "cap": null,
+              "text": "I stay once it's live.",
+              "size": 72,
+              "lh": 1.25,
+              "lines": 1,
+              "h": 90,
+              "range": [
+                52,
+                72
+              ],
+              "floor": 52,
+              "status": "ok"
+            },
+            {
+              "id": "wordmark",
+              "state": null,
+              "role": "wordmark",
+              "lang": "zxx",
+              "box": "800x110",
+              "maxLines": 1,
+              "cap": null,
+              "text": "Numidea Labs",
+              "size": 88,
+              "lh": 1.1,
+              "lines": 1,
+              "h": 102,
+              "range": [
+                88,
+                88
+              ],
+              "floor": 80,
+              "status": "ok"
+            },
+            {
+              "id": "T50",
+              "state": null,
+              "role": "label",
+              "lang": "en",
+              "box": "800x170",
+              "maxLines": 2,
+              "cap": 52,
+              "text": "Web & software studio · Bordj Bou Arréridj, Algeria",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 130,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T51",
+              "state": null,
+              "role": "label",
+              "lang": "en",
+              "box": "800x130",
+              "maxLines": 2,
+              "cap": 52,
+              "text": "Rooted in Numidia · built on ideas",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 2,
+              "h": 130,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            },
+            {
+              "id": "T52",
+              "state": null,
+              "role": "label",
+              "lang": "en",
+              "box": "800x90",
+              "maxLines": 1,
+              "cap": 52,
+              "text": "Link in comments",
+              "size": 52,
+              "lh": 1.25,
+              "lines": 1,
+              "h": 65,
+              "range": [
+                46,
+                52
+              ],
+              "floor": 44,
+              "status": "ok"
+            }
+          ],
+          "layout": {
+            "cut": {
+              "name": "full",
+              "frames": [
+                0,
+                900
+              ]
+            },
+            "blueprint": [
+              {
+                "part": "bp-frame",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-chrome",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-dots",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-address",
+                "preset": "drawn at f0"
+              },
+              {
+                "part": "bp-logo",
+                "from": 0.1,
+                "to": 0.429
+              },
+              {
+                "part": "bp-nav",
+                "from": 0.229,
+                "to": 0.525
+              },
+              {
+                "part": "bp-h1",
+                "from": 0.325,
+                "to": 0.665
+              },
+              {
+                "part": "bp-h2",
+                "from": 0.465,
+                "to": 0.786
+              },
+              {
+                "part": "bp-p1",
+                "from": 0.586,
+                "to": 0.921
+              },
+              {
+                "part": "bp-p2",
+                "from": 0.721,
+                "to": 1.04
+              },
+              {
+                "part": "bp-button",
+                "from": 0.84,
+                "to": 1.182
+              },
+              {
+                "part": "bp-image",
+                "from": 0.982,
+                "to": 1.43
+              },
+              {
+                "part": "bp-hatch",
+                "from": 1.23,
+                "to": 2.028
+              },
+              {
+                "part": "bp-card1",
+                "from": 1.828,
+                "to": 2.219
+              },
+              {
+                "part": "bp-card2",
+                "from": 2.019,
+                "to": 2.409
+              },
+              {
+                "part": "bp-card3",
+                "from": 2.209,
+                "to": 2.6
+              }
+            ],
+            "t40": {
+              "a": {
+                "size": 120,
+                "top": 418
+              },
+              "b": {
+                "size": 72,
+                "top": 306
+              },
+              "words": 2
+            },
+            "mock": {
+              "scale": 1,
+              "order": [
+                "en",
+                "fr",
+                "ar"
+              ],
+              "slots": [
+                {
+                  "copy": "M01",
+                  "size": 32,
+                  "x": 40,
+                  "w": 152,
+                  "bars": [
+                    "40,76,150x16"
+                  ]
+                },
+                {
+                  "copy": "M02",
+                  "size": 56,
+                  "x": 40,
+                  "w": 381,
+                  "bars": [
+                    "40,158,378x28"
+                  ]
+                },
+                {
+                  "copy": "M03",
+                  "size": 32,
+                  "x": 512,
+                  "w": 248,
+                  "bars": []
+                }
+              ],
+              "mirror": [
+                "image 470->40",
+                "card1 40->40",
+                "card2 285->285",
+                "card3 530->530",
+                "button 40->590",
+                "p1 40->400",
+                "p2 40->470",
+                "c40a 62->98",
+                "c40b 62->148",
+                "c285a 307->343",
+                "c285b 307->393",
+                "c530a 552->588",
+                "c530b 552->638"
+              ],
+              "yields": [
+                "logo slot under the tab row",
+                "image under the text column"
+              ]
+            },
+            "coins": {
+              "coin_horse": {
+                "box": "216,860,328,300",
+                "inAt": 10.667,
+                "turn": [
+                  11,
+                  12.2
+                ],
+                "depth": "near"
+              },
+              "coin_palm": {
+                "box": "544,860,312,300",
+                "inAt": 11,
+                "turn": [
+                  11.333,
+                  12.533
+                ],
+                "depth": "far"
+              }
+            },
+            "plateScale": {
+              "far": 0.713,
+              "mid": 0.609,
+              "near": 0.76,
+              "contour": 1,
+              "coin_horse": 0.994,
+              "coin_palm": 0.994,
+              "bench": 0.713,
+              "light": 0.771
+            },
+            "founder": {
+              "box": "140,300,800,200",
+              "roundel": 200,
+              "mark": {
+                "text": "Y",
+                "src": "F17",
+                "ref": "index.html .fd-photo .mono (scripts-trailer.md §3.4 cites l. 1050; l. 1053 at site 076c991); facts-bank.md §1.2"
+              }
+            },
+            "wordmark": {
+              "box": "140,340,800,110",
+              "size": 88,
+              "mark": {
+                "parts": [
+                  "Num",
+                  "idea",
+                  " Labs"
+                ],
+                "src": "F20",
+                "ref": "index.html a.logo (fact F20 cites l. 1256; l. 1265 at site 076c991); styles.css:43, :139-142, :2464"
+              }
+            },
+            "pointer": "li",
+            "light": {
+              "fl": 14,
+              "fr": 0,
+              "fb": 14
+            },
+            "crop45": {
+              "window": [
+                90,
+                1440
+              ],
+              "9x16": {
+                "faq3": null,
+                "light": [
+                  280,
+                  1000,
+                  800,
+                  433
+                ],
+                "bench": [
+                  170,
+                  1012,
+                  740,
+                  413
+                ]
+              }
+            },
+            "nobreak": [
+              {
+                "key": "T31",
+                "phrase": "web developer"
+              }
+            ],
+            "separatorsHiddenAtBreak": {
+              "T50": 1,
+              "T51": 1
+            }
+          }
+        }
+      },
+      "warm": [
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        },
+        {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        }
+      ],
+      "safe_checked": [
+        {
+          "frame": 0,
+          "label": "S1 f0: T40 set, Plate I and the blueprint outline on screen, the thumbnail frame (f0)",
+          "violations": 0
+        },
+        {
+          "frame": 54,
+          "label": "S1: stars and constellation set (f54)",
+          "violations": 0
+        },
+        {
+          "frame": 78,
+          "label": "S1: blueprint drawn (f78)",
+          "violations": 0
+        },
+        {
+          "frame": 99,
+          "label": "S1 last frame (f99)",
+          "violations": 0
+        },
+        {
+          "frame": 115,
+          "label": "T40 header and blueprint in the mock-up frame (f115)",
+          "violations": 0
+        },
+        {
+          "frame": 133,
+          "label": "S2: « Votre site » filled, state 1 (f133)",
+          "violations": 0
+        },
+        {
+          "frame": 134,
+          "label": "S2: T41 settled (f134)",
+          "violations": 0
+        },
+        {
+          "frame": 219,
+          "label": "S2: state 2 (grey bars) (f219)",
+          "violations": 0
+        },
+        {
+          "frame": 239,
+          "label": "S2: mid-mirror glide (f239)",
+          "violations": 0
+        },
+        {
+          "frame": 248,
+          "label": "S2: state 3, Arabic layout mirrored (f248)",
+          "violations": 0
+        },
+        {
+          "frame": 319,
+          "label": "S2 last frame (f319)",
+          "violations": 0
+        },
+        {
+          "frame": 315,
+          "label": "S2 -> S3 wipe, halfway (f315)",
+          "violations": 0
+        },
+        {
+          "frame": 338,
+          "label": "S3: T42 settled (f338)",
+          "violations": 0
+        },
+        {
+          "frame": 341,
+          "label": "S3: coin-horse inked (f341)",
+          "violations": 0
+        },
+        {
+          "frame": 358,
+          "label": "S3: T09 settled (f358)",
+          "violations": 0
+        },
+        {
+          "frame": 376,
+          "label": "S3: both coins turned (f376)",
+          "violations": 0
+        },
+        {
+          "frame": 459,
+          "label": "S3 last frame (f459)",
+          "violations": 0
+        },
+        {
+          "frame": 455,
+          "label": "S3 -> S4 wipe, halfway (f455)",
+          "violations": 0
+        },
+        {
+          "frame": 469,
+          "label": "S4: founder card wiping in (f469)",
+          "violations": 0
+        },
+        {
+          "frame": 480,
+          "label": "S4: ring drawn (f480)",
+          "violations": 0
+        },
+        {
+          "frame": 488,
+          "label": "S4: T30 settled (f488)",
+          "violations": 0
+        },
+        {
+          "frame": 483,
+          "label": "S4: monogram settled (f483)",
+          "violations": 0
+        },
+        {
+          "frame": 508,
+          "label": "S4: T31 settled (f508)",
+          "violations": 0
+        },
+        {
+          "frame": 516,
+          "label": "S4: bench inked (f516)",
+          "violations": 0
+        },
+        {
+          "frame": 584,
+          "label": "S4: T32 settled (f584)",
+          "violations": 0
+        },
+        {
+          "frame": 679,
+          "label": "S4 last frame (f679)",
+          "violations": 0
+        },
+        {
+          "frame": 675,
+          "label": "S4 -> S5 wipe, halfway (f675)",
+          "violations": 0
+        },
+        {
+          "frame": 329,
+          "label": "S3: T42 wiping in (f329)",
+          "violations": 0
+        },
+        {
+          "frame": 689,
+          "label": "S5: wordmark wiping in (f689)",
+          "violations": 0
+        },
+        {
+          "frame": 698,
+          "label": "S5: wordmark set (f698)",
+          "violations": 0
+        },
+        {
+          "frame": 708,
+          "label": "S5: T50 settled (f708)",
+          "violations": 0
+        },
+        {
+          "frame": 718,
+          "label": "S5: T51 settled (f718)",
+          "violations": 0
+        },
+        {
+          "frame": 726,
+          "label": "S5: Plate V inked (f726)",
+          "violations": 0
+        },
+        {
+          "frame": 750,
+          "label": "S5: beam swept, still (f750)",
+          "violations": 0
+        },
+        {
+          "frame": 788,
+          "label": "S5: T52 settled (f788)",
+          "violations": 0
+        },
+        {
+          "frame": 899,
+          "label": "S5 last frame (held) (f899)",
+          "violations": 0
+        },
+        {
+          "frame": 899,
+          "label": "last frame",
+          "violations": 0
+        }
+      ],
+      "determinism": {
+        "checked": 7,
+        "identical": 7,
+        "results": [
+          {
+            "frame": 450,
+            "same": true
+          },
+          {
+            "frame": 0,
+            "same": true
+          },
+          {
+            "frame": 899,
+            "same": true
+          },
+          {
+            "frame": 7,
+            "same": true
+          },
+          {
+            "frame": 450,
+            "same": true
+          },
+          {
+            "frame": 1,
+            "same": true
+          },
+          {
+            "frame": 898,
+            "same": true
+          }
+        ],
+        "probe_warm": {
+          "frames": [
+            0,
+            220,
+            380,
+            600,
+            800
+          ],
+          "rounds": 3,
+          "stable": true
+        }
+      },
+      "page_errors": [],
+      "verify": {
+        "file": "../out/v01/src/v01__9x16__en__li__music-s7.mp4",
+        "ok": true,
+        "checks": [
+          {
+            "name": "video codec h264",
+            "ok": true,
+            "value": "h264"
+          },
+          {
+            "name": "profile High",
+            "ok": true,
+            "value": "High"
+          },
+          {
+            "name": "pix_fmt yuv420p",
+            "ok": true,
+            "value": "yuv420p"
+          },
+          {
+            "name": "size",
+            "ok": true,
+            "value": "1080x1920"
+          },
+          {
+            "name": "fps",
+            "ok": true,
+            "value": "30/1"
+          },
+          {
+            "name": "frame count",
+            "ok": true,
+            "value": "900"
+          },
+          {
+            "name": "colour tags bt709",
+            "ok": true,
+            "value": "bt709/bt709/bt709"
+          },
+          {
+            "name": "audio aac",
+            "ok": true,
+            "value": "aac"
+          },
+          {
+            "name": "audio 48 kHz stereo",
+            "ok": true,
+            "value": "48000 Hz, 2 ch"
+          },
+          {
+            "name": "faststart (moov before mdat)",
+            "ok": true,
+            "value": "ftyp > moov > free > mdat"
+          },
+          {
+            "name": "container duration",
+            "ok": true,
+            "value": "30.000000"
+          },
+          {
+            "name": "MP4 frame 500 vs browser frame 500: colour shift < 1.5/255 per channel",
+            "ok": true,
+            "value": "mean shift R,G,B = 0.01, 0.04, -0.81"
+          },
+          {
+            "name": "MP4 frame 500 vs browser frame 500: PSNR >= 32 dB",
+            "ok": true,
+            "value": "42.61 dB"
+          },
+          {
+            "name": "MP4 frame 500 is closest to browser frame 500 (not 499 / 501)",
+            "ok": true,
+            "value": "42.61 dB vs f499 41.58 dB, f501 40.90 dB"
+          },
+          {
+            "name": "text blocks and key visuals inside the safe area and their boxes (37 checkpoint frames)",
+            "ok": true,
+            "value": "all inside at f0, f54, f78, f99, f115, f133, f134, f219, f239, f248, f319, f315, f338, f341, f358, f376, f459, f455, f469, f480, f488, f483, f508, f516, f584, f679, f675, f329, f689, f698, f708, f718, f726, f750, f788, f899, f899"
+          },
+          {
+            "name": "no page errors",
+            "ok": true,
+            "value": "none"
+          },
+          {
+            "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+            "ok": true,
+            "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+          },
+          {
+            "name": "true peak <= -1 dBTP (encoded file)",
+            "ok": true,
+            "value": "-5.4 dBTP"
+          },
+          {
+            "name": "loudness range <= 4 LU",
+            "ok": true,
+            "value": "1.2 LU"
+          },
+          {
+            "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+            "ok": true,
+            "value": "-17.9 LUFS (-3.9 LU)"
+          }
+        ],
+        "bytes": 6942741,
+        "bitrate_kbps": 1851,
+        "video": {
+          "codec": "h264",
+          "profile": "High",
+          "level": 41,
+          "pix_fmt": "yuv420p"
+        }
+      },
+      "loudness": {
+        "file": "../out/v01/src/v01__9x16__en__li__music-s7.mp4",
+        "integrated_lufs": -14,
+        "integrated_lufs_bs1770": -14,
+        "loudness_range_lu": 1.2,
+        "true_peak_dbtp": -5.4,
+        "phone_lufs": -17.9,
+        "phone_loss_lu": 3.9,
+        "checks": [
+          {
+            "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+            "ok": true,
+            "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+          },
+          {
+            "name": "true peak <= -1 dBTP (encoded file)",
+            "ok": true,
+            "value": "-5.4 dBTP"
+          },
+          {
+            "name": "loudness range <= 4 LU",
+            "ok": true,
+            "value": "1.2 LU"
+          },
+          {
+            "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+            "ok": true,
+            "value": "-17.9 LUFS (-3.9 LU)"
+          }
+        ],
+        "ok": true
+      },
+      "contact": null
+    }
+  ],
+  "wall_s": 118.17
+}

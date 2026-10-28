@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Yasser — hmm</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* the bust is 598x734 drawn at 1.15x = 688x844 (78% of the frame height) */
+  .bust { position: absolute; left: 60px; top: 170px; width: 688px; height: 844px; transform-origin: 50% 85%; will-change: transform; }
+  .squash { position: absolute; left: 0; top: 0; width: 688px; height: 844px; transform-origin: 50% 100%; will-change: transform; }
+  .squash img { display: block; width: 688px; height: 844px; }
+  svg.fx { position: absolute; left: 0; top: 0; overflow: visible; }
+  svg.dot { position: absolute; overflow: visible; will-change: transform; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bust" id="bust">
+    <div class="squash" id="squash">
+      <img src="../assets/y-glasses.png" width="688" height="844" alt="">
+      <!-- glint, drawn in the asset's own pixel space so it sits on the lenses -->
+      <svg class="fx" width="688" height="844" viewBox="0 0 598 734">
+        <defs>
+          <clipPath id="lenses">
+            <ellipse cx="245" cy="276" rx="31" ry="27"/>
+            <ellipse cx="343" cy="277" rx="34" ry="27"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#lenses)">
+          <g id="streak" transform="translate(-200 276)">
+            <g transform="skewX(-28)" fill="#efe6d6" opacity=".88">
+              <rect x="-10" y="-65" width="20" height="130"/>
+              <rect x="16" y="-65" width="7" height="130"/>
+            </g>
+          </g>
+        </g>
+        <g id="star" transform="translate(0 0) scale(0)">
+          <path d="M0 -30 C3 -8 8 -3 30 0 C8 3 3 8 0 30 C-3 8 -8 3 -30 0 C-8 -3 -3 -8 0 -30 Z"
+                fill="#e6b450" stroke="#1b1712" stroke-width="4.6" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <svg class="dot" id="d1" width="60" height="60" viewBox="-30 -30 60 60"><circle r="26" fill="#1b1712"/><circle r="20" fill="#efe6d6"/></svg>
+  <svg class="dot" id="d2" width="60" height="60" viewBox="-30 -30 60 60"><circle r="26" fill="#1b1712"/><circle r="20" fill="#efe6d6"/></svg>
+  <svg class="dot" id="d3" width="60" height="60" viewBox="-30 -30 60 60"><circle r="26" fill="#1b1712"/><circle r="20" fill="#efe6d6"/></svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, win, set } = Motion;
+  const bust = document.getElementById('bust'), squash = document.getElementById('squash');
+  const streak = document.getElementById('streak'), star = document.getElementById('star');
+  // dot centres on the stage, rising slightly away from the head
+  const dots = [
+    { el: document.getElementById('d1'), x: 812, y: 352, in: 0.40, out: 0.840 },
+    { el: document.getElementById('d2'), x: 892, y: 328, in: 0.50, out: 0.860 },
+    { el: document.getElementById('d3'), x: 972, y: 304, in: 0.60, out: 0.880 },
+  ];
+  dots.forEach((d) => { d.el.style.left = (d.x - 30) + 'px'; d.el.style.top = (d.y - 30) + 'px'; });
+
+  // the push: a small dip, a snappy nudge up, a short hold at the top, then a damped settle
+  function nudge(p) {
+    if (p < 0.13) { const k = ease.inOut(win(p, 0.05, 0.13)); return { y: 6 * k, sy: 1 - 0.014 * k }; }
+    if (p < 0.21) { const k = ease.out(win(p, 0.13, 0.21)); return { y: 6 - 19 * k, sy: 0.986 + 0.036 * k }; }
+    if (p < 0.24) return { y: -13, sy: 1.022 };
+    const t = win(p, 0.24, 0.40), env = (1 - t) * (1 - t) * Math.cos(1.5 * Math.PI * t);
+    return { y: -13 * env, sy: 1 + 0.022 * env };
+  }
+
+  function glint(p) {
+    // a bone streak sweeps across both lenses (clipped to them)
+    const ts = ease.inOut(win(p, 0.17, 0.34));
+    const T = 160 + 270 * ts;
+    streak.setAttribute('transform', `translate(${T.toFixed(2)} 276)`);
+    // the brass star rides the top of the streak while it is on the glass, arcing over the bridge,
+    // twinkles on the far rim for a beat, then snaps shut
+    const u = Math.min(Math.max((T - 211) / (380 - 211), 0), 1);
+    const sx = 226 + 148 * u, sy = 264 - 12 * u - 10 * Math.sin(Math.PI * u);
+    const shut = win(p, 0.34, 0.38);
+    let s = ease.out(Math.min(u / 0.5, 1)) * (1 - ease.in(shut));
+    if (T <= 211 || shut >= 1) s = 0;
+    const r = 90 * u + 45 * ease.in(shut);
+    star.setAttribute('transform', `translate(${sx.toFixed(2)} ${sy.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${s.toFixed(4)})`);
+  }
+
+  function dot(d, p) {
+    const a = win(p, d.in, d.in + 0.07), b = win(p, d.out, d.out + 0.05);
+    const s = ease.back(a) * (1 - ease.in(b));
+    set(d.el, { y: 12 * (1 - ease.out(a)), s, o: s > 0.001 ? 1 : 0 });
+  }
+
+  Sticker({
+    seconds: 2.4, fps: 30, poster: 52,
+    draw(p) {
+      const n = nudge(p);
+      // slow head tilt: in while he settles, held while he thinks, back upright before the loop closes
+      const r = 1.8 * (ease.inOut(win(p, 0.13, 0.46)) - ease.inOut(win(p, 0.80, 0.97)));
+      set(bust, { y: n.y, r });
+      set(squash, { sx: 1 - (n.sy - 1) * 0.5, sy: n.sy });
+      glint(p);
+      dots.forEach((d) => dot(d, p));
+    },
+  });
+</script>
+</body>
+</html>

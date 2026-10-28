@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Test de rendu 3 s</title>
+<!--
+  PRIVATE render test (not a deliverable). Proves: the site's real fonts
+  (Cinzel, Cinzel Decorative, Geist, Geist Mono, IBM Plex Sans Arabic), one
+  French line, one Arabic RTL line, one engraving from assets/illus (plate II),
+  two aspect ratios from one file, a deterministic clock.
+  Every string is quoted from the site (assets/app.js: hero.title, pl.arch,
+  hero label), see the facts bank §1.1.
+  ARABIC: all `ar` strings below are « à relire par un arabophone natif ».
+-->
+<link rel="stylesheet" href="/brand/base.css">
+<style>
+  .layout{display:flex;flex-direction:column}
+  .col-plate{display:flex;flex-direction:column;align-items:flex-start}
+  .plate{width:100%;aspect-ratio:1000/558}
+  .head{margin:0;font-family:var(--font-head);font-weight:700;letter-spacing:var(--head-tracking);color:var(--ice);line-height:1.08}
+  .head .swash{display:block;font-family:var(--font-head-em);color:var(--teal-text)}
+  .head [lang="ar"]{font-weight:700;line-height:1.3}
+  .other{margin:0;color:var(--body-strong);font-weight:600}
+  .other[lang="ar"]{line-height:1.5}
+  .other:not([lang="ar"]){font-family:var(--font-head);font-weight:700}
+  .sig{display:flex;flex-direction:column;gap:10px}
+  .mark{font-family:var(--font-logo);font-weight:700;letter-spacing:var(--logo-tracking);color:var(--crimson-text);text-transform:uppercase}
+  .kick{font-family:var(--font-body);font-weight:500;color:var(--muted)}
+  .testlabel{position:absolute;top:36px;inset-inline-start:40px;font:400 20px/1.5 "Geist Mono", monospace;color:var(--faint);letter-spacing:.06em;direction:ltr;text-align:left}
+  .testlabel b{color:var(--crimson-text);font-weight:400}
+
+  /* 9:16 — Reels, TikTok, Shorts: one column, plate on top. Sized for the
+     band x 140-940, y 290-1240 (scripts-trailer.md §3.3). */
+  html[data-ratio="9x16"] .plate{width:640px}
+  html[data-ratio="9x16"] .pl-cap{font-size:17px;margin-top:16px}
+  html[data-ratio="9x16"] .col-text{margin-top:36px}
+  html[data-ratio="9x16"] .head{font-size:60px}
+  html[data-ratio="9x16"] .other{font-size:42px;margin-top:24px}
+  html[data-ratio="9x16"] .sig{margin-top:auto}
+  html[data-ratio="9x16"] .mark{font-size:34px}
+  html[data-ratio="9x16"] .kick{font-size:24px}
+
+  /* 16:9 — YouTube, site embed: text column + plate column (mirrors in RTL) */
+  html[data-ratio="16x9"] .layout{display:grid;grid-template-columns:800px 1fr;grid-template-rows:1fr auto;
+    grid-template-areas:"text plate" "sig plate";column-gap:90px}
+  html[data-ratio="16x9"] .col-text{grid-area:text;align-self:center}
+  html[data-ratio="16x9"] .col-plate{grid-area:plate;align-self:center}
+  html[data-ratio="16x9"] .sig{grid-area:sig}
+  html[data-ratio="16x9"] .pl-cap{font-size:15px;margin-top:18px}
+  html[data-ratio="16x9"] .head{font-size:66px}
+  html[data-ratio="16x9"] .other{font-size:42px;margin-top:40px}
+  html[data-ratio="16x9"] .mark{font-size:30px}
+  html[data-ratio="16x9"] .kick{font-size:21px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="safe layout">
+    <div class="col-plate">
+      <figure class="plate" id="plate" style="margin:0" aria-hidden="true"><div class="plate-ink"></div><div class="plate-burin"></div></figure>
+      <span class="pl-cap" id="cap" data-cap="plate"></span>
+    </div>
+    <div class="col-text">
+      <h1 class="head"><span class="l1" data-cap="headA"></span> <span class="swash" data-cap="headB"></span></h1>
+      <p class="other" id="other" data-cap="headFull"></p>
+    </div>
+    <footer class="sig" id="sig" data-safe><span class="mark">Numidea Labs</span><span class="kick" data-cap="label"></span></footer>
+  </div>
+  <div class="testlabel" id="tl"></div>
+</div>
+<script type="module">
+import { createScene } from '/runtime/scene.js';
+import { applyCaptions, plate, rise, wipe, fade } from '/runtime/components.js';
+
+// Quoted from assets/app.js (hero.title fr/en/ar, pl.arch fr/en/ar, hero
+// label). ar: « à relire par un arabophone natif ».
+const CAPTIONS = {
+  headA:    { fr: 'Votre site sur mesure,', en: 'Custom websites,', ar: 'موقعك المخصّص،' },
+  headB:    { fr: 'en français, anglais ou arabe.', en: 'in English, French and Arabic.', ar: 'بالعربية والفرنسية والإنجليزية.' },
+  headFull: { fr: 'Votre site sur mesure, en français, anglais ou arabe.', en: 'Custom websites, in English, French and Arabic.',
+              ar: 'موقعك المخصّص، بالعربية والفرنسية والإنجليزية.' },
+  plate:    { fr: 'Pl. II — Arc de Trajan · Timgad', en: 'Pl. II — Arch of Trajan · Timgad', ar: 'لوحة 2 — قوس تراجان · تيمقاد' },
+  label:    { fr: 'Studio web & logiciel · Bordj Bou Arréridj, Algérie', en: 'Web & software studio · Bordj Bou Arréridj, Algeria',
+              ar: 'استوديو ويب وبرمجيات · برج بوعريريج، الجزائر' },
+};
+
+const PLATE = '/site/illus/arch.webp';
+const scene = createScene({
+  duration: 3, fps: 30,
+  fonts: [
+    ['700 70px "Cinzel"', 'Votre site sur mesure Numidea Labs'],
+    ['700 70px "Cinzel Decorative"', 'en français, anglais ou arabe.'],
+    ['600 50px "IBM Plex Sans Arabic"', 'موقعك المخصّص، بالعربية والفرنسية والإنجليزية.'],
+    ['700 70px "IBM Plex Sans Arabic"', 'موقعك المخصّص'],
+    ['500 24px "Geist"', 'Studio web & logiciel · Bordj Bou Arréridj, Algérie'],
+    ['400 20px "Geist Mono"', 'TEST DE RENDU 0123456789 PL. II — ARC DE TRAJAN · TIMGAD'],
+  ],
+  images: [PLATE],
+});
+
+// The second line is always in the other script: Arabic under French or
+// English, French under Arabic, so every version carries one RTL line and
+// one LTR line.
+document.getElementById('other').dataset.capLang = scene.lang === 'ar' ? 'fr' : 'ar';
+applyCaptions(CAPTIONS, scene.lang);
+
+const $ = (s) => document.querySelector(s);
+const tl = $('#tl');
+scene
+  .on(plate($('#plate'), { src: PLATE, t0: 0.05, dur: 1.3, settle: 3 }))
+  .on(fade($('#cap'), { t0: 1.15, dur: 0.5 }))
+  .on(rise($('.l1'), { t0: 0.30 }))
+  .on(rise($('.swash'), { t0: 0.45 }))
+  .on(fade($('#other'), { t0: 0.95, dur: 0.6 }))
+  .on(wipe($('#other'), { t0: 0.95, dur: 1.0 }))
+  .on(rise($('#sig'), { t0: 1.35 }))
+  .on((t, s) => {
+    const n = Math.round(t * s.fps);
+    tl.innerHTML = `TEST DE RENDU · ${s.width}×${s.height} · ${s.fps} i/s · ${s.lang.toUpperCase()} · frame <b>${String(n).padStart(2, '0')}</b>/${s.frames} · t=${t.toFixed(3)} s<br>AR : à relire par un arabophone natif`;
+  });
+scene.seek(0);
+</script>
+</body>
+</html>

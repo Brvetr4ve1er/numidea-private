@@ -1,0 +1,725 @@
+{
+  "summary": "Develop the owner-chosen miniature-world carousel: three mechanics, three critics, one production script",
+  "agentCount": 7,
+  "logs": [
+    "3 variants in"
+  ],
+  "result": {
+    "final": {
+      "title": "Vous glissez. On construit. · La maquette qui se construit",
+      "one_liner": "One locked camera watches a museum-grade scale model of a small street in the Algerian high plateaus. As the reader swipes, a bare plot becomes a finished shop whose window lights up with a homepage. The kickers mark the reader's three small moves (describe, send, decide) against everything the studio builds.",
+      "mechanics": "STATUS: this is a production plan only. Nothing is generated until the owner says go, because the user asked for planning and no generating yet.\n\n1. WHAT WAS CHOSEN\n- Base: 'La table de maquette', which all three critics ranked first. One square model tile, one locked frontal camera, a coded road on a straight street, coded joints at the seams, the gold drawing that becomes the building, and a coded end card.\n- From 'Ici, bientôt…': the kickers À vous / À nous, the road's dash states as a progress meter, the coded homepage in the window, and the olive tree.\n- From 'La rue qui se bâtit': the kraft-paper reveal, the light dip just before it, the tailor's-tape pun and the atlas loupe.\n- From the critics: a steeper camera, keyframes first, plate lock (patch compositing) and short edit prompts.\n\n2. CAMERA\n- Every render uses one view: square-on, zero yaw, about 38° down, long telephoto.\n- Zero yaw keeps the street a level horizontal line. The road can then be one straight coded line, and every overlay is plain 2D with no perspective maths (the drawing, brackets, dimension lines and the homepage in the window).\n- 38° gives the high tabletop view that sells the miniature. At 32° the model read as an object on a shelf.\n\n3. KEYFRAMES FIRST, NO FRAME DEEPER THAN TWO EDITS\nCanva generate-image returns one image per call. Use PORTRAIT_4_5 for every scene frame and pass imageReferences by media id. Log every id.\n- K0, the bare plate: text-to-image, depth 0. It is the cover.\n- K1, the finished shop with a blank lit window: one edit of [K0], depth 1. It is slide 7.\n- Additive in-betweens are edits of K0, with K1 as the footprint reference: F2 [K0, K1] and F3 [K0, K1].\n- Subtractive and later frames are edits of K1: F4 [K1, K0], F5 [K1], F6 [K1, F5] and F8 [K1].\n- Side assets, all SQUARE_1_1: the crate R1 [F4], and the loupe details D3 [F3] and D5 [F5].\n- The cover is depth 0 and the payoff is depth 1, so the frames that matter most are the cleanest.\n\n4. PLATE LOCK (patch compositing)\n- Register every frame onto K0 with four anchors: the tile's two front-top corners and the front-top corners of both boundary walls. Use a similarity transform; the residual must be 4px or less.\n- Use only each frame's plot patch. M_plot is a polygon between the inner faces of the two boundary walls, from the far curb up to y 440 in slide coordinates, feathered 20px.\n- Outside M_plot, every slide shows K0's own pixels. S8 adds M_lamp (the lamp post, its head and its light pool, feathered 16px), because its lamp switches on.\n- Match each patch's exposure to K0 with a CSS filter (brightness and contrast within ±6%), measured on the wall faces.\n- Result: the street, sidewalks, walls, neighbours, tree, lamp, ridge and tile edges are pixel-identical from S1 to S8. The build is a true stop-motion, swiping back and forth replays it, and drift outside the plot no longer forces a re-roll.\n\n5. NORMALISATION\n- Measure one transform, T0, on K0 and apply it to every composited frame. It maps the tile's front-top corners to x 24 and x 1056, and the street centreline to y 1120.\n- Allowed range: scale 0.9 to 1.1 and rotation of 1° or less. Outside that range, regenerate.\n- Clip the image to x 24–1056.\n- Opacity mask: 0 above y 440, rising to 1 at y 620. The ridge rises out of the dark under the type, and no text sits on the picture.\n- Check on K1 that the top of the stair cube lands at y 660 or lower. If not, move the fade to 400–580 and keep every text block above y 540.\n\n6. ONE STRIP\n- Build the carousel in Claude Design as one 9720×1350 stage. Slide n is the 1080×1350 window at x (n−1)·1080.\n- These layers are drawn once on the strip, so they cannot break at a seam:\n  - the #0a1420 ground;\n  - the Arcanum atmosphere: a teal glow top-left of S1, a brass crown top-right of S8–S9, and a brass lamp haze over each tile;\n  - the brass grid: 64px, 1px rgba(230,180,80,.5) at .07, fading to 0 by y 620;\n  - the tabletop band: void to navy #0f1e30 from y 1000 to 1250, back to void by 1350;\n  - the table-edge hairline: 1px #27496b at y 1318;\n  - the road.\n- Each tile sits at x 24–1056 of its slide, so every seam is a 48px joint of coded tabletop between two model tiles. The renders never have to match each other across a seam.\n- Each tile gets a coded contact shadow under its front face.\n\n7. SEAM RIDER\n- R1 is one closed, unmarked crate. Generate it on flat mid-grey (never navy on navy), remove the background in Canva, then grade it in code to the tile's light.\n- It is about 180px wide, with its base on y 1120. It is centred on x 1080 of S3 and on x 0 of S4; each slide clips its own half, and the swipe joins them. It reads as your content in transit, carried across by your own thumb.\n\n8. LIGHT LIVES IN CODE\n- The renders never contain drawn light. These are all coded:\n  - the gold drawing, traced once from K1 and reused at fixed coordinates: 100% with a pen-tip spark on S1, .45 on S2, .35 on S3, only the unbuilt parts at .30 on S4, and gone from S5;\n  - the road, dimension lines, corner brackets and light pools;\n  - the homepage in the window, mapped onto a frontal rectangle measured on K1.\n- Practical lights are rendered: the window glow, the open door, the lantern and the street lamp. Only these switch on. The workshop lamp never changes, so nothing implies a day passing.\n\n9. TYPE (Arcanum)\n- Kicker at (54, 54): always a word, never a number.\n- Headline: Cinzel 700, line height 1.03, .01em, in ice, with the closing words in crimson-text.\n- Subline: Geist 400, 52px, line height 1.25, in body-strong.\n- Every text block stays between x 54 and 1026 and ends above y 560.\n- No page count, tile map, exit teaser or chevron. No glow, gradient or shadow on type.\n- Widths were measured with the shipped woff2 faces (HarfBuzz, kerning on).\n\n10. SELECTION AND QA\n- For each frame:\n  - inspect at 200% and reject any figure, hand, animal, vehicle, glyph or mark, glowing line, glass case, plinth or crane operator;\n  - onion-skin the frame at 50% over K0 inside the plot: the footprint must sit where K1's shop stands, within 6px;\n  - registration residual 4px or less.\n- After composing:\n  - check all eight seams on a 9720×1350 contact strip;\n  - swipe through a private carousel preview on a phone;\n  - check the glows for banding after export;\n  - check the French spacing in every string.\n\n11. EXPORT\n- Export nine 1080×1350 sRGB PNGs (or JPEG at quality 95), uploaded in order, each with its French alt text.\n- Bonus: the surroundings are plate-locked, so the eight frames make a 6–8 s stop-motion Reel with no new generation. It plays once and settles, and the carousel itself is its still version.\n\n12. BUDGET\n- 29 calls planned: K0 4, K1 4, F4 3, F6 3, F8 3, F2 2, F3 2, F5 2, R1 2, D3 2, D5 2.\n- Plus about 9 re-rolls, so about 38 in total.\n- Prompts carry no hex codes. The palette is held by one shared CSS grade.",
+      "cover_hook": "Vous glissez. On construit.",
+      "style_block": "Macro photograph of a museum-quality architectural scale model, shot in a dark studio. One square diorama tile, a thick slab with crisp chamfered edges and sides painted matte deep navy, rests directly on a seamless matte navy model-maker's table that falls off into near-black. Locked camera, square-on to the model: centred, with no side rotation, looking down at about 38 degrees through a long telephoto lens, so the tile's sides barely converge and its front edge is perfectly level and parallel to the bottom of the frame. The tile spans almost the full width of the frame and sits in its lower two thirds; behind it there is only plain dark navy darkness. Tilt-shift depth of field: a sharp band from the street to the back of the plot; the tile's front face and the back ridge fall softly out of focus. Fixed layout, identical in every frame: a straight, empty, smooth pale-stone street crosses the front third of the tile from its left edge to its right edge, parallel to the front edge, with a low curb and a narrow sidewalk on each side. Behind the far sidewalk, in the middle of the tile and about half its width, lies the plot of a small shop in a quiet town of the Algerian high plateaus, framed by a low whitewashed boundary wall on each side. Beyond each wall stands the flat-roofed front of a neighbouring house in ochre and lime plaster with closed deep-navy wooden shutters, cut clean by the tile's edge. On the far sidewalk, in front of the right-hand house, one young street tree with a rounded clipped crown; in front of the left-hand house, one slim black wrought-iron street lamp. Along the back edge, a low jagged limestone ridge in layered grey-blue plaster: the Bibans mountains. Model-maker's materials: hand-sculpted plaster terrain dusted with fine ochre sand, lime-washed walls with a fine plaster texture, ochre limestone, basswood, tiny photo-etched brass details, static-grass tufts. Light: one warm brass-gold workshop lamp from high upper left, soft and directional, with long gentle shadows, a cool deep-navy ambient and a thin warm rim along the tile's top edges; the lamp itself is out of frame. Palette: ochre, whitewash, warm stone, aged brass and deep navy shadows. Calm, precise, quietly luxurious: one small object lit in a dark studio.\n\n(The full block goes only into K0, the one text-to-image call. Every edit prompt states only the change, plus the short exclusion line. There are no hex codes in any prompt: the palette is enforced in code by one shared grade.)",
+      "negative_block": "Exclude: people, figurines, hands, animals and vehicles of any kind. No lettering anywhere: no text, letters, numbers, logos, signs or marks on any wall, paper, tape or screen. No glowing lines, neon, holograms, light trails, lens flare or sparkles. No glass cases, plinths or pedestals. No palm trees, domes, minarets or flags. No sky, sun or clouds. Not toy plastic, cartoon, clay or isometric; no fisheye, no tilted or angled view; no oversaturated colour.\n\nShort form, closing every edit prompt: « No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines. » Add « no cab, no operator » to the crane frame. Add « completely blank » for the tape, the seal and the window glow.",
+      "road": "One straight horizontal coded line on every slide, at y_road = 1120 (held as one shared constant).\n\nPosition:\n- Every render is normalised so its street centreline lands exactly on y 1120, so the line sits on the model street, inside the tilt-shift focus band.\n- S1: starts at a brass benchmark ring at x 72 (nothing at the left edge) and leaves the right edge at y 1120.\n- S2 to S8: enters at x 0 and leaves at x 1080, both at y 1120.\n- S9: enters at y 1120 and ends at the terminus ring at x 420.\n\nParts on each slide:\n- Two bridges, x 0–24 and x 1056–1080, always solid. Every seam therefore joins solid to solid at the same y, with no kink and no doubled dash, whatever the state.\n- The tile run, x 24–1056 (S1: x 86–1056), carries the state's dash pattern. It uses pathLength=1000, periods that divide 1000 (20 and 50) and butt caps, so it starts on a dash and ends on a gap.\n\nStrokes, bottom to top:\n- halo: 12px #34d0e8 at .30, blurred 5px;\n- core: #34d0e8, 3px in the chalk state and 4px after;\n- hot centre: 1.5px #eaf1f8 at .6, in the lit state only.\nThis is the ceiling (README: no neon bloom). No wider spill, never behind or on type, no animation.\n\nStates (the progress meter that replaces numerals):\n- S1–S2: chalk dots, dasharray 4 16.\n- S3–S4: survey dashes, 12 8.\n- S5: long dashes, 44 6, at .85 opacity for the light dip.\n- S6–S9: solid and lit.\n\nHow it meets the image:\n- The renders hold no line: every prompt excludes glowing lines and keeps the street empty, so the generator never fights the code.\n- On each tile, a street spill: an ellipse 1000×56 centred on the line, radial #34d0e8 at .12 (.16 when lit) fading to 0, screen blend, clipped to the street band measured on K0.\n- Under each bridge, a faint teal pool on the tabletop (ellipse 48×36, .14, blurred 10px), so the line reads as crossing the joint between two model tiles.\n- On S6–S8, a coded ice-and-teal pool under the window brightens the line where the shop's light falls on the street.\n\nObjects on it:\n- The crate R1 rides it across the S3|S4 seam, base on y 1120.\n\nEndpoints:\n- S1 benchmark: 28px ring, 3px #e6b450 stroke, 6px #e6b450 dot.\n- S9 terminus: 32px ring, 3px #e6b450 stroke, 8px dot, a 0 0 0 1px rgba(230,180,80,.45) ring. « LIEN EN BIO » sits at x 468, so the road ends on the pointer.\n\nFallback, if a chosen frame's street falls soft: halo to 14px, hot centre to .5.",
+      "slides": [
+        {
+          "n": 1,
+          "beat": "Cover: the hook and the rule of the game. Takeaway: an empty plot is about to become a lit shop, and all you do is swipe. « Glisser » means both the swipe and « ça glisse », the smooth ride the owner wants to promise. Focal object: a gold architect's elevation of the finished shop, standing on the bare model plot and caught mid-stroke, with a spark at its tip. Pull to slide 2: the drawing is unfinished, and the chalk-dotted teal road runs off the right edge.",
+          "kicker": "None. The top row holds the wordmark at left and the coordinates device at right.",
+          "headline": "Vous glissez. On construit.",
+          "subline": "Regardez votre site sortir de terre.",
+          "image": "K0, the bare plate (text-to-image, depth 0). The square model tile on the dark table, seen square-on from about 38° above. The empty pale-stone street runs across the front third. Behind it: a bare, levelled ochre plot between two low whitewashed boundary walls; partial neighbouring house fronts with closed navy shutters at both tile ends; a young clipped street tree at right and an unlit wrought-iron lamp at left, both on the far sidewalk; the Bibans ridge in grey-blue plaster along the back. One warm workshop lamp lights it from the upper left. Nothing is built. The gold drawing, the spark and the road are code. K0 is also the plate that every later slide's surroundings come from.",
+          "image_prompt": "Macro photograph of a museum-quality architectural scale model, shot in a dark studio. One square diorama tile, a thick slab with crisp chamfered edges and sides painted matte deep navy, rests directly on a seamless matte navy model-maker's table that falls off into near-black. Locked camera, square-on to the model: centred, with no side rotation, looking down at about 38 degrees through a long telephoto lens, so the tile's sides barely converge and its front edge is perfectly level and parallel to the bottom of the frame. The tile spans almost the full width of the frame and sits in its lower two thirds; behind it there is only plain dark navy darkness. Tilt-shift depth of field: a sharp band from the street to the back of the plot; the tile's front face and the back ridge fall softly out of focus. Fixed layout, identical in every frame: a straight, empty, smooth pale-stone street crosses the front third of the tile from its left edge to its right edge, parallel to the front edge, with a low curb and a narrow sidewalk on each side. Behind the far sidewalk, in the middle of the tile and about half its width, lies the plot of a small shop in a quiet town of the Algerian high plateaus, framed by a low whitewashed boundary wall on each side. Beyond each wall stands the flat-roofed front of a neighbouring house in ochre and lime plaster with closed deep-navy wooden shutters, cut clean by the tile's edge. On the far sidewalk, in front of the right-hand house, one young street tree with a rounded clipped crown; in front of the left-hand house, one slim black wrought-iron street lamp. Along the back edge, a low jagged limestone ridge in layered grey-blue plaster: the Bibans mountains. Model-maker's materials: hand-sculpted plaster terrain dusted with fine ochre sand, lime-washed walls with a fine plaster texture, ochre limestone, basswood, tiny photo-etched brass details, static-grass tufts. Light: one warm brass-gold workshop lamp from high upper left, soft and directional, with long gentle shadows, a cool deep-navy ambient and a thin warm rim along the tile's top edges; the lamp itself is out of frame. Palette: ochre, whitewash, warm stone, aged brass and deep navy shadows. Calm, precise, quietly luxurious: one small object lit in a dark studio. This frame: the plot between the two boundary walls is bare, levelled ochre earth with a few dry grass tufts and small pebbles; nothing is built and nothing stands on it. The street and both sidewalks are completely empty. The street lamp is unlit and the neighbours' shutters are closed. Exclude: people, figurines, hands, animals and vehicles of any kind. No lettering anywhere: no text, letters, numbers, logos, signs or marks on any wall, paper, tape or screen. No glowing lines, neon, holograms, light trails, lens flare or sparkles. No glass cases, plinths or pedestals. No palm trees, domes, minarets or flags. No sky, sun or clouds. Not toy plastic, cartoon, clay or isometric; no fisheye, no tilted or angled view; no oversaturated colour.",
+          "reference": "None: text-to-image, 4 calls of one image each. Keep the candidate that is the most square-on and level, with the sharpest empty street and nothing in the plot, and that shows no figure and no lettering at 200%. The owner approves K0 (a local feel, nothing orientalist) before any other call, because every frame inherits it. If Canva truncates the prompt, drop the materials and palette sentences first.",
+          "ratio": "PORTRAIT_4_5 (Canva output about 1136×1408)",
+          "crop": "Placed by T0, the one transform measured on K0: a similarity transform (translation, uniform scale between 0.9 and 1.1, rotation of 1° or less; outside that, regenerate) that puts the tile's front-top corners at x 24 and x 1056 and the street centreline at y 1120. Expected landmarks after T0 (verify on K0): ridge at about y 470–600, far curb about 1060, tile front edge about 1226, front face down to about 1280. Clipped to x 24–1056; the 24px strips at each side are the coded table joint. Opacity mask: 0 above y 440, rising to 1 at y 620, over the #0a1420 stage. The render's empty top is replaced by the coded void.",
+          "type_zone": "Top row, y 54–102: wordmark at x 54–374 (40px); coordinates device right-aligned at x 591–1026, baseline y 90. Headline at x 54–994, top y 150; lines at 150–274 (« Vous glissez. », 848px) and 274–397 (« On construit. », 940px at 120px; 128px would overflow at 1002px). Subline on one line, x 54–861, y 429–494. The text block ends at y 494; nothing is typed below y 500.",
+          "coded_layer": "- Shared strip layers (see mechanics):\n  - Arcanum teal glow at the top left: radial at (220,200), r 620, rgba(52,208,232,.10);\n  - brass grid;\n  - tile lamp haze: brass radial at (260,560), r 700, .06;\n  - tabletop band;\n  - table-edge hairline at y 1318;\n  - tile contact shadow: a navy-black ellipse 1040×40 under the front face, blur 18px, .6;\n  - right-seam bridge.\n- Top row:\n  - Wordmark « Num<i>idea</i> Labs » at 40px: Cinzel 700, .04em, #eaf1f8; « idea » in Geist 600 #34d0e8; a #e6b450 block 16×36px, logo-scaled, no glow.\n  - Right-aligned to x 1026: a 64px 1px #27496b dimension line with 8px end ticks, a 16px gap, then « 36°04′N · 4°46′E » in Geist Mono 30px, .14em, #9db2c6.\n- Headline: Cinzel 700, 120px, line height 1.03, .01em, forced break. « Vous glissez. » in #eaf1f8 / « On construit. » in #e6b450 (crimson-text). No glow, shadow or gradient on type.\n- Subline: Geist 400, 52px, line height 1.25, #c7d5e2.\n- THE GHOST, the scroll-stopper:\n  - An SVG elevation of the finished shop front, traced once from K1 after registering K1 onto K0. It includes the ground line, walls, parapet, stair cube, three arches, the door leaves, the window frame and fanlight, the grille and the lantern bracket, all in straight runs and true arcs.\n  - 4px #e6b450 strokes with round caps, and a drop-shadow 0 0 10px rgba(230,180,80,.35) on the lines only.\n  - Drawn to 94% (pathLength 100, dasharray 94 100), so the stair cube's last edge is unfinished.\n  - Pen tip: a 22px radial spark (#eaf1f8 to #f4d27a to transparent, screen blend) at the end of the stroke, plus three 2px #e6b450 dots.\n  - Where the drawing meets the earth: an ellipse 520×70, rgba(230,180,80,.14), screen blend.\n  - Two 2px #e6b450 dimension lines with 16px end ticks, one 36px above the parapet and one 36px to the right of the front. No labels.\n- Road: chalk state, starting at the benchmark ring at x 72.\n- No kicker, page count or arrow: the hook is the swipe cue.\n- Alt text: « Maquette d’une petite rue : un terrain nu entre deux murets blancs, où le dessin doré d’une boutique est en train d’être tracé. »"
+        },
+        {
+          "n": 2,
+          "beat": "Your first move, built as a second cover, because Instagram re-serves unswiped carousels from slide 2. Takeaway: starting takes you two minutes, in your own language. Focal object: the shop's footprint staked out in white string on the ground, under the fading gold drawing. Change: the drawing comes down onto the ground. Pull: an outline asks to be filled.",
+          "kicker": "À vous",
+          "headline": "Vous décrivez le projet.",
+          "subline": "Deux minutes, par écrit ou de vive voix. En français, anglais ou arabe.",
+          "image": "F2, depth 1: an additive edit of K0, using K1 for the footprint. Four small wooden stakes mark the exact footprint of the future shop, joined by taut white string a few millimetres above the bare earth. Nothing else changes, and after plate lock everything outside the plot is K0's own pixels.",
+          "image_prompt": "Edit reference image 1, a photograph of a scale model. Change only the bare plot: four small wooden survey stakes now stand at the four corners of the exact footprint that the shop occupies in reference image 2, joined by taut thin white string a few millimetres above the earth. The earth inside the string stays bare. Keep everything else exactly as in reference image 1: camera, framing, tile, street, sidewalks, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.",
+          "reference": "imageReferences [K0, K1]: K0 is the image to edit, K1 gives the footprint. 2 calls. Accept a frame only if the string rectangle sits on K1's footprint within 6px in the 50% onion-skin.",
+          "ratio": "PORTRAIT_4_5",
+          "crop": "F2 is registered onto K0 with four anchors: the tile's front-top corners and the front-top corners of both boundary walls (similarity transform, residual 4px or less). Only its plot patch is used: M_plot, between the inner faces of the boundary walls, from the far curb up to y 440, feathered 20px. Everything else is K0. The patch is exposure-matched to K0 (CSS brightness and contrast within ±6%). Then T0, the x 24–1056 clip and the 440→620 fade, as on slide 1.",
+          "type_zone": "Kicker group at x 54–284, y 54–92 (the text « À VOUS » is 169px). Wordmark at 34px, right-aligned to x 1026 (x 751–1026, y 54–92). Headline top y 116: lines 116–231 (881px) and 231–347 (572px). Subline top y 379: lines 379–444 (923px) and 444–509 (689px). The block ends at y 509.",
+          "coded_layer": "- Shared strip layers; bridges at both edges.\n- Kicker at (54,54): a 32×2px rule fading from #e6b450 to transparent, an 8px gap, a 6px rotated #e6b450 square, a 12px gap, then Geist Mono 500, 38px, uppercase, .14em, #e6b450: « À VOUS ».\n- Wordmark at 34px, top right (logo-scaled, no glow). As the second cover, it tells viewers re-served from this slide whose post it is.\n- Headline: Cinzel 700, 112px. « Vous décrivez » in #eaf1f8 / « le projet. » in #e6b450.\n- Subline: Geist 52px, #c7d5e2, forced break after « voix. »: « Deux minutes, par écrit ou de vive voix. » / « En français, anglais ou arabe. »\n- Ghost: the cover's drawing at the same coordinates, 3px, opacity .45, no glow, fully drawn. The plan still hovers while its footprint appears on the ground in string.\n- Road: chalk dots, continuing from S1's right bridge.\n- Alt text: « Le même terrain : l’emprise de la boutique est piquetée au sol avec de la ficelle blanche, sous le dessin doré. »"
+        },
+        {
+          "n": 3,
+          "beat": "Our reply, then the scope fixed before any price. Takeaway: a first reply within 24 working hours, with our questions; then a written scope and a firm price, once the scoping is agreed together. Focal object: the poured slab that fills the outline exactly (the « périmètre », literally), with a sealed letter on it, enlarged in an atlas loupe. Change: the loose string becomes a precise slab. Pull: half a crate slides in at the right edge.",
+          "kicker": "À nous",
+          "headline": "On revient sous 24 h ouvrées.",
+          "subline": "D’abord avec nos questions, puis un périmètre écrit et un prix ferme, dès que le cadrage est validé ensemble.",
+          "image": "F3, depth 1: an additive edit of K0, using K1 for the footprint. A freshly poured, flat, pale-grey foundation slab covers the exact footprint. Brass-capped survey pegs stand at its corners. Near its front-right corner lie a small rolled plan tied with a brass band and a folded blank sheet closed with a dark-gold wax seal. Plus D3, a close-up of the seal and plan for the loupe, and the left half of the crate R1 at the right edge.",
+          "image_prompt": "F3 (PORTRAIT_4_5): Edit reference image 1, a photograph of a scale model. Change only the bare plot: a freshly poured, perfectly flat pale-grey foundation slab with crisp square edges now covers the exact footprint that the shop occupies in reference image 2. Small survey pegs with polished brass caps stand at its four corners. On the slab, near its front right corner, lie a small rolled plan tied with a thin brass band and a folded blank sheet closed with a dark-gold wax seal pressed with a plain circle. Keep everything else exactly as in reference image 1: camera, framing, tile, street, sidewalks, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.\n\nD3 (SQUARE_1_1, the loupe detail): A close-up of the same scale model as the reference image, with the same materials, the same warm workshop lamp from high upper left and the same deep-navy shadows. Override the camera only: close, looking down at about 38 degrees, very shallow depth of field. On the pale-grey foundation slab lie a small rolled plan tied with a thin brass band and a folded sheet closed with a dark-gold wax seal pressed with a plain circle; one brass-capped survey peg stands at the slab's edge. The paper is completely blank: no lines of writing, no letters, no numbers. Dark navy background. No figures or hands; no glowing lines.",
+          "reference": "F3: imageReferences [K0, K1], 2 calls. D3: imageReferences [F3], SQUARE_1_1, 2 calls; reject any seal or paper carrying a glyph. R1 (the seam crate) is generated from F4: see slide 4.",
+          "ratio": "PORTRAIT_4_5 (F3); SQUARE_1_1 (D3)",
+          "crop": "F3 is plate-locked onto K0 exactly as on slide 2 (four anchors, M_plot patch, exposure match, then T0, the x 24–1056 clip and the 440→620 fade). D3 is cropped to a 300px circle (object-fit cover, the seal centred) inside the loupe. R1, with its background removed, is placed at about 180px wide, its base on y 1120 and its centre on x 1080; the slide clips its left half.",
+          "type_zone": "Kicker at y 54–92 (« À NOUS », 169px). Headline at 104px, top y 116: lines 116–223 (932px) and 223–330 (754px). Subline top y 362, three lines: 362–427 (773px), 427–492 (820px), 492–557 (947px). The block ends at y 557, the longest of the set. Loupe Ø 300 centred on (874, 770): x 724–1024, y 620–920, clear of the type and of the crate (x 990–1080, y 990–1120).",
+          "coded_layer": "- Kicker « À NOUS » (the system as on slide 2).\n- Headline: Cinzel 700, 104px. « On revient sous » in #eaf1f8 / « 24 h ouvrées. » in #e6b450, with U+00A0 between 24 and h.\n- Subline: Geist 52px, #c7d5e2, three lines broken after « puis » and after « ferme, »: « D’abord avec nos questions, puis » / « un périmètre écrit et un prix ferme, » / « dès que le cadrage est validé ensemble. » The condition never leaves the slide that carries the firm price.\n- On the slab: four #e6b450 L-brackets, 3px, 30px legs, on the slab's measured corners and following its edges (the « périmètre », drawn).\n- Ghost at .35, 3px.\n- Loupe, the atlas callout:\n  - Ø 300 centred on (874, 770);\n  - a 2px #27496b ring, plus a 1px #eaf1f8 ring at 18% inside it;\n  - four 10px #e6b450 ticks at N, E, S and W;\n  - D3 cropped inside;\n  - a 1px #27496b leader from the ring's lower left to the seal, ending in an 8px ring. No label.\n- Seam rider: R1's left half at the right edge, with a coded contact shadow on the street (ellipse 170×14, navy-black .5, blur 6px).\n- Road: survey dashes (12 8, 4px core).\n- Alt text: « Une dalle coulée remplit exactement l’emprise de la future boutique ; dessus, un plan roulé et une lettre scellée de cire dorée. »"
+        },
+        {
+          "n": 4,
+          "beat": "You send, we build: the biggest jump of the build, everything caught mid-action. Takeaway: your content goes in, and your homepage is built in 5 working days from receipt of your content. Focal object: the walls rising under scaffolding while the crane swings a block in, the upper half still only gold drawing. Change: from slab to half-built walls, with the crates delivered. Pull: the drawing shows what is still to come.",
+          "kicker": "À vous, puis à nous",
+          "headline": "Vous envoyez. On construit.",
+          "subline": "Votre page d’accueil : 5 jours ouvrés à réception de vos contenus.",
+          "image": "F4, depth 2: a subtractive edit of K1, using K0 for the ground, so the walls keep the finished shop's exact geometry. Bare ochre stone walls stand at half height, with timber formwork in the three arches and scaffolding on the left half of the front. A slim jib crane with no cab holds a block in mid-air. Three closed, unmarked crates stand on the plot's left. Plus the right half of the crate R1 at the left edge.",
+          "image_prompt": "F4 (PORTRAIT_4_5): Edit reference image 1, a photograph of a scale model. Change only the shop, which is now under construction: remove its roof, parapet, rooftop cube, door, glazing and lantern; its walls are bare ochre stone blocks standing at about half their final height, and the three arch openings are held by curved timber formwork. Light timber scaffolding with two plank levels stands against the left half of the front. At the back right of the plot, a slim ochre-yellow miniature jib crane with no cab and no operator holds one stone block in mid-air on a thin cable. Three closed, plain wooden crates stand on the earth at the left of the plot. Match the bare earth around the walls to reference image 2. Keep everything else exactly as in reference image 1: camera, framing, tile, street, sidewalks, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, operators, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.\n\nR1, the seam crate (SQUARE_1_1): A single closed wooden crate, plain and unmarked, made by the same model-maker as the reference image: the same basswood, scale and craft. Seen square-on from about 38 degrees above through a long lens, lit by the same warm workshop lamp from high upper left. It stands alone in the centre of a plain, flat, mid-grey seamless background, with only a soft contact shadow beneath it and the whole crate inside the frame with a wide margin. No lettering, stencils, labels or marks; no figures or hands.",
+          "reference": "F4: imageReferences [K1, K0], 3 calls (the big edit). R1: imageReferences [F4], SQUARE_1_1, 2 calls, then Canva remove-background, then graded in code (brightness, warmth and a navy shadow side) to match the tile.",
+          "ratio": "PORTRAIT_4_5 (F4); SQUARE_1_1 (R1)",
+          "crop": "F4 is plate-locked onto K0 as on slide 2: only the plot patch comes from F4. The crane jib must stay inside M_plot; reject any candidate whose crane crosses the boundary walls. Then T0, the clip and the fade. R1 sits at about 180px wide, base on y 1120, centre on x 0; the slide clips its right half.",
+          "type_zone": "Kicker at y 54–92 (« À VOUS, PUIS À NOUS », 534px). Headline at 112px, top y 116: lines 116–231 (872px) and 231–347 (877px). Subline top y 379: lines 379–444 (858px) and 444–509 (676px). The block ends at y 509.",
+          "coded_layer": "- Kicker « À VOUS, PUIS À NOUS ».\n- Headline: Cinzel 700, 112px. « Vous envoyez. » in #eaf1f8 / « On construit. » in #e6b450. It echoes the cover: the swipe was the send.\n- Subline: Geist 52px, #c7d5e2, forced break before « à réception »: « Votre page d’accueil : 5 jours ouvrés » / « à réception de vos contenus. » U+00A0 before the colon and between 5 and jours. The figure never travels without its condition, and « page d’accueil » sits on the same line.\n- Ghost at .30, masked to the area above the half-wall line measured on F4, so the gold drawing completes exactly the walls still to come.\n- Seam rider: R1's right half at the left edge, with a contact shadow, joining S3's half in mid-swipe.\n- Road: survey dashes.\n- No other device: the crane, the scaffolding and the rising walls are this page's one thing.\n- Alt text: « Les murs montent à mi-hauteur sous un échafaudage ; une grue soulève un bloc et des caisses fermées sont livrées. » Use U+202F before « ; », not U+00A0: set « échafaudage ; une grue ».",
+          "fact_sources": "prev.tl3 shortened (« Vous envoyez votre contenu, on construit votre page d’accueil ») + prev.tl3d « 5 jours ouvrés », with the required « à réception de vos contenus » (claims.md §1.3)."
+        },
+        {
+          "n": 5,
+          "beat": "The craft beat: short and punchy, with a deliberate dip in the light before the reveal. Takeaway: designed for you, never a re-coloured template. Focal object: a tailor's tape measure draped over the parapet of the finished, still-wrapped shop, enlarged in a loupe with its graduations drawn in code. Change: walls, roof and parapet complete; the window wrapped in kraft paper. Pull: what is behind the paper?",
+          "kicker": "À nous",
+          "headline": "Sur mesure.",
+          "subline": "Jamais un modèle tout fait repeint à vos couleurs.",
+          "image": "F5, depth 2: an edit of K1. The finished shop, its big window covered in brown kraft paper tied with string, the window light off. A plain golden tape measure is draped over the parapet's right corner and hangs to the sidewalk. Plus D5, a close-up of the tape on the parapet for the loupe.",
+          "image_prompt": "F5 (PORTRAIT_4_5): Edit this photograph of a scale model. Change only two details. The large shop window is now covered with brown kraft paper, taped at its edges and tied with fine string, and its light is off. A plain golden-yellow tailor's tape measure, completely blank with no numbers, ticks or printing, is draped over the parapet at the right corner of the shop front and hangs down that corner almost to the sidewalk. Keep everything else exactly as in the reference: camera, framing, tile, street, shop, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.\n\nD5 (SQUARE_1_1, the loupe detail): A close-up of the same scale model as the reference image, with the same materials, the same warm workshop lamp from high upper left and the same deep-navy shadows. Override the camera only: close, level with the roof, very shallow depth of field. The right corner of the shop's lime-white parapet, with a plain golden-yellow tailor's tape measure draped over it and hanging down the corner. The tape is completely blank: no numbers, ticks, marks or printing. Dark navy background. No figures or hands; no lettering anywhere.",
+          "reference": "F5: imageReferences [K1], 2 calls. D5: imageReferences [F5], SQUARE_1_1, 2 calls; reject any tape that carries digits or printed marks.",
+          "ratio": "PORTRAIT_4_5 (F5); SQUARE_1_1 (D5)",
+          "crop": "F5 is plate-locked onto K0 as on slide 2, then T0, the clip and the fade. The light dip is applied in code to the tile composite only. D5 is cropped to a 300px circle, with the tape centred.",
+          "type_zone": "Kicker at y 54–92. Headline at 140px on one line, top y 116: 116–260 (« Sur mesure. », 895px). Subline top y 292: lines 292–357 (636px) and 357–422 (532px). The block ends at y 422. Loupe Ø 300 centred on (870, 480): x 720–1020, y 330–630, 30px clear of the subline's longest line.",
+          "coded_layer": "- Light dip, on purpose: the tile composite at CSS brightness .90, its lamp haze down to .03, the road in long dashes at .85.\n- Kicker « À NOUS ».\n- Headline: Cinzel 700, 140px, the punch beat. « Sur » in #eaf1f8, « mesure. » in #e6b450.\n- Subline: Geist 52px, #c7d5e2: « Jamais un modèle tout fait » / « repeint à vos couleurs. »\n- Made to measure, drafted: two #e6b450 dimension lines at .8, 1.5px, with 12px 45° tick ends, each 24px off the geometry.\n  - One runs across the full front, 24px above the parapet.\n  - One runs up the front's left side, from the ground to the parapet.\n  - No figures, no labels.\n- Loupe:\n  - Ø 300 centred on (870, 480), styled as on slide 3, with D5 inside.\n  - Inside it, the tape's graduations are drawn in code along a line traced 4px inside the tape's upper edge: a 7px stroke in #0a1420 at .55 with dasharray 1.5 8.5 (short ticks every 10px), and a 12px stroke with dasharray 1.5 48.5 (long ticks). No numerals.\n  - A 1px #27496b leader runs from the ring's bottom to the tape on the parapet's right corner.\n- No ghost from this slide on.\n- Alt text: « La boutique est terminée, sa vitrine emballée de papier kraft ; un mètre de couturier pend du parapet. » Use U+202F before « ; », not U+00A0: set « kraft ; un mètre ».",
+          "fact_sources": "price.t1b « Design sur mesure — jamais un modèle tout fait repeint à vos couleurs », split between the headline and the subline with nothing added (copy-library › Craft and method)."
+        },
+        {
+          "n": 6,
+          "beat": "The reveal: the brightest frame so far and the emotional turn. Takeaway: we present your homepage to you, in a 30-minute video call. Focal object: the kraft paper sliding off as the window lights up with a homepage (coded, labelled « exemple »), shown flat and legible in an atlas loupe. Change: the paper falls, the light comes on, a small brass spotlight aims at the window. Pull: the road turns solid and lit.",
+          "kicker": "À nous",
+          "headline": "On vous la présente.",
+          "subline": "Votre page d’accueil, en visio de 30 min.",
+          "image": "F6, depth 2: an edit of K1, with F5 for the paper. The kraft paper slides down and crumples along the bottom of the window, revealing its even, blank, cool-white glow, which lights the far sidewalk. A small aged-brass spotlight on a low tripod stands left of the door, aimed at the window. The homepage itself is code.",
+          "image_prompt": "Edit reference image 1, a photograph of a scale model. Change only these details: the shop window has just been unwrapped. A sheet of brown kraft paper, the same as in reference image 2, is sliding down and crumpling along the bottom of the window, revealing the window's even, blank, cool white glow, which now lights the far sidewalk in front of it. A small aged-brass spotlight on a low tripod stands on the far sidewalk to the left of the door, aimed at the window. The glow stays completely blank, with nothing on it. Keep everything else exactly as in reference image 1: camera, framing, tile, street, shop, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.",
+          "reference": "imageReferences [K1, F5]: K1 is the image to edit, F5 gives the paper. 3 calls. Reject any glow that shows shapes, UI or glyphs.",
+          "ratio": "PORTRAIT_4_5",
+          "crop": "F6 is plate-locked onto K0 as on slide 2 (the spotlight and the sidewalk spill are inside M_plot). Then T0, the clip and the fade. The window-glass rectangle is the one measured on K1, re-checked on F6 (±4px).",
+          "type_zone": "Kicker at y 54–92. Headline at 112px, top y 116: lines 116–231 (512px) and 231–347 (743px). Subline top y 379: lines 379–444 (495px) and 444–509 (444px). The block ends at y 509. Loupe Ø 340 centred on (852, 560): x 682–1022, y 390–730. Check on K1 that the loupe's bottom stays at least 24px above the stair cube; otherwise use Ø 300.",
+          "coded_layer": "- Shared strip layers; the tile lamp haze is back to .06 (the dip ends).\n- Kicker « À NOUS ».\n- Headline: Cinzel 700, 112px. « On vous » in #eaf1f8 / « la présente. » in #e6b450.\n- Subline: Geist 52px, #c7d5e2: « Votre page d’accueil, » / « en visio de 30 min. », with U+00A0 between 30 and min. Naming the homepage keeps the reader from taking the finished shop as the whole site.\n- THE WINDOW: the coded homepage, mapped onto the window-glass rectangle measured on K1 (frontal, inset 3px inside the dark frame) and clipped above the paper's top edge traced on F6, so the paper crumples in front of it.\n- Homepage spec (also used on S7–S8): an 800×520 mini-page scaled to the glass.\n  - Ground: #eaf1f8 at .94.\n  - A 56px top bar with a 24px #0f1e30 circle at left and three short #0f1e30 bars at 30% at right.\n  - Two #0f1e30 headline bars (60% and 40% of the width) and two #9db2c6 text bars.\n  - A #e6b450 button block, 140×40, radius 8.\n  - An image block (a #0f1e30 to #e6b450 gradient) holding a #34d0e8 disc.\n  - Three cards outlined 1px #1c3550.\n  - No letters, no name, no logo.\n  - On the glass only: a 1px inner line rgba(10,20,32,.5), a 10% diagonal reflection, and box-shadow 0 0 36px rgba(234,241,248,.28).\n- LOUPE, the payoff at a legible size:\n  - Ø 340 centred on (852, 560), styled as on slide 3;\n  - inside, on #0a1420, the same homepage drawn flat at 290×189;\n  - a 1px #27496b leader from the ring's lower left to the glass's top-right corner, ending in an 8px ring;\n  - on the loupe's bottom rim, the « EXEMPLE » chip: Geist Mono 30px, uppercase, .14em, #9db2c6, on a #0a1420 chip, padding 6×12px, radius 4px.\n- Light: a coded pool carries the window's light onto the street (an ellipse 360×60 under the window, #eaf1f8 at .10 plus #34d0e8 at .08, screen blend), so the road brightens there.\n- Road: switches to solid and lit.\n- Alt text: « Le papier kraft glisse de la vitrine, qui s’allume sur une page d’accueil d’exemple. »",
+          "fact_sources": "prev.tl4 « On vous la présente » + prev.tl4d « visio de 30 min » (business.md, the path, step 4). The window site is a fictional mock-up labelled « exemple » (README › Imagery)."
+        },
+        {
+          "n": 7,
+          "beat": "Your call: the calm after the reveal, a breathing slide. Takeaway: you decide. Focal object: the finished shop with its lit window, framed by brass corner brackets like a plate in the atlas. Change: the paper and the spotlight are gone, and nothing moves. Pull: the road keeps going.",
+          "kicker": "À vous",
+          "headline": "Vous décidez.",
+          "subline": "None by default: the headline alone. OWNER switch, only after the owner's written yes on prev.tl5p: « Si c’est oui, la page d’accueil est déjà faite : on enchaîne sur le reste. »",
+          "image": "K1, the finished master (depth 1), shown as is. A single-storey shop: lime-white walls over an ochre-stone base; a flat roof with a low parapet and a small stair cube; three pale-limestone round arches holding a closed navy double door, a large rectangular window with a fanlight, and a small grilled window. An unlit lantern hangs beside the door. The window glows an even, blank cool white. No sign, no plaque, nothing in the street.",
+          "image_prompt": "Edit this photograph of a scale model. Change only the bare plot between the two boundary walls: a finished single-storey shop now stands on it, facing the camera, set back behind the far sidewalk and filling most of the plot's width. It has lime-white walls over a low ochre-stone base, a flat roof with a low parapet, and a small whitewashed stair cube on the roof at the right. The front has three round arches dressed in pale limestone: the left arch holds a closed deep-navy wooden double door with a small brass handle; the centre arch holds a large rectangular shop window in a thin dark frame, with a plain semicircular fanlight above it; the right arch holds a small window behind a simple wrought-iron grille. A plain black wrought-iron lantern, unlit, hangs on a bracket on the wall to the left of the door. The large shop window and its fanlight glow with an even, blank, cool white light, like a lit screen with nothing on it. No sign and no plaque. Keep everything else exactly as in the reference: camera, framing, tile, street, sidewalks, boundary walls, neighbouring houses, street tree, street lamp, ridge and lighting. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.",
+          "reference": "imageReferences [K0], 4 calls. K1 is the second image generated, and the master for F4, F5, F6, F8, the ghost drawing and the window rectangle. Lock it; never regenerate it later.",
+          "ratio": "PORTRAIT_4_5",
+          "crop": "K1 is plate-locked onto K0 (four anchors, M_plot patch, exposure match), then T0, the clip and the fade. Reject K1 if its shop leaves the boundary walls, or if the stair cube's top lands above y 640 after T0.",
+          "type_zone": "Kicker at y 54–92. Headline at 124px on one line, top y 116: 116–244 (932px). No subline by default. With the owner switch: lines 276–341 (678px) and 341–406 (926px). Brackets around the shop front at about x 260–820, y 712–1044 (measured on K1). « EXEMPLE » chip at about x 840–1000, y 640–684.",
+          "coded_layer": "- Kicker « À VOUS ».\n- Headline: Cinzel 700, 124px. « Vous » in #eaf1f8, « décidez. » in #e6b450.\n- No subline by default.\n- OWNER switch: « Si c’est oui, la page d’accueil » / « est déjà faite : on enchaîne sur le reste. », Geist 52px, #c7d5e2, top y 276, U+00A0 before the colon. No image change goes with it: no annex, no upper floor, no roof sketch.\n- Window: the same coded homepage on K1's glass.\n- « EXEMPLE » chip in the calm area above the roofline at right, at least 24px clear of the stair cube and the brackets, with a 1px #27496b leader to the glass's top-right corner.\n- THE FRAME: four #e6b450 L-brackets, 2px, 40px legs, set 24px outside the finished front's measured bounds (from the base of the walls to the top of the stair cube). The shop is presented as a plate in the atlas: done, and still.\n- Light: the window pool on the street, as on slide 6.\n- Road: lit.\n- Alt text: « La boutique terminée, vitrine allumée, encadrée comme une planche d’atlas. »",
+          "fact_sources": "prev.tl5 « Vous décidez » (business.md, the path, step 5). prev.tl5p is OWNER (claims.md §1.3, business.md), so it stays behind the switch. prev.outcome is not used: copy-library files it under Gate B."
+        },
+        {
+          "n": 8,
+          "beat": "We stay: the warm resolution. Takeaway: launch day is not goodbye. Focal object: the shop with its door half open on warm light, the lantern and the street lamp lit, and a young olive tree newly planted out front. Change: the model's own lights come on, and the workshop light stays the same (no night, no time passing). Pull: the road runs off the tile into the end card.",
+          "kicker": "Et après",
+          "headline": "On reste.",
+          "subline": "Pas de « bonne chance » le jour de la mise en ligne.",
+          "image": "F8, depth 2: an edit of K1. The left door leaf stands half open, with warm light spilling onto the sidewalk. The lantern beside the door glows warm. The street lamp at left is lit, with a warm pool. A young olive tree stands in a square limestone surround on the far sidewalk, left of the door. The window keeps its blank glow (coded homepage on top), and the workshop lamp is unchanged.",
+          "image_prompt": "Edit this photograph of a scale model. Change only these details: the left leaf of the navy door now stands half open, with warm brass-gold light from inside spilling over the threshold onto the far sidewalk. The wrought-iron lantern beside the door is lit with a warm flame-coloured glow. The street lamp on the far sidewalk at the left is lit, casting a soft warm pool on the sidewalk and the street. A young olive tree, newly planted in a square limestone surround, stands on the far sidewalk in front of the shop, to the left of the door. The workshop light stays exactly as it is: no dusk, no night. The shop window keeps its blank cool white glow. Keep everything else exactly as in the reference: camera, framing, tile, street, shop, boundary walls, neighbouring houses with their shutters closed, street tree, ridge. No figures, hands, animals or vehicles; no lettering, numbers or marks anywhere; no glowing lines.",
+          "reference": "imageReferences [K1], 3 calls. Reject any candidate that darkens the scene, lights the neighbours' windows or adds a sky.",
+          "ratio": "PORTRAIT_4_5",
+          "crop": "F8 is plate-locked onto K0 as on slide 2, with a second patch, M_lamp: the lamp post from its base to 30px above its head, plus its pool on the sidewalk and the street, feathered 16px. Everything else is K0, so the neighbours stay shuttered. Then T0, the clip and the fade.",
+          "type_zone": "Kicker at y 54–92 (« ET APRÈS », 225px). Headline at 148px on one line, top y 116: 116–268 (756px). Subline top y 300: lines 300–365 (589px) and 365–430 (613px). The block ends at y 430.",
+          "coded_layer": "- Shared strip layers; the Arcanum brass crown begins at the top right.\n- Kicker « ET APRÈS », with no question mark: Geist Mono has no U+202F, and no ; ! ? goes on a visual.\n- Headline: Cinzel 700, 148px. « On » in #eaf1f8, « reste. » in #e6b450.\n- Subline: Geist 52px, #c7d5e2: « Pas de « bonne chance » » / « le jour de la mise en ligne. », with U+00A0 inside the guillemets.\n- Window homepage, « EXEMPLE » chip and leader as on slide 7, re-measured on F8.\n- Light: the window pool, plus warm pools carrying the door's light and the street lamp's light onto the street (ellipses 200×44 and 260×50, #e6b450 at .10, screen blend).\n- Road: lit; it leaves the right bridge into the end card.\n- Alt text: « Porte ouverte, lanterne et réverbère allumés, un jeune olivier planté devant la boutique. »",
+          "fact_sources": "faq4.a « On reste. » and « Pas de « bonne chance » le jour de la mise en ligne. » (copy-library › Craft and method). Nothing says what support covers."
+        },
+        {
+          "n": 9,
+          "beat": "The close: who built it, where, and where to go next. The table runs on, empty, past the last model. The plaster ridge of the tiles becomes the brand's engraved Bibans, and the road ends at « Lien en bio ».",
+          "kicker": "None",
+          "headline": "Numidea Labs (the wordmark)",
+          "subline": "Studio web & logiciel · Bordj Bou Arréridj, Algérie — Enraciné en Numidie · bâti sur des idées — Lien en bio",
+          "image": "No render. Coded tabletop, Plate I (the engraved Bibans) as a luminance mask, and the end of the road.",
+          "image_prompt": "None: coded only, no image generation.",
+          "reference": "None. Uses assets/Engravings/vista-far.webp, vista-mid.webp and vista-near.webp (Plate I), as the design system allows.",
+          "ratio": "None: coded 1080×1350",
+          "crop": "No render. Plate I spans the full width at y 560–1018 (its 1600×679 source scaled to 1080 wide) and is never behind a line of text.",
+          "type_zone": "Wordmark at 88px, x 54–767, y 180–270. Label on two lines: 312–362 (588px) and 362–412 (756px). Motto at y 440–495 (796px). Plate I band at y 560–1018. Plate caption chip at (54, 1034). Road at y 1120, terminus at x 420. « LIEN EN BIO » at x 468–794, centred on y 1120. Table-edge hairline at y 1318.",
+          "coded_layer": "- Shared strip layers continue: ground, grid (fading by y 620), tabletop band, table-edge hairline, and the brass crown at the top right (radial at (980,120), r 700, rgba(230,180,80,.10)). There is no tile: the table runs on, empty, past the last model.\n- Lockup at x 54, from y 180:\n  - The wordmark at 88px: Cinzel 700, .04em, #eaf1f8 « Num » and « Labs »; « idea » in Geist 600 #34d0e8; a #e6b450 block 36×80px, logo-scaled, no glow.\n  - The label in Geist Mono 40px, .1em, #34d0e8, on two lines: « Studio web & logiciel » / « Bordj Bou Arréridj, Algérie ». The line break replaces the middle dot.\n  - The motto in Geist 44px #9db2c6: « Enraciné en Numidie · bâti sur des idées ».\n- Plate I, luminance masks:\n  - vista-far inked #9db2c6 at .32;\n  - vista-mid inked #34d0e8 (teal-text) at .42;\n  - vista-near inked #c7d5e2 at .26;\n  - each skyline filled with a void–navy mix, darker toward the viewer.\n  - Caption chip: « Pl. I — Les Bibans · Bordj Bou Arréridj », Geist Mono 24px #9db2c6 on a #0a1420 chip (padding 3×7px, radius 3px).\n- Road: enters lit at y 1120 and ends at the terminus ring at x 420. « LIEN EN BIO » in Geist Mono 40px, .14em, #eaf1f8, at x 468, centred on y 1120, so the road ends on the pointer.\n- No URL, email, phone, handle or ref code.\n- Alt text: « Numidea Labs, studio web et logiciel à Bordj Bou Arréridj, Algérie. Lien en bio. »",
+          "fact_sources": "hero.eyebrow (the label), footer.tag (the motto), the end-card pointer « Lien en bio » (copy-library Pillar 5; README › Per market, Algeria), Plate I files and inks (README › The engraved plates)."
+        }
+      ],
+      "generation_order": [
+        "0 · Gate: run nothing until the owner approves generation (the user asked for planning only). Log every Canva media id. Each call returns one image, so 'candidates' means calls.",
+        "1 · K0, the bare plate (slide 1, and the plate for every slide's surroundings) · text-to-image · PORTRAIT_4_5 · no reference · 4 calls · the owner approves its local look before anything else",
+        "2 · K1, the finished master (slide 7, and the source of every later frame) · edit · imageReferences [K0] · PORTRAIT_4_5 · 4 calls · lock it",
+        "3 · Pilot gate (no call): register K1 onto K0 and measure the edit fidelity. Set T0, y 1120, M_plot, the window-glass rectangle and the stair-cube top. Trace the ghost SVG from K1. Re-roll K1 if its shop leaves the walls or the plot geometry moved more than 15px.",
+        "4 · F4 (slide 4) · edit · [K1, K0] · PORTRAIT_4_5 · 3 calls",
+        "5 · R1, the seam crate (S3|S4) · edit · [F4] · SQUARE_1_1 · 2 calls · on flat mid-grey, then Canva remove-background",
+        "6 · F5 (slide 5) · edit · [K1] · PORTRAIT_4_5 · 2 calls",
+        "7 · F6 (slide 6) · edit · [K1, F5] · PORTRAIT_4_5 · 3 calls",
+        "8 · TEST: compose slides 1, 4 and 6 in Claude Design, fully coded (K0 with the ghost; F4 with R1 and the ghost; F6 with the homepage and loupe). The owner judges the look before more calls are spent.",
+        "9 · F2 (slide 2) · edit · [K0, K1] · PORTRAIT_4_5 · 2 calls",
+        "10 · F3 (slide 3) · edit · [K0, K1] · PORTRAIT_4_5 · 2 calls",
+        "11 · F8 (slide 8) · edit · [K1] · PORTRAIT_4_5 · 3 calls",
+        "12 · D3, the seal detail (slide 3 loupe) · edit · [F3] · SQUARE_1_1 · 2 calls",
+        "13 · D5, the tape detail (slide 5 loupe) · edit · [F5] · SQUARE_1_1 · 2 calls",
+        "14 · Compose all nine slides on the 9720×1350 strip (slide 9 needs no generation). QA: 200% inspection, contact strip, phone swipe, banding, French spacing. Export nine 1080×1350 PNGs with alt texts. Total: 29 planned calls plus about 9 re-rolls, about 38."
+      ],
+      "test_frames": [
+        1,
+        4,
+        6
+      ],
+      "caption": "Vous glissez. On construit. La création de votre site sur mesure, du terrain nu à la vitrine allumée.\n\nFaites défiler : à chaque image, la maquette avance d’une étape. Le chantier, c’est pour nous.\n\nLa boutique est fictive, à titre d’exemple ; sa vitrine figure votre page d’accueil. Images de synthèse, composées par le studio.\n\nNumidea Labs · Studio web & logiciel · Bordj Bou Arréridj, Algérie\nEnraciné en Numidie · bâti sur des idées\nLien en bio.\n\n#creationsiteweb #siteweb #sitesurmesure #algerie #bordjbouarreridj",
+      "compliance_changes": [
+        "Decision slide: prev.tl5p (« Si c’est oui… on enchaîne sur le reste ») is off by default, because claims.md §1.3 and business.md mark it OWNER. Slide 7 runs the headline alone; an owner switch restores the line word for word, only after his written yes.",
+        "prev.outcome (« Vous dites oui en connaissance de cause… ») is not used as a fallback: copy-library files it under Gate B and it makes the Aperçu explicit.",
+        "No 'rest' imagery anywhere: no annex, upper floor, roof frame or roof sketch. What follows a yes is undecided, so the owner switch changes copy only.",
+        "One constant workshop light from slide 1 to slide 8: no sun, sky, dusk or night. Only the shop's own lights switch on (the window on 6; the door, lantern and street lamp on 8), so nothing implies a one-day build. The neighbours stay shuttered.",
+        "The cover hook carries no time word and no product word: « bientôt » and the « vitrine »/site-vitrine pun are dropped, so the cover cannot borrow the site-vitrine lead time.",
+        "Step 2 uses the copy-library line with « D’abord » (from the facts bank's 'First with our questions'). The condition « dès que le cadrage est validé ensemble » sits on the same slide as « un prix ferme ». « Pas une fourchette, un chiffre » is left out. The wording is exact: « dès que », not « une fois »; « On construit », not « On bâtit ».",
+        "« 5 jours ouvrés » appears only with « à réception de vos contenus », on the same line as « Votre page d’accueil ». Slide 6 repeats « Votre page d’accueil » so the finished shop is not read as the whole site. The caption says the window stands for the homepage. No duration is summed anywhere.",
+        "Facts are said once (README › Spacing and layout). The caption does not retell the steps or the durations, and has no line listing the client's whole role (« À vous : décrire… » removed).",
+        "The content crates are closed and unmarked: no papers, framed pictures or labels. What the client supplies stays unsaid (claims.md §3). Building materials are no longer shown as the client's delivery.",
+        "The shop has no sign board and no plaque. The rendered window glow is blank, and the homepage is coded with no letters. « exemple » appears on every frame where the site shows (the loupe rim on 6, a chip with a leader on 7 and 8).",
+        "No light is drawn by the generator: the gold drawing, pen-tip spark, road, dimension lines, brackets and pools are all code. Every prompt excludes glowing lines. The words 'pen' and 'sketch' are gone from the prompts, and every call excludes hands.",
+        "The crane has no cab and no operator. The tape measure, the wax seal and the paper are blank; the tape's graduations are drawn in code inside the loupe, with no numerals.",
+        "Glow is capped to README's 'no neon bloom': the road halo is 12px at .30 with no wide spill; the drawing's glow is 10px at .35, on lines only; the wordmark block has no glow at scaled sizes. There is never a glow, gradient or shadow on type.",
+        "Local look: the palms are gone (they are rare on the high plateaus), replaced by a clipped street tree and a newly planted young olive. No domes, minarets, flags, zellige or souk. The owner approves K0 before the chain starts.",
+        "No hex codes in any generation prompt; the palette is held by one shared CSS grade. Edit prompts state only the change, plus a one-line exclusion.",
+        "No numbered kicker, page count, tile map, exit teaser or chevron. The kickers name who acts (À vous / À nous / À vous, puis à nous / Et après), and the road's dash states show progress.",
+        "French typography is specified per string: U+00A0 in « 24 h », « 5 jours » and « 30 min », before every « : » and inside « » ; typographic apostrophes. No ; ! ? sits on a visual (Geist Mono lacks U+202F, so the last kicker reads « Et après »). In the caption and alt texts: U+00A0 before « : » and U+202F before « ; ».",
+        "Every text block was measured with the shipped woff2 faces (HarfBuzz, kerning on) and ends above y 560. « On construit. » measures 1002px at 128px, so the cover runs at 120px (940px), inside the 972px measure.",
+        "The caption discloses « Images de synthèse » and the fictional shop. The renders are never called hand-made or real. Instagram's AI label is accepted, not stripped.",
+        "No URL, email, phone, handle or ref code on any visual. The end card says « Lien en bio ». The link goes out without the Aperçu share-card preview until Gate B (marketing.md › Link previews).",
+        "Never in the piece, caption or replies: « Aperçu », « gratuit », « free », « avant de payer », « 0 DA », « sans engagement », any price, or any call to action beyond « Lien en bio ».",
+        "No people, figurines, hands or faces in any prompt; 200% inspection of every candidate; the founder never appears.",
+        "Plate I appears only on the end card, as a luminance mask at the README's inks and strengths, never behind the model or behind type. No new engraving is made."
+      ],
+      "remaining_risks": [
+        "Aperçu by implication: slides 4 to 7 retell the Aperçu's path (homepage built, presented, then you decide) neutrally, without its name or conditions. claims.md §1.3 allows the Aperçu before Gate B only as method step 3 with its conditions. The owner, and the lawyer already consulted on step 3, must clear this neutral telling before posting. If they refuse, slides 4, 6 and 7 need new copy; no rewording can fix it.",
+        "Generated images: claims.md rule 7, README › Imagery and claims.md §5 still forbid them. Record the owner's override, with its date and scope (art-directed renders, brand palette, no faces, no client work, light only in code or practicals), before publishing. Otherwise the piece fails pre-publish check item 2.",
+        "prev.tl5p stays OWNER. Slide 7 ships headline-only until the owner confirms it in writing.",
+        "Edit fidelity is unknown until the pilot gate. Plate lock absorbs any drift outside the plot, but not a shop that wanders inside it. F4 (the subtractive build) and F8 (lights switching on) are the likeliest re-rolls.",
+        "Patch seams: if a patch's exposure or registration misses, the 20px feather along the wall faces can show a halo or a doubled edge. Inspect at 200% and fix with the per-slide exposure match, not by widening the mask.",
+        "Generator habits: miniature scenes pull in tiny figures, crane operators, pseudo-letters on the seal, tape or window, and sometimes a pedestal under the tile. Every candidate is inspected at 200%; regenerate rather than retouch, above all on the cover.",
+        "A crisp coded road over a tilt-shift photo can look pasted on if the street falls outside the focus band. The fallback is ready: halo 14px, hot centre .5.",
+        "Even with « Votre page d’accueil » on slides 4 and 6 and the caption note, a reader may still take the finished shop to mean the whole site in 5 working days. The owner should read the sequence with that question in mind.",
+        "Layout depends on K1's measured geometry: the stair-cube top must land at y 660 or lower for the 440→620 fade and the slide 6 loupe. Otherwise move the fade to 400–580, shrink the loupe to Ø 300 and keep the text above y 540.",
+        "On slides 7 and 8 the window is only about 200px wide, so the homepage is legible as a layout only through the slide 6 loupe. That is deliberate, but the owner may want the loupe repeated on slide 7.",
+        "Seams and compression: cut the strip at exact multiples of 1080 with no subpixel offset. Low-alpha teal and brass glows may band after Instagram's compression; export at high quality and check on a phone.",
+        "Length: 9 slides is within the brief's 6–9 but above the design system's 5–8 guidance for Instagram. If the owner wants 8, merge slide 7 into slide 6 (subline « Votre page d’accueil, en visio de 30 min. » and headline « On vous la présente. Vous décidez. », re-measured).",
+        "Design-system departures to record, so a later review does not 'fix' them back: word kickers with no number and no page count, the atlas loupe callout, generated renders, and the 9-slide length.",
+        "Budget: about 38 Canva calls, one image each. Any later change to K1 means regenerating F4, F5, F6, F8, R1, D5 and the traced ghost.",
+        "Scope: this is the production plan for one carousel. Nothing has been generated, in line with the user's 'planning only' instruction."
+      ]
+    },
+    "reviews": [
+      {
+        "reviews": [
+          {
+            "name": "La table de maquette · Vous glissez. On construit.",
+            "score": 7.5,
+            "strengths": [
+              "Best cover of the three. The full finished shop stands on the empty plot as a crisp coded gold elevation, traced from the final frame, so in under a second the reader sees what will be built. The 132px hook « Vous glissez. On construit. » sets the rule of the game. « Glisser » means both 'swipe' and 'go smoothly', so the owner's message (smooth and easy) is in the hook itself.",
+              "The safest production plan. Renders never contain light lines (the negative block bans glowing lines), so every glow is in code: the ghost drawing, the road and the window homepage. That removes the main way the rejected 'random teal light ribbon' or sci-fi neon look could come back.",
+              "The frontal locked camera makes every overlay plain 2D: the homepage is a rectangle, and the brackets and dimension lines need no perspective maths. Coded 48px joints with brass joiner plates mean no render has to match another pixel for pixel at a seam. This is the only variant whose seams cannot break.",
+              "The drawing turns into the building. The same traced path runs at 100%, then .45, .35 and .30, and is finally replaced by real walls. This is the clearest visual proof that the world builds itself.",
+              "Good rhythm. The Vous/On headlines alternate (the reader's acts are tiny, the studio's are heavy). S4 is a headline-only breathing slide. S6 has a curiosity gap: the linen cloth is half slid off a dark window, a brass spotlight is aimed at it, and S7 pays it off with the lit window. On S7, the annex stakes rhyme with S2.",
+              "The tile fills almost the full slide width, so the build stays legible on a phone. Variant 1's band is about 780px wide; this one is 1032px.",
+              "A free second asset: the normalised frames play as stop-motion and give a 6–8 s Reel with no new generation. The coded end card with engraved Plate I ties the model to the brand's atlas.",
+              "Copy discipline is the best of the three. Step 2 is claims.md §1.4 word for word, with the scoping condition. « 5 jours ouvrés » never appears without « à réception de vos contenus ». The S7 fallback is prev.outcome, which is OK, with S7b/S8b frames ready."
+            ],
+            "fatal_flaws": [
+              "The camera is frontal at 32° above the tabletop. That is the weakest angle for the miniature illusion: tilt-shift charm needs a higher view. The model may read as a dollhouse on a shelf rather than an exquisite tabletop world, which undercuts the owner's 'premium renders'.",
+              "The tile map (nine squares top right, the current one filled) is a page counter by another name. It brings back some of the UI chrome and progress-list feel the owner rejected.",
+              "S4's 'delivery' of crates plus cut stone plus timber beams makes « vos contenus » read as the client supplying building materials. That says the opposite of 'easy' and touches the undecided item of what the client supplies (claims.md §3).",
+              "The S5 text block is very likely to overflow. A 3-line 96px headline, 32px gap and 2-line 52px subline end around y 613, past the y 600 limit, where the image fade begins.",
+              "The ghost elevation is traced from S7 but overlaid on S5's half-built walls. Any drift between S5 and S7 will show as the drawing missing the walls, and S5→S6 is the riskiest edit.",
+              "Only one payoff relight (night). It is a weaker emotional landing than variant 1's dusk-then-night street coming alive."
+            ],
+            "fixes": [
+              "Generate P0 candidates at about 38–40° (still frontal and symmetric) with stronger tilt-shift. Pick by phone-size thumbnail appeal, not only by levelness.",
+              "Replace the tile map with variant 1's kickers « À vous / À nous / Vous et nous », or drop it. Progress is already carried by the road and the build.",
+              "S4: show only the unmarked crates of blank papers and blank frames. Cut the stone stack and the timber. Let the coded brass parcels on the road carry the 'content in transit' idea.",
+              "S5: shorten the headline to « On construit. » (one line, 132px) and move « votre page d'accueil » into the subline (« Votre page d'accueil : 5 jours ouvrés à réception de vos contenus. »), so the block ends above y 600.",
+              "Draw the S5 ghost only on parts that are clearly unbuilt (parapet, rooftop cube), traced from S5's own registered walls, or drop it from S5.",
+              "Graft a dusk step, or variant 3's deliberate light dip on S5/S6 before the reveal, so the lit window lands harder.",
+              "Ship S7b/S8b (with prev.outcome) as the default, and switch to prev.tl5p and the annex only after the owner's written yes."
+            ]
+          },
+          {
+            "name": "Ici, bientôt, votre vitrine (one plot, one camera)",
+            "score": 6.5,
+            "strengths": [
+              "The purest version of the direction the owner chose: one plot, one locked high three-quarter camera, every swipe a new state of the same model. It is true stop-motion, and the 3/4 tilt-shift view is the most premium-looking miniature of the three.",
+              "The cover headline is the wittiest line in the set. « Ici, bientôt, votre vitrine. » plays on the familiar construction hoarding sign and on « vitrine » as both shop window and « site vitrine », and it is aimed at the owner's own shop.",
+              "The kickers « À vous / À nous / Vous et nous » let the reader count their own small share. That is the cleanest way to prove 'easy' without claiming it.",
+              "The strongest payoff: S7 window on, S8 dusk with neighbours' windows, lamps, open door and glowing groove, S9 night with a lantern and a newly planted olive tree. The olive tree quietly rhymes with « Enraciné ».",
+              "Good seam craft. One y_A constant, dash periods that divide pathLength, a crate that straddles the S4|S5 seam as content in transit, and dash states (chalk, survey, long dash, solid) that work as a progress meter in place of numerals.",
+              "A rigorous anti-drift plan: P0 plate, 4 candidates, 50% onion-skin, 3-anchor registration with 6px residual, exposure matching. The window homepage is coded and mapped with matrix3d, labelled « exemple »."
+            ],
+            "fatal_flaws": [
+              "The hero visuals are asked of the generator against its own negative block. S1's pen of light with sparks, S2's whole shop drawn in glowing teal lines in the air and S8's roof sketch are all requested in the render, while the negative block bans neon, holograms, sci-fi and light ribbons. The likely output is the holographic-neon look that echoes the rejected 'random teal light ribbon'. The SVG fallback covers only P2, not the cover (P1) or P8.",
+              "Too much on every slide: kicker, 2-line headline, 2-line subline, exit teaser, brass chevron, road, grid, two scrims, question pins, dimension lines, crate, chip. With the top 28% and bottom 18% reserved, the diorama is a roughly 780px band squeezed between text. It does not feel fast-paced.",
+              "The middle sags at phone size. S3 (stakes, a pennant, a tripod level) and S4 (strings, a trestle table, a wax seal) are tiny changes that will be mush on a phone. Two weak swipes in a row, in a 9-slide set.",
+              "The exit teasers (« Notre réponse → », « Le cadrage → », « Vos contenus → »...) chained across seven slides read as a table of contents, which brings back the list feel. With the chevron and the road there are three swipe cues per slide.",
+              "S9 crams the end card into the night render: headline, subline, chip, road terminus, « Lien en bio » and a three-part lockup. The final beat loses its calm."
+            ],
+            "fixes": [
+              "Take every light drawing out of the renders. The camera is locked and frames are registered, so trace the finished P7 outline once in image space and reuse that SVG as the pen stroke on S1, the full sketch on S2 and the roof sketch on S8. It needs no perspective maths, and the glow stays in code (variant 2's method).",
+              "Cut the exit teasers, or keep one on S1 only, and drop the chevron. The kicker, the road and the crate carry the momentum.",
+              "Merge S3 and S4 into one 'reply + scope' slide (as variant 2 does) to free a slot. Use it for a clean coded end card, so S9 is just the night render with « On reste. ».",
+              "Raise the block to about 85% of frame width and shrink the reserved bands. Add a variant 3-style loupe on any slide whose key change is a small prop.",
+              "Default S8's subline to « La décision vous revient. » or prev.outcome until the owner confirms prev.tl5p in writing.",
+              "Drop « bientôt » if the owner reads it as a time promise. « Ici, votre vitrine. » keeps the pun."
+            ]
+          },
+          {
+            "name": "La rue qui se bâtit (the Street Panorama)",
+            "score": 5.5,
+            "strengths": [
+              "The most entertaining individual set pieces in the set: a tailor's tape measure draped over the parapet for « sur mesure », a window wrapped in kraft paper that slides off at the reveal, and a deliberate light dip just before it.",
+              "Atlas-style loupe callouts, matching the brand's engraved-atlas world, make small details (the wax seal, the tape on the cornice) legible at phone size. This is the only variant that solves the small-prop problem.",
+              "Seamless half-objects on every seam (half palm, half crates, half scaffold, half lamp, half Timgad-like arch) are the strongest physical swipe cue, and the lit street lamp spills light in from the next slide.",
+              "Real Instagram know-how: slide 2 is built as a second cover because Instagram re-serves unswiped carousels from slide 2. The stage can be mirrored for an Arabic right-to-left version.",
+              "A smart way to hold geometry: generate the finished master first, then take it apart backwards. The light grows from left to right, so brightness itself pulls the eye."
+            ],
+            "fatal_flaws": [
+              "It abandons the chosen direction. Mapping time onto space gives a street of seven copies of the same shop at different stages, which readers will see as seven different shops (the variant admits this). Swiping becomes walking down a street, not watching one world build itself, so 'you do nothing and it builds' is diluted.",
+              "A strict side-on elevation at rooftop height, 10° down, against a flat navy cyclorama with the mountains banned from the render, kills the tilt-shift miniature effect. It reads as a stage flat or dollhouse, not a premium diorama, and the facade is only about 550px wide on the slide.",
+              "The cover is overloaded. It carries the step-1 fact (« Vous décrivez le projet : deux minutes… ») under the hook, which spends the cover on information instead of the pure promise.",
+              "The heaviest and most fragile production: 7 lots, 6 background-removed cut-outs (palm fronds, scaffold lashings) and 2 detail shots, about 45 generations. It also relies on 300px feathered cross-fades between different renders' ground textures, which will smudge, and any change to the master invalidates the whole chain.",
+              "The window website is generated inside the render (lots 4–6), which risks gibberish UI. Variants 1 and 2 code it.",
+              "Copy drift: « une fois le cadrage validé ensemble » replaces the source's « dès que le cadrage est validé ensemble », and « On bâtit » replaces « on construit ». The brief allows facts only as written or shortened."
+            ],
+            "fixes": [
+              "Fold its best devices (loupe, kraft-paper reveal, tape measure, light dip, half-object seams) into the one-plot model rather than shipping the panorama.",
+              "If the street is kept, raise the camera, restore the Bibans in the render, and lay one identical coded ghost silhouette over every lot so 'same shop, later' is unmistakable.",
+              "Make the cover pure hook and move step 1 to slide 2, which doubles as the second cover.",
+              "Code the window homepage and the cover thread outline. Keep the renders free of glow lines and UI.",
+              "Restore the exact wording: « dès que le cadrage est validé ensemble » and « On construit ».",
+              "Replace the cut-out set pieces with coded out-of-focus silhouettes on the seams to cut the generation count and the fringe artefacts."
+            ]
+          }
+        ],
+        "best_ideas_to_graft": [
+          "BEST HOOK: « Vous glissez. On construit. » (variant 2, shared by variant 3). « Glisser » is both the swipe and 'going smoothly', so in four words the hook states the mechanic, the reader's tiny effort and the studio's work. Keep « Ici, bientôt, votre vitrine. » (variant 1) as the runner-up: use it as the caption's opening line, or as a coded construction-hoarding panel on the empty plot on the cover.",
+          "From variant 2 into everything: the renders never contain light lines. Trace the finished frame's outline once and reuse that SVG as the cover's ghost drawing, then fade it as the walls replace it. With a locked camera and registered frames, this also works in variant 1's 3/4 view with no perspective maths, and it removes the neon and light-ribbon risk.",
+          "From variant 1 into variant 2: the kickers « À vous / À nous / Vous et nous » in place of the tile map. The reader counts their own small share, which proves 'easy' with no page counter.",
+          "From variant 1: the two-step payoff relight. Dusk with the street coming alive (neighbours' windows, lamps, open door, glowing groove), then night with a lantern and a newly planted olive tree, a quiet echo of « Enraciné en Numidie ».",
+          "From variant 3: a deliberate light dip on the slide before the reveal, plus a wrapped window (kraft paper, or variant 2's half-slid linen cloth) that slides off on the next swipe. Each swipe opens a curiosity gap and the next one closes it.",
+          "From variant 3: the tailor's tape measure draped over the parapet as the « Sur mesure » beat. It is the most entertaining visual pun in the set; pair it with variant 1's drafting dimension lines.",
+          "From variant 3: atlas-style loupe callouts on any slide whose change is a small prop (stakes, seal, plan), so mid-sequence slides stay readable on a phone.",
+          "From variants 1 and 3: one physical object straddling a seam, such as variant 1's content crate across S4|S5, or a half palm or half street lamp whose lit pool spills in from the next slide. It is the strongest thumb cue without arrows or teasers.",
+          "From variant 3: write slide 2 as a second cover (a strong stand-alone headline and image), because Instagram re-serves unswiped carousels from slide 2.",
+          "From variant 2: coded joints between tiles (brass joiner plates with the road as a light bridge) whenever renders cannot be made to match at a seam. Also a free stop-motion Reel from the same normalised frames.",
+          "From variant 2: merge 'reply + scope + firm price' into one slide (claims.md §1.4 step 2 word for word, with the scoping condition). This frees a slot for a clean coded end card with engraved Plate I and the road ending at « Lien en bio ».",
+          "For all three: default the decision slide to prev.outcome (OK) and the frames without the annex. Switch to prev.tl5p and the 'next floor' or annex visual only after the owner's written yes."
+        ],
+        "ranking": [
+          "La table de maquette · Vous glissez. On construit.",
+          "Ici, bientôt, votre vitrine (one plot, one camera)",
+          "La rue qui se bâtit (the Street Panorama)"
+        ]
+      },
+      {
+        "reviews": [
+          {
+            "name": "Ici, bientôt, votre vitrine (one plot, one camera)",
+            "score": 5.5,
+            "strengths": [
+              "Every quoted line on the slides traces to a listed fact. Step 1 (prev.tl1 + tl1p), « 24 h ouvrées » (tl2), « Sur mesure / Jamais un modèle tout fait repeint à vos couleurs » (price.t1b), « On vous la présente / visio de 30 min » (tl4, tl4d) and « On reste / Pas de « bonne chance »… » (faq4.a) are all exact or cleanly shortened. Nothing new is added.",
+              "Splitting step 2 is the safest handling in the set. S3 carries only « On revient sous 24 h ouvrées / D'abord avec nos questions ». S4 puts « Un périmètre écrit. Un prix ferme. » on the same page as « Dès que le cadrage est validé ensemble. », so the firm price never travels without its condition and never reads as arriving within 24 h.",
+              "« 5 jours ouvrés » always carries « à réception de vos contenus » (S5 and the caption), as claims.md §1.3 requires.",
+              "No gated wording: no gratuit, free, avant de payer, 0 DA, sans engagement or Aperçu. No price, URL, email, phone, tool or AI-model name, team size, years count, client or competitor.",
+              "French spacing is specified string by string: U+00A0 before « : », inside « », and in « 24 h », « 5 jours » and « 30 min ». The window homepage is coded, with no generated UI, and labelled « exemple » with a leader on S7–S9.",
+              "The OWNER fallback for prev.tl5p, « La décision vous revient. », restates « Vous décidez » and adds no fact or Gate B line. The caption discloses « rendus 3D générés ». The risk list is the most complete of the three (Gate B, the link preview, the generated-image override, drift, figurines)."
+            ],
+            "fatal_flaws": [
+              "Implied duration: the lighting tells one day. P0 is 'Early, quiet, waiting' under a low warm sun, the build S1–S7 runs in that light, S8 (Vous décidez) is dusk and S9 is night. The sequence from describing the project to the decision reads as morning to night, a summed, invented duration the brief forbids.",
+              "Inflated speed on the cover: « Ici, bientôt, votre vitrine. » ties « vitrine » to the site-vitrine vocabulary (Essentiel, whose real lead time in faq1.a is 2 à 4 semaines) and adds « bientôt ». The full shop then stands finished at the 5-days/presentation step (S7), which implies the whole site vitrine is done in 5 working days, not the homepage.",
+              "prev.tl5p (« Si c'est oui, la page d'accueil est déjà faite : on enchaîne sur le reste. ») sits on S8 and in the caption. claims.md §1.3 and business.md mark it OWNER, out of marketing until the owner confirms in writing; the brief's listing does not override the binding claims file. The risk note also says the rooftop sketch 'may stay' under the fallback, which keeps the barred 'on enchaîne sur le reste' as a picture.",
+              "New implied-completeness claim in the caption: « À vous : décrire, valider le cadrage avec nous, envoyer vos contenus, décider. » presents the client's whole role as four acts. What the client supplies, revision rounds and payment are undecided items (claims.md §3), and this line implicitly says there is nothing else."
+            ],
+            "fixes": [
+              "Kill the day arc. Use one constant, sunless light from S1 to S9 (a blue-hour stage light, as variant 3 does) and remove « Early » from P0 and the dusk and night skies from P8 and P9. Let only the practical lights (window, door, lamps, lantern) switch on.",
+              "Replace the cover hook with one that names no product and no time, for example « Vous glissez. On construit. » or « Ici, votre future vitrine. ». Drop « bientôt ».",
+              "Until the owner's written yes, set S8's subline to « La décision vous revient. », cut the « Si c'est oui… » caption line and remove the rooftop light sketch from P8 and P9, since what follows a yes is undecided.",
+              "Delete the caption line « À vous : décrire, valider le cadrage avec nous, envoyer vos contenus, décider. ».",
+              "On S8, do not light the neighbours' windows as the 'street comes alive' at the decision; the beat implies a result for the client's business. Keep only the shop's own lights.",
+              "Crates (P5, R1): show closed, unmarked crates. Remove 'blank paper sheets and blank framed pictures', which depict what the client supplies (undecided, claims.md §3).",
+              "Prompts: replace 'pen of light … tip of a pen' and 'freehand architect's sketch' with 'a single bright point of light where the line ends' and 'a precise line drawing', and add 'no hand, no tool held'. The word 'pen' invites a generated hand.",
+              "Bring the lit road down to the brand's 'no neon bloom' limit: drop the 56px spill at 18% and keep the core plus at most a 10–14px halo at about 30%.",
+              "Check the caption for French spacing: U+202F in « terrain nu ; » and « Et après ? », and U+00A0 before every « : ». The slide specs declare it; the caption spec does not."
+            ]
+          },
+          {
+            "name": "La table de maquette · Vous glissez. On construit.",
+            "score": 7,
+            "strengths": [
+              "The copy is the most literal in the set. S3's subline is prev.tl2p minus its last sentence, word for word, so the scoping condition sits next to the firm price. S5 reads « On construit votre page d'accueil. » / « 5 jours ouvrés, à réception de vos contenus. », naming the homepage explicitly, so the 5 days cannot be read as the whole site.",
+              "Client supplies stay unsaid. S4 is headline-only (« Vous envoyez vos contenus. »), and the delivery is unmarked crates, stone and timber, with no papers, pictures or labels.",
+              "Least hand or person risk: the cover's sketch is a coded ghost elevation, not a 'pen'. The negative block bans figurines, hands and vehicles, and the frontal camera keeps every overlay as plain 2D.",
+              "Correct brand use: the end card inks Plate I as luminance masks at the README's own layer inks and strengths. Wordmark, label, motto and « Lien en bio »; no URL, email, phone or ref code. The road glow is held to four restrained strokes, and nothing glows on type.",
+              "Spacing is specified (U+00A0 in « 24 h », « 5 jours », « 30 minutes », before « : » and inside « bonne chance ») and is part of the export QA. No durations are summed, and the tile map carries no numerals.",
+              "Fallback frames S7b and S8b are generated in the same session, and the risk note correctly says the annex must go when prev.tl5p is refused, since what follows a yes is undecided. The caption discloses « Images de synthèse · commerce fictif, à titre d'exemple »."
+            ],
+            "fatal_flaws": [
+              "The OWNER fallback is itself barred before Gate B. The proposed S7 subline « Vous dites oui en connaissance de cause : vous avez déjà vu le résultat. » is prev.outcome, which copy-library.md files under Pillar 1 › 'Gate B: headlines, calls to action, invitations to write'. The variant's claim 'OK per claims.md' misreads §1.3. The line also makes the Aperçu explicit ('vous avez déjà vu le résultat') with none of its conditions (claims.md rule 8).",
+              "prev.tl5p sits on S7 and in the caption while claims.md §1.3 and business.md still mark it OWNER."
+            ],
+            "fixes": [
+              "Replace the prev.outcome fallback with « La décision vous revient. » (a pure restatement of « Vous décidez ») or the headline alone. Run S7b and S8b (no annex) whenever the owner has not confirmed prev.tl5p in writing, and cut the caption line with it.",
+              "Even if prev.tl5p is confirmed, use S8b under « On reste. »: an annex being framed under a worklight beside 'we stay' implies that post-launch support covers further building, and what support covers is undecided (claims.md §3, faq4.a rule).",
+              "S6 shows a sign board but no « exemple » chip. Add the chip and leader on S6, as variant 3 does, or leave the board off until S7. Resolve the contradiction between the cover ghost's 'blank sign board' and the risk note's 'the cover drawing carries no sign'.",
+              "S4: drop the 64px teal streaks behind the brass parcels. They read as light trails or swooshes, which the brief rejected, and they break the variant's own 'the road is the only teal object' rule.",
+              "Check the caption for U+202F before « ? » (« Et après ? ») and U+00A0 before every « : ».",
+              "Optional authenticity fix: swap the street palm for an olive or ficus to fit a Bordj Bou Arréridj high-plains street."
+            ]
+          },
+          {
+            "name": "La rue qui se bâtit (the Street Panorama)",
+            "score": 6,
+            "strengths": [
+              "Its visual metaphor is the most accurate on the scope of the 5 days. The ground floor and window (the homepage) finish at the presentation step, while the rooftop room ('le reste') stays a thread outline until later. The piece never implies the whole site is done in 5 working days.",
+              "Constant blue-hour stage light with no sun, clock or sky, explicitly so that the build cannot be read as 'built in one evening'. Durations appear one at a time and are never totalled.",
+              "The copy traces to listed facts. S2 keeps the scoping condition with the firm price (« une fois le cadrage validé ensemble », a faithful restatement in the site's price.estFine register), and S3 keeps « à réception de vos contenus » with « 5 jours ouvrés ».",
+              "« exemple » chips appear from the first frame where the website shows (S5) and are extended to the unwrapped sign on S6. The sign plate is blank apart from a plain circle.",
+              "The road glow is the most restrained (a 1px ring plus a 10px halo at 30%, never on type). The Bibans come from the brand's own engraving as a mask, not generated. The caption discloses that the images are generated and the shop is fictional."
+            ],
+            "fatal_flaws": [
+              "The brief's French-typography hard rule is never specified. No coded layer sets U+00A0 in « 24 h ouvrées » (S2), « 5 jours ouvrés » and before the colon of « Votre page d'accueil : » (S3), before « : » in S1's subline (« le projet : deux minutes ») and S6's subline (« déjà faite : on enchaîne »), or inside « bonne chance » (S7). Nor does it set U+202F before « ; » in the caption (« vos contenus ; on construit »). With ordinary spaces, « 24 h » can wrap and colons can open a line.",
+              "The OWNER fallback circumvents the rule. If prev.tl5p is refused, the plan keeps S6's image of the roof frame going up under a crane and lets 'the image carry the yes'. That still states 'on enchaîne sur le reste', now as a picture, and what happens after a yes is undecided (business.md).",
+              "The website in the window is generated inside the master render (G1) and inherited by every later lot, rather than composited in code. It invites gibberish glyphs or pseudo-UI text on the fictional site, with only an after-the-fact fallback."
+            ],
+            "fixes": [
+              "Add a typography spec to every coded layer and to export QA: U+00A0 in « 24 h », « 5 jours » and « 30 min », before every « : » and inside « » ; U+202F before ; ! ? (the caption's « contenus ; », « fictive, à titre d'exemple ; »).",
+              "Change the S6 fallback: if prev.tl5p is not confirmed in writing, render S6 without the roof frame or the crane and use « La décision vous revient. » or the headline alone. Remove the « Si c'est oui… » caption line.",
+              "Composite the window homepage in code (ice ground, navy bars, a brass button block, no letters) and render the glass as a blank glow in G1 to G3. Reject any render with visible glyphs.",
+              "Replace the date palms (P1, P6). They are Saharan and do not grow on the Bordj Bou Arréridj high plateaus, so they read as the postcard cliché the brief bans. Use olive trees, a ficus or a stone pillar.",
+              "P2 crates: closed and unmarked. Remove 'rolled papers and small blank picture frames', which depict what the client supplies (claims.md §3).",
+              "Add 'empty cab, no operator' to both crane prompts (G5, G2) and 'tape with no digits or printed marks' to the S4 and D4 prompts; inspect at 200%.",
+              "Add the link-preview caution to the risks: the bio link must not unfurl the site's Aperçu share card before Gate B (marketing.md › Link previews).",
+              "Keep the mirrored and tiled vista-far faint and away from type, or use the three Plate I layers unmirrored as variant 2 does, so the engraving is not visibly altered."
+            ]
+          }
+        ],
+        "best_ideas_to_graft": [
+          "From variant 1: split step 2 across two slides. S3 says « On revient sous 24 h ouvrées / D'abord avec nos questions »; S4 says « Un périmètre écrit. Un prix ferme. » with « Dès que le cadrage est validé ensemble. » on the same page. The firm price is never apart from its condition, and nobody reads 'price within 24 h'.",
+          "From variant 1: the fallback for the OWNER line, « La décision vous revient. ». It restates « Vous décidez » with no Gate B text. Use it in place of variant 2's prev.outcome (a Gate B Aperçu line) and variant 3's 'let the image carry the yes', and always remove the 'rest' imagery with it (rooftop sketch, annex, roof frame).",
+          "From variant 3: one constant, sunless stage light (blue hour, no sky, sun or stars) for the whole build. It removes variant 1's morning-to-night arc, which implies a one-day duration, and variant 2's closing night. Only the practical lights switch on.",
+          "From variant 3: map the homepage to the finished ground floor and window, and 'le reste' to an upper room still drawn in thread. It is the only metaphor that does not imply the whole site is finished in 5 working days. Graft it only if prev.tl5p is confirmed; otherwise the upper room is simply part of the building.",
+          "From variant 2: a headline-only 'content' slide (« Vous envoyez vos contenus. ») with unmarked, closed crates, stone and timber. What the client supplies stays unsaid, unlike the crates of papers and framed pictures in variants 1 and 3.",
+          "From variant 2: a coded ghost elevation for the cover sketch instead of a generated 'pen of light'. There is no pen or freehand wording to invite a hand, and the drawing registers exactly with the finished shop.",
+          "From variant 1: a fully coded homepage in the window, mapped and clipped, with no letters and labelled « exemple » with a leader on every frame where it shows. Never generate UI inside the render, as variant 3 does.",
+          "From variant 3: the « exemple » chip extended to any visible sign plate or board. Graft it onto variant 2's S6 and variant 1's plaque frames.",
+          "From variant 3: the road-glow ceiling (1px ring plus a 10px halo at about 30%, never on type), to respect README's 'no neon bloom'.",
+          "From variants 1 and 2: explicit U+00A0/U+202F specs per string plus an export QA step, covering « 24 h », « 5 jours », « 30 min », colons, guillemets and the caption's ; and ?. Graft them into variant 3, which has none.",
+          "From variant 2: generate the fallback frames (no 'rest' imagery) in the same session as the main chain, so the piece can ship at once if the owner refuses prev.tl5p.",
+          "From variant 2: the end card inks Plate I with the README's own masks and layer strengths, which is brand-sanctioned imagery for the close.",
+          "From all three, keep: the caption disclosure (generated images, fictional shop, « exemple »), no gated wording, no sums, no URL on any visual. Add variant 1's link-preview caution (a bio destination that does not unfurl the Aperçu share card) to every variant."
+        ],
+        "ranking": [
+          "La table de maquette · Vous glissez. On construit.",
+          "La rue qui se bâtit (the Street Panorama)",
+          "Ici, bientôt, votre vitrine (one plot, one camera)"
+        ]
+      },
+      {
+        "reviews": [
+          {
+            "name": "La table de maquette · Vous glissez. On construit.",
+            "score": 7.5,
+            "strengths": [
+              "Its camera is the only one of the three that works for both the generator and the coded layer. The view is square-on with a 32° downward tilt, so the street comes out as a level line. The road can then be one straight SVG at y 1120, and every overlay (the ghost elevation, the brackets, the dimension lines, the homepage in the window) is flat 2D with no matrix3d.",
+              "Its style block is the furthest from the generic AI look: « Macro photograph of a museum-grade physical architectural scale model », a chamfered tile painted navy, plaster dusted with ochre sand, basswood, photo-etched brass, static grass. That is real model-maker vocabulary. It pulls the generator toward photography and away from glossy CGI.",
+              "No light is asked of the generator: glowing lines are in the negative block, and all the teal is drawn in code. The rejected light ribbon and the hologram look cannot appear in the renders.",
+              "The seams are designed breaks. Each slide has a 48px coded joint, and the tabletop band, table edge, grid and road are drawn once on a 9720px strip. The renders never have to match pixel for pixel across a swipe. That is the honest answer to Canva's lack of outpainting.",
+              "The type stays in a fixed band (y 140–600) over the coded void and never sits on the picture. Normalisation is measurable and repeatable: front corners to x 24 and 1056, street to y 1120, a scale cap of 1.1, a rotation fix.",
+              "The cover is the most controllable hook: a photoreal empty plot with a crisp gold ghost elevation traced from the finished S7. On later slides the ghost fades (.45, .35, .30, then only the unbuilt parts), so the drawing literally becomes the building.",
+              "The Vous/On rhythm makes the client's part feel tiny. S4, with a headline and no subline, gives the sequence a breath. The S7b/S8b fallback frames for the OWNER line are made in the same session. S9 is coded only, with Plate I, so the model's ridge hands over to the brand atlas."
+            ],
+            "fatal_flaws": [
+              "The payoff frames sit deepest in the chain. S7 is the 6th successive edit (reference 1 is always the previous stage) and S8 is the 7th. Softening, colour drift and object creep pile up on the reveal and the night beat. The accepted tolerances (street 8px; palm, lamp and ridge 15px) mean the promised stop-motion re-swipe will visibly jitter.",
+              "Every edit prompt repeats the whole style block and negative block word for word, about 3,500 characters. Re-describing the full scene in an edit call pushes the model to re-render the frame instead of preserving the reference, and it raises the truncation risk. The hex codes in the prompt are either ignored or printed as text.",
+              "S7 asks the generator to paint « a simple web page made only of abstract pale blocks » in the window. That invites gibberish UI and pseudo-letters underneath the coded homepage, and fights its edges.",
+              "The fixed top fade (0% above y 520, 100% from y 700) can cut the finished parapet, the rooftop stair-cube and the ridge once the shop is built. Generators do not reliably honour « the upper 45% is empty »."
+            ],
+            "fixes": [
+              "Make the keyframes first. Generate S1 bare (text-to-image, 3–4 calls), then S7 finished and lit as one big edit of [S1] (3–4 calls). Then make the in-betweens from the nearer keyframe, with the other as the camera anchor: S2–S4 add to S1, S5–S6 strip back S7. No frame is more than 2 edits deep, and the payoff is depth 1. Make S8 (night) as a relight of S7, and S8b from S7b.",
+              "Composite a master plate on S1–S7. Outside a feathered polygon around the plot, every slide shows S1's own pixels: street, boundary walls, palm, lamp post, ridge, tile edges. Only the plot patch comes from each edit, registered on the four tile corners. The stop-motion then holds truly still and only the build moves. The rejection rate also drops, because drift outside the plot no longer matters.",
+              "Keep edit prompts to the change only, at most about 120 words: « Edit this photograph of a scale model. Change only the plot behind the far sidewalk: [delta]. Keep the camera, framing, tile, street, walls, palm, lamp post, ridge and lighting exactly as in the reference. No figures, no vehicles, no lettering anywhere. » Keep the full style block for S1 only.",
+              "S7 render: « the shop window glows with an even, blank, cool-white light, like a lit screen with nothing on it ». The coded homepage carries all the structure.",
+              "Remove every hex code from the prompts and use words instead (« one warm brass-gold workshop lamp », « deep navy shadows », « near-black background »). Enforce the palette in code with one shared grade: a CSS filter plus a low-opacity navy-to-brass gradient map, the same on every slide.",
+              "Generate the tile larger (about 95% of the width, about 70% of the height) for more detail, and shrink it into the coded void. Raise the fade to about y 430–620, then check on S6–S8 that the parapet and the rooftop cube sit below it.",
+              "At 14 × 22px the joiner plates come out about 5pt on a phone, so nobody sees them. Drop them and let the joint itself be the device: a 1px hairline-2 seam plus the teal bridge glow. Enlarge the tile-map squares to at least 28px or drop the map, since Instagram already shows the dots.",
+              "Add V1's pen-tip spark at one end of the cover's gold ghost (an 18px radial, screen blend), so it reads as being drawn now rather than as a static blueprint.",
+              "For a high-plains town, consider a young olive or a pruned street ficus instead of the palm. Palms are allowed by the brief, so confirm with the owner."
+            ]
+          },
+          {
+            "name": "Ici, bientôt, votre vitrine (one plot, one camera)",
+            "score": 6.5,
+            "strengths": [
+              "It has the best copy idea of the three. « Ici, bientôt, votre vitrine. » plays on « vitrine » as both the shop window and the « site vitrine », which an Algerian small-business owner reads in one second.",
+              "The kickers « À vous / À nous / Vous et nous » let the reader count their own small part. That proves the ease without claiming it, and replaces the numbering elegantly.",
+              "The road-line states (chalk dots, survey dashes, long dashes, then solid and lit) form a progress meter with no numerals. The dash maths is correct: pathLength 1000, periods that divide 1000 and butt caps guarantee a clean phase at every seam.",
+              "The R1 crate straddling the S4|S5 seam (your content in transit, dragged across by your own thumb) is the most entertaining seam mechanic of the three.",
+              "It has the most rigorous QA: an unpublished P0 master plate, a 50% onion-skin test, three-anchor registration with 6px or less residual, per-slide exposure matching, inspection at 200%, and a 9720px contact strip.",
+              "It splits the window correctly: the render shows a blank light panel, and the homepage is composited in code, so no generated UI ever appears.",
+              "Its local choices are the most authentic: an olive tree, no palms at that altitude, lime render, navy shutters. The dusk-to-night relight gives an emotional close."
+            ],
+            "fatal_flaws": [
+              "The hero is too small. The plot is about a third of a block that fills 72% of the width, so the shop is roughly 250–300px wide on the 1080 slide and its arched window about 120–150px. The 800×600 coded homepage, the whole payoff, shrinks to a smudge of about 50pt on a phone.",
+              "P1 and P2 ask the generator for the very things the negative block bans (« glowing lines », « holographic », « neon », sparks). On a contradictory prompt, the likeliest output for a full building drawn in light lines in the air is a Tron or hologram wireframe: the rejected sci-fi look, and on slide 2, which Instagram re-serves as a second cover.",
+              "The chain runs forward, P0 → P1 → … → P9, and adds P0 only after drift appears. The payoff frames P7–P9 are 7 to 9 edits deep, so softening and colour cast land on the most important images. The registration transform corrects translation and scale, but not neighbours whose windows have been redrawn.",
+              "A cut block of earth with visible soil strata, floating in a navy void, is the most common AI diorama trope (the floating isometric island). It reproduces the generic AI-render feel the owner rejected, only with a different subject.",
+              "The camera is turned slightly and the block fills only 72% of the width. To reach the seams, the coded road has to leave the model and cross empty void at street height. That segment is a glowing line floating in space, which is exactly a light ribbon.",
+              "It counts on the generator to leave exact 28% and 18% empty bands. Generators ignore percentage layouts, so the Bibans and the tabletop will often sit inside the type bands. The 120px two-line cover headline already fills the 378px band exactly."
+            ],
+            "fixes": [
+              "Camera: zero yaw, square-on, a 38–40° downward tilt, a long lens. Let the earth base run past both frame edges, so the street crosses from x 0 to x 1080 exactly level inside the model and the road never crosses the void. Make the lot 45–50% of the frame width, with the neighbours as partial slices at the edges.",
+              "Replace the floating strata block with a museum model base: « a dark-navy painted model baseboard with a thin cut edge of layered earth, on a model-maker's table » (borrow V2's materials vocabulary).",
+              "Make the keyframes first. P0 bare is text-to-image. P7 (finished, window lit blank) is one edit of [P0]. P3–P6 are edits of whichever keyframe is closer, with both as imageReferences. P8 (dusk) and P9 (night) are both relights of P7, not of each other. Nothing goes deeper than 2 edits.",
+              "Composite a master plate. On S1–S7, everything outside a feathered mask around the lot (neighbours, lamps, street, ridge) comes from P0's pixels, and only the lot comes from each edit. Neighbours and mountains can then never flicker, and the 3-anchor registration is needed only for the patch.",
+              "Never render light. P1 shows a physical surveyor's chalk line or taut string on the soil, and P2 shows only stakes. Draw the pen stroke, pen tip and perspective sketch in code, traced from the chosen P7 so the sketch is the real building. Make this the primary route, not the fallback.",
+              "Keep edit prompts to the change only, at most about 120 words, with no style block and no hex codes: « Edit this photograph of a scale model. Change only the lot: … Everything else stays exactly as in the reference. No figures, no lettering. »",
+              "Generate the model filling about 85% of the frame, then place it at 85–90% over a coded #0a1420 void with a feathered radial mask. Let the code create the type bands rather than asking the generator for them.",
+              "S7 payoff: add an atlas loupe (V3's device), 360–420px across, with the coded homepage flat inside, a 1px hairline-2 leader to the window, and « exemple » on the loupe.",
+              "Lighten each page: keep the kickers, and drop either the exit teasers or the question pins. Bring S4 back to 96px or more by shortening to « Périmètre écrit. / Prix ferme. », with the scoping condition still on the same page. Budget honestly: 10 frames × 4 calls plus R1 and re-rolls is closer to 55 calls than 40."
+            ]
+          },
+          {
+            "name": "La rue qui se bâtit (the Street Panorama)",
+            "score": 5.5,
+            "strengths": [
+              "It has the most entertaining beats of the three: a window wrapped in kraft paper as a curiosity gap, the light deliberately dipping before the reveal, a tailor's tape measure draped over the parapet for « sur mesure », a wax-sealed sheet for the firm price, the open door, and lights growing from left to right.",
+              "It generates the finished, fully lit shop first, as a clean text-to-image keyframe, and that silhouette drives every earlier lot. That is the right instinct: the payoff is never degraded.",
+              "It builds one 8640 × 1350 stage, so everything that crosses a seam is drawn once and continuous by construction. The plinth with a model-maker's tick scale and the station nodes are classy, on-brand replacements for kickers and page counts.",
+              "Its atlas-style loupe callouts (a ring, brass ticks, a leader line) change the scale and show small details at phone size. It is the best single device in the three plans.",
+              "The type sits on clean zones, the empty backdrop above and the coded plinth below the curb, never over the picture. Slide 2 is built to work as a second cover.",
+              "Two extras come free: a constant-speed pan of the stage makes a tracking-shot Reel, and a mirrored stage gives the right-to-left order for a future Arabic version."
+            ],
+            "fatal_flaws": [
+              "A strict side-on view at 10° down kills the miniature. Tilt-shift only reads as a tabletop model from a high angle. At 10°, in front of a seamless cyclorama, each lot reads as a stage-set facade or a real building at blue hour. The diorama magic the owner chose is lost.",
+              "A continuous street of seven lots shows seven different shops side by side, which contradicts the story of one plot over time. The headlines have to correct what the image says, and the variant's own risk list admits it.",
+              "The cover is G7, the deepest generation in the backward chain (6 edits from the master). The frame that has to stop the scroll is the most degraded.",
+              "The production load is the heaviest: 7 lots, 6 cut-out seam pieces and 2 loupe details, so 15 accepted images and 45 or more calls. Canva's background remover on navy-on-navy palm fronds and scaffold lashings (dark subject, dark background, low contrast) will chew the edges, and every seam then falls back to a coded silhouette.",
+              "The 300px cross-fades mix two different pavement renders at the curb, exactly where the road runs, so they ghost: doubled setts and doubled curb edges.",
+              "White-line engraving art (vista-far.webp as a luminance mask) sits directly behind photoreal model renders. Two incompatible image languages share one depth stack.",
+              "The cover is overloaded: a 120px hook, a three-line step-1 subline and the wordmark. The hook loses its one-second read."
+            ],
+            "fixes": [
+              "Tilt the camera to 25–30° down and keep zero yaw. Tilting alone keeps every street-parallel line level, so the curb and the road stay perfectly horizontal while the roofs and the street surface show and the tilt-shift miniature reads again.",
+              "Build every lot from the master: each one is an edit of G1, with the neighbouring lot only as a second reference for props. Make the cover from [G1] directly. No frame deeper than 2.",
+              "Use one shared ground strip. Cut the master's pavement and curb band once and tile or extend it across the whole stage in code, and mask each lot above the pavement line. Cross-fade only the bare ground and the backdrop, never the setts or the curb where the road runs.",
+              "Generate the seam pieces on a flat mid-grey seamless background with the same key light, remove the background, then grade them to the blue-hour look in code. Prefer solid shapes (lamp, arch, crates) over palms, or make the coded out-of-focus foreground silhouette the primary route.",
+              "Make 'same shop, later' unmistakable. Composite each lot's unchanged parts from the master's pixels, and lay V2's coded ghost elevation over the unbuilt parts. Or drop the continuous street for separate modules joined by coded joints, as in V2.",
+              "Move step 1 off the cover. The cover holds the hook and a one-line swipe promise only; step 1 opens slide 2 (9 slides is still within the brief).",
+              "Keep Plate I off the stage behind the model. Use it only on the end card, or as a very faint band explicitly framed as a printed backdrop.",
+              "Generators almost always print digits on a tape measure. Ask for « a plain golden tape with no markings », draw the ticks in code inside the D4 loupe, and reject any render with glyphs at 200%."
+            ]
+          }
+        ],
+        "best_ideas_to_graft": [
+          "Camera: use V2's square-on view with zero yaw, but tilted about 35–40° down to keep V1's miniature feel. Tilting keeps the street exactly level, so a single straight coded road and flat 2D overlays work; turning the camera breaks both.",
+          "Keyframes first (V3's instinct, applied to V1 and V2): generate the bare plate (text-to-image) and the finished lit shop (one edit of the plate) before anything else. Make each in-between from the nearer keyframe with the other as the camera reference. No frame goes deeper than 2 edits; the cover is depth 0 and the payoff depth 1.",
+          "Master-plate patch compositing (new): on every daytime slide, everything outside a feathered mask around the plot is the master plate's own pixels, and only the plot comes from each edit. This removes drift on neighbours, trees and the ridge, makes V2's stop-motion re-swipe genuinely static, and cuts the rejection rate.",
+          "No light in renders (V2): the generator draws only physical things (stakes, string, chalk, crates). Every teal line, ghost drawing, pen tip and glow is coded and traced from the finished keyframe. This removes the hologram and light-ribbon risk.",
+          "V2's gold ghost elevation, traced from the finished shop and fading to only the unbuilt parts as walls rise, plus V1's pen-tip spark on the cover so it reads as being drawn now.",
+          "V1's hook « Ici, bientôt, votre vitrine. » (shop window plus « site vitrine ») is the strongest line. A/B it against V2 and V3's « Vous glissez. On construit. », or use one as the cover and the other as slide 2's second cover.",
+          "V1's kickers « À vous / À nous / Vous et nous » and its road-line states (dots, dashes, long dashes, solid and lit) as a progress meter with no numerals.",
+          "V3's atlas loupe callout for the payoff: a 360–420px ring with brass ticks and a leader to the window, holding the coded homepage flat at a legible size, labelled « exemple ».",
+          "V3's story beats for entertainment: the window wrapped in kraft paper with a light dip just before the reveal, a tailor's tape for « sur mesure » (blank tape, ticks in code), and a wax-sealed sheet for the written scope and firm price.",
+          "Seam mechanics for « Vous envoyez »: V1's crate riding the seam (dragged across by the thumb) or V2's brass parcels gliding along the road. Pick one, not both.",
+          "Prompt hygiene: edit prompts that state only the change, in about 120 words or fewer, with no repeated style block. No hex codes anywhere: use colour words and enforce the palette with one shared code grade. A short exclusion line (« an empty model: no figures, no vehicles, no lettering anywhere ») instead of long lists naming pedestals, light bulbs or camels the scene never invites.",
+          "Let code own the layout space: generate the model large for detail, then shrink it into a coded navy void with feathered masks. Never ask the generator for 'top 28% empty'.",
+          "QA stack: V1's onion-skin rejection, three-anchor registration and per-slide exposure matching, V2's normalisation with its scale cap, and V3's shared ground strip so no two pavement renders are ever cross-faded.",
+          "Cut-outs (V1's crate, V3's seam pieces): generate them on a flat mid-grey background, then remove the background and grade. Never navy on navy, where the remover fails.",
+          "Pilot before production, once the owner allows generation (the user's current instruction is planning only, no generating yet): three Canva calls (bare plate, one additive edit, one subtractive edit), onion-skinned against the plate to measure how faithful imageReferences editing really is. If neighbours redraw or the drift is over 15px, go fully to patch compositing. Each call returns one image, so '4 candidates' means 4 calls: budget about 30 calls for a V2-style build.",
+          "Endings: V2's coded end card with Plate I (the model's ridge becomes the engraved atlas), V3's plinth with a model-maker's tick scale, and V1's dusk-to-night relight. Both night frames are relights of the finished keyframe, not of each other."
+        ],
+        "ranking": [
+          "La table de maquette · Vous glissez. On construit.",
+          "Ici, bientôt, votre vitrine (one plot, one camera)",
+          "La rue qui se bâtit (the Street Panorama)"
+        ]
+      }
+    ],
+    "variantNames": [
+      "Ici, bientôt, votre vitrine (one plot, one camera)",
+      "La table de maquette · Vous glissez. On construit.",
+      "La rue qui se bâtit (the Street Panorama)"
+    ]
+  },
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "index": 1,
+      "title": "Variants"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 2,
+      "title": "Critique"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 3,
+      "title": "Script"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 1,
+      "label": "variant:one-plot",
+      "phaseIndex": 1,
+      "phaseTitle": "Variants",
+      "agentId": "afaff5b38e90e2861",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793118582182,
+      "queuedAt": 1793118582125,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Ici, bientôt, votre vitrine (one plot, one camera)",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793119821002,
+      "tokens": 230915,
+      "toolCalls": 22,
+      "durationMs": 1238817,
+      "resultPreview": "{\"name\":\"Ici, bientôt, votre vitrine (one plot, one camera)\",\"mechanics\":\"1) ONE WORLD, ONE LENS. Every frame shows the same tabletop model. A cut block of earth, with its soil strata visible and no pedestal, sits on a navy table in a navy void. The empty lot is in the centre of the block, between a one-storey neighbour on the left and a two-storey neighbour on the right. A street of limestone set…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 2,
+      "label": "variant:tiles",
+      "phaseIndex": 1,
+      "phaseTitle": "Variants",
+      "agentId": "a8ea5e5d7bd5764e0",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793118582183,
+      "queuedAt": 1793118582126,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "La table de maquette · Vous glissez. On construit.",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793119800792,
+      "tokens": 172724,
+      "toolCalls": 18,
+      "durationMs": 1216691,
+      "resultPreview": "{\"name\":\"La table de maquette · Vous glissez. On construit.\",\"mechanics\":\"ONE LOCKED CAMERA, ONE LONG TABLE, ONE CODED ROAD.\\n\\n1. Why the geometry works. Every tile is shot head-on: frontal, centred, about 32 degrees down, long telephoto. That gives three things.\\n(a) The street runs parallel to the tile's front edge, so it shows as a straight horizontal line. The teal road can then be one straig…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 3,
+      "label": "variant:panorama",
+      "phaseIndex": 1,
+      "phaseTitle": "Variants",
+      "agentId": "a295a77abaaf7c91b",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793119800931,
+      "queuedAt": 1793118582126,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "La rue qui se bâtit (the Street Panorama)",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793121336323,
+      "tokens": 193470,
+      "toolCalls": 13,
+      "durationMs": 1535389,
+      "resultPreview": "{\"name\":\"La rue qui se bâtit (the Street Panorama)\",\"mechanics\":\"WHY GENERATION ALONE CANNOT DO IT. Canva cannot outpaint or stitch. Every call re-invents the ground line, the perspective and the light, so asking it to \\\"continue the street\\\" from the edge of the last frame produces a new street each time. A 2:1 render cut in two covers only two slides, and its halves are square, not 4:5. So nothi…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 4,
+      "label": "critic:catchy",
+      "phaseIndex": 2,
+      "phaseTitle": "Critique",
+      "agentId": "a75e1b70a3586c1ad",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793121336522,
+      "queuedAt": 1793121336437,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793121565148,
+      "tokens": 156109,
+      "toolCalls": 3,
+      "durationMs": 228610,
+      "resultPreview": "{\"reviews\":[{\"name\":\"La table de maquette · Vous glissez. On construit.\",\"score\":7.5,\"strengths\":[\"Best cover of the three. The full finished shop stands on the empty plot as a crisp coded gold elevation, traced from the final frame, so in under a second the reader sees what will be built. The 132px hook « Vous glissez. On construit. » sets the rule of the game. « Glisser » means both 'swipe' and …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 5,
+      "label": "critic:honesty",
+      "phaseIndex": 2,
+      "phaseTitle": "Critique",
+      "agentId": "a09c23e89004c5fb5",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793121336529,
+      "queuedAt": 1793121336443,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793121654175,
+      "tokens": 217772,
+      "toolCalls": 8,
+      "durationMs": 315251,
+      "resultPreview": "{\"reviews\":[{\"name\":\"Ici, bientôt, votre vitrine (one plot, one camera)\",\"score\":5.5,\"strengths\":[\"Every quoted line on the slides traces to a listed fact. Step 1 (prev.tl1 + tl1p), « 24 h ouvrées » (tl2), « Sur mesure / Jamais un modèle tout fait repeint à vos couleurs » (price.t1b), « On vous la présente / visio de 30 min » (tl4, tl4d) and « On reste / Pas de « bonne chance »… » (faq4.a) are all…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 6,
+      "label": "critic:craft",
+      "phaseIndex": 2,
+      "phaseTitle": "Critique",
+      "agentId": "ac06895cd057c5114",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793121565162,
+      "queuedAt": 1793121336447,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793122103277,
+      "tokens": 184226,
+      "toolCalls": 9,
+      "durationMs": 538110,
+      "resultPreview": "{\"reviews\":[{\"name\":\"La table de maquette · Vous glissez. On construit.\",\"score\":7.5,\"strengths\":[\"Its camera is the only one of the three that works for both the generator and the coded layer. The view is square-on with a 32° downward tilt, so the street comes out as a level line. The road can then be one straight SVG at y 1120, and every overlay (the ghost elevation, the brackets, the dimension …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 7,
+      "label": "script",
+      "phaseIndex": 3,
+      "phaseTitle": "Script",
+      "agentId": "ae97100dc20ce20c8",
+      "model": "claude-opus-5-5",
+      "state": "done",
+      "startedAt": 1793122103404,
+      "queuedAt": 1793122103325,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "Vous glissez. On construit. · La maquette qui se construit",
+      "promptPreview": "You are developing an Instagram carousel for Numidea Labs, a small web and software studio in Bordj Bou Arreridj, Algeria (founder: Yasser Hamisse, freelance since 2019). Audience: owners of small and mid-sized businesses in Algeria first, France second. Language of this piece: French.\n\nTHE GOAL (the owner's words): \"the whole point is to convince the client that the process of getting their syste…",
+      "promptFramed": true,
+      "lastProgressAt": 1793123274303,
+      "tokens": 304860,
+      "toolCalls": 14,
+      "durationMs": 1170892,
+      "resultPreview": "{\"title\":\"Vous glissez. On construit. · La maquette qui se construit\",\"one_liner\":\"One locked camera watches a museum-grade scale model of a small street in the Algerian high plateaus. As the reader swipes, a bare plot becomes a finished shop whose window lights up with a homepage. The kickers mark the reader's three small moves (describe, send, decide) against everything the studio builds.\",\"mech…"
+    }
+  ],
+  "totalTokens": 1460076,
+  "totalToolCalls": 87
+}

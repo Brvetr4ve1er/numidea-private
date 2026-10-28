@@ -1,0 +1,270 @@
+{
+  "files": [
+    {
+      "file": "v01__9x16__fr__thumb__f000.png",
+      "lang": "fr",
+      "what": "First frame, 9:16 FR (Reels, Shorts, TikTok): the hook, Plate I and the blueprint outline",
+      "bytes": 740492,
+      "size": "1080x1920"
+    },
+    {
+      "file": "v01__9x16__fr__ig-cover__f090.png",
+      "lang": "fr",
+      "what": "Instagram cover, 9:16 FR f90: the hook and the finished blueprint (text inside the 3:4 grid crop)",
+      "bytes": 763724,
+      "size": "1080x1920"
+    },
+    {
+      "file": "v01__4x5__fr__carousel-ig__1-f090.png",
+      "lang": "fr",
+      "what": "Carousel slide 1 (Instagram, FR), 4:5 crop of 9:16 f90 (crop layout)",
+      "bytes": 77955,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__carousel-ig__2-f300.png",
+      "lang": "fr",
+      "what": "Carousel slide 2 (Instagram, FR), 4:5 crop of 9:16 f300 (crop layout)",
+      "bytes": 80298,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__carousel-ig__3-f450.png",
+      "lang": "fr",
+      "what": "Carousel slide 3 (Instagram, FR), 4:5 crop of 9:16 f450 (crop layout)",
+      "bytes": 429681,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__carousel-ig__4-f670.png",
+      "lang": "fr",
+      "what": "Carousel slide 4 (Instagram, FR), 4:5 crop of 9:16 f670 (crop layout)",
+      "bytes": 238984,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__carousel-ig__5-f890.png",
+      "lang": "fr",
+      "what": "Carousel slide 5 (Instagram, FR), 4:5 crop of 9:16 f890 (crop layout)",
+      "bytes": 311064,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__thumb__f000.png",
+      "lang": "fr",
+      "what": "First frame, LinkedIn 4:5 FR: f0 of the pointer=li render, cropped y 90-1440",
+      "bytes": 61377,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel__1-f090.png",
+      "lang": "fr",
+      "what": "Carousel slide 1 (LinkedIn, FR), 4:5 crop of 9:16 pointer=li f90",
+      "bytes": 77955,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel__2-f300.png",
+      "lang": "fr",
+      "what": "Carousel slide 2 (LinkedIn, FR), 4:5 crop of 9:16 pointer=li f300",
+      "bytes": 80298,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel__3-f450.png",
+      "lang": "fr",
+      "what": "Carousel slide 3 (LinkedIn, FR), 4:5 crop of 9:16 pointer=li f450",
+      "bytes": 429681,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel__4-f670.png",
+      "lang": "fr",
+      "what": "Carousel slide 4 (LinkedIn, FR), 4:5 crop of 9:16 pointer=li f670",
+      "bytes": 238984,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel__5-f890.png",
+      "lang": "fr",
+      "what": "Carousel slide 5 (LinkedIn, FR), 4:5 crop of 9:16 pointer=li f890",
+      "bytes": 313726,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__16x9__fr__thumb__f000.png",
+      "lang": "fr",
+      "what": "First frame, 16:9 FR, 1920 x 1080: the hook, Plate I and the blueprint outline",
+      "bytes": 823053,
+      "size": "1920x1080"
+    },
+    {
+      "file": "v01__16x9__fr__yt-thumb-1280x720__f300.png",
+      "lang": "fr",
+      "what": "YouTube thumbnail FR, 1280 x 720 from the 16:9 f300 (§4.6): the default, upload it as the custom thumbnail",
+      "bytes": 137309,
+      "size": "1280x720"
+    },
+    {
+      "file": "v01__4x5__fr__li__carousel.pdf",
+      "lang": "fr",
+      "what": "LinkedIn PDF carousel « Ce que vous obtenez » (FR): the five LinkedIn slides, one per page, 810 x 1012.5 pt = 1080 x 1350 px",
+      "bytes": 1140140
+    },
+    {
+      "file": "v01__9x16__en__thumb__f000.png",
+      "lang": "en",
+      "what": "First frame, 9:16 EN (Reels, Shorts, TikTok): the hook, Plate I and the blueprint outline",
+      "bytes": 737685,
+      "size": "1080x1920"
+    },
+    {
+      "file": "v01__9x16__en__ig-cover__f090.png",
+      "lang": "en",
+      "what": "Instagram cover, 9:16 EN f90: the hook and the finished blueprint (text inside the 3:4 grid crop)",
+      "bytes": 761067,
+      "size": "1080x1920"
+    },
+    {
+      "file": "v01__4x5__en__carousel-ig__1-f090.png",
+      "lang": "en",
+      "what": "Carousel slide 1 (Instagram, EN), 4:5 crop of 9:16 f90 (crop layout)",
+      "bytes": 75447,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__carousel-ig__2-f300.png",
+      "lang": "en",
+      "what": "Carousel slide 2 (Instagram, EN), 4:5 crop of 9:16 f300 (crop layout)",
+      "bytes": 77068,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__carousel-ig__3-f450.png",
+      "lang": "en",
+      "what": "Carousel slide 3 (Instagram, EN), 4:5 crop of 9:16 f450 (crop layout)",
+      "bytes": 432475,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__carousel-ig__4-f670.png",
+      "lang": "en",
+      "what": "Carousel slide 4 (Instagram, EN), 4:5 crop of 9:16 f670 (crop layout)",
+      "bytes": 227638,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__carousel-ig__5-f890.png",
+      "lang": "en",
+      "what": "Carousel slide 5 (Instagram, EN), 4:5 crop of 9:16 f890 (crop layout)",
+      "bytes": 309952,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__thumb__f000.png",
+      "lang": "en",
+      "what": "First frame, LinkedIn 4:5 EN: f0 of the pointer=li render, cropped y 90-1440",
+      "bytes": 58734,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel__1-f090.png",
+      "lang": "en",
+      "what": "Carousel slide 1 (LinkedIn, EN), 4:5 crop of 9:16 pointer=li f90",
+      "bytes": 75447,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel__2-f300.png",
+      "lang": "en",
+      "what": "Carousel slide 2 (LinkedIn, EN), 4:5 crop of 9:16 pointer=li f300",
+      "bytes": 77068,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel__3-f450.png",
+      "lang": "en",
+      "what": "Carousel slide 3 (LinkedIn, EN), 4:5 crop of 9:16 pointer=li f450",
+      "bytes": 432475,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel__4-f670.png",
+      "lang": "en",
+      "what": "Carousel slide 4 (LinkedIn, EN), 4:5 crop of 9:16 pointer=li f670",
+      "bytes": 227638,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel__5-f890.png",
+      "lang": "en",
+      "what": "Carousel slide 5 (LinkedIn, EN), 4:5 crop of 9:16 pointer=li f890",
+      "bytes": 312260,
+      "size": "1080x1350"
+    },
+    {
+      "file": "v01__16x9__en__thumb__f000.png",
+      "lang": "en",
+      "what": "First frame, 16:9 EN, 1920 x 1080: the hook, Plate I and the blueprint outline",
+      "bytes": 820440,
+      "size": "1920x1080"
+    },
+    {
+      "file": "v01__16x9__en__yt-thumb-1280x720__f300.png",
+      "lang": "en",
+      "what": "YouTube thumbnail EN, 1280 x 720 from the 16:9 f300 (§4.6): the default, upload it as the custom thumbnail",
+      "bytes": 135233,
+      "size": "1280x720"
+    },
+    {
+      "file": "v01__4x5__en__li__carousel.pdf",
+      "lang": "en",
+      "what": "LinkedIn PDF carousel « Ce que vous obtenez » (EN): the five LinkedIn slides, one per page, 810 x 1012.5 pt = 1080 x 1350 px",
+      "bytes": 1124432
+    }
+  ],
+  "checks": [
+    {
+      "name": "still f239 identical to the render's own frame (v01__9x16__fr__silent__f239.png)",
+      "ok": true,
+      "lang": "fr"
+    },
+    {
+      "name": "still f239 identical to the render's own frame (v01__9x16__fr__li__silent__f239.png)",
+      "ok": true,
+      "lang": "fr"
+    },
+    {
+      "name": "still f239 identical to the render's own frame (v01__16x9__fr__silent__f239.png)",
+      "ok": true,
+      "lang": "fr"
+    },
+    {
+      "name": "carousel PDF (FR): 5 pages, every MediaBox and CropBox [0 0 810 1012.5], each painted whole by its slide, pixels = the PNG slides",
+      "ok": true,
+      "value": "5 pages; [0 0 810 1012.5], painted 810 x 1012.5 pt from (0, 0)",
+      "lang": "fr"
+    },
+    {
+      "name": "still f239 identical to the render's own frame (v01__9x16__en__silent__f239.png)",
+      "ok": true,
+      "lang": "en"
+    },
+    {
+      "name": "still f239 identical to the render's own frame (v01__9x16__en__li__silent__f239.png)",
+      "ok": true,
+      "lang": "en"
+    },
+    {
+      "name": "still f239 identical to the render's own frame (v01__16x9__en__silent__f239.png)",
+      "ok": true,
+      "lang": "en"
+    },
+    {
+      "name": "carousel PDF (EN): 5 pages, every MediaBox and CropBox [0 0 810 1012.5], each painted whole by its slide, pixels = the PNG slides",
+      "ok": true,
+      "value": "5 pages; [0 0 810 1012.5], painted 810 x 1012.5 pt from (0, 0)",
+      "lang": "en"
+    }
+  ]
+}

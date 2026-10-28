@@ -1,0 +1,590 @@
+{
+  "variants": [
+    {
+      "variant": "9x16:fr",
+      "ratio": "9x16",
+      "lang": "fr",
+      "pointer": null,
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 120px 2L ok",
+        "T40/header 65px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 51px 1L ok",
+        "M03 32px 1L ok",
+        "T42 96px 2L ok",
+        "T09 48px 1L ok",
+        "T30 80px 1L ok",
+        "T31 56px 2L ok",
+        "T32 72px 2L ok",
+        "wordmark 88px 1L ok",
+        "T50 52px 2L ok",
+        "T51 52px 2L ok",
+        "T52 52px 1L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 3.7,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": false,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T40",
+          "phrase": "sur mesure"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": false,
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [
+        {
+          "cut": "s1",
+          "cutFrame": 45,
+          "masterFrame": 45,
+          "same": true
+        },
+        {
+          "cut": "s2",
+          "cutFrame": 139,
+          "masterFrame": 239,
+          "same": true
+        },
+        {
+          "cut": "s3",
+          "cutFrame": 26,
+          "masterFrame": 346,
+          "same": true
+        },
+        {
+          "cut": "s4",
+          "cutFrame": 40,
+          "masterFrame": 500,
+          "same": true
+        },
+        {
+          "cut": "s5",
+          "cutFrame": 50,
+          "masterFrame": 730,
+          "same": true
+        }
+      ],
+      "stills": [],
+      "page_errors": []
+    },
+    {
+      "variant": "16x9:fr",
+      "ratio": "16x9",
+      "lang": "fr",
+      "pointer": null,
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 96px 2L ok",
+        "T40/header 63px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 51px 1L ok",
+        "M03 32px 1L ok",
+        "T42 88px 2L ok",
+        "T09 46px 1L ok",
+        "T30 80px 1L ok",
+        "T31 52px 2L ok",
+        "T32 64px 2L ok",
+        "wordmark 88px 1L ok",
+        "T50 48px 2L ok",
+        "T51 48px 2L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 3.1,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": false,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T40",
+          "phrase": "sur mesure"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": false,
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [
+        {
+          "cut": "s1",
+          "cutFrame": 45,
+          "masterFrame": 45,
+          "same": true
+        },
+        {
+          "cut": "s2",
+          "cutFrame": 139,
+          "masterFrame": 239,
+          "same": true
+        },
+        {
+          "cut": "s3",
+          "cutFrame": 26,
+          "masterFrame": 346,
+          "same": true
+        },
+        {
+          "cut": "s4",
+          "cutFrame": 40,
+          "masterFrame": 500,
+          "same": true
+        },
+        {
+          "cut": "s5",
+          "cutFrame": 50,
+          "masterFrame": 730,
+          "same": true
+        }
+      ],
+      "stills": [],
+      "page_errors": []
+    },
+    {
+      "variant": "9x16:fr:li",
+      "ratio": "9x16",
+      "lang": "fr",
+      "pointer": "li",
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 120px 2L ok",
+        "T40/header 65px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 51px 1L ok",
+        "M03 32px 1L ok",
+        "T42 96px 2L ok",
+        "T09 48px 1L ok",
+        "T30 80px 1L ok",
+        "T31 56px 2L ok",
+        "T32 72px 2L ok",
+        "wordmark 88px 1L ok",
+        "T50 52px 2L ok",
+        "T51 52px 2L ok",
+        "T52 52px 1L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 2.7,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": true,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T40",
+          "phrase": "sur mesure"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": {
+        "window": [
+          90,
+          1440
+        ],
+        "9x16": {
+          "faq3": null,
+          "light": [
+            280,
+            1000,
+            800,
+            433
+          ],
+          "bench": [
+            170,
+            1012,
+            740,
+            413
+          ]
+        }
+      },
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [],
+      "stills": [],
+      "page_errors": []
+    },
+    {
+      "variant": "9x16:en",
+      "ratio": "9x16",
+      "lang": "en",
+      "pointer": null,
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 120px 2L ok",
+        "T40/header 72px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 56px 1L ok",
+        "M03 32px 1L ok",
+        "T42 96px 2L ok",
+        "T09 48px 1L ok",
+        "T30 80px 1L ok",
+        "T31 56px 2L ok",
+        "T32 72px 1L ok",
+        "wordmark 88px 1L ok",
+        "T50 52px 2L ok",
+        "T51 52px 2L ok",
+        "T52 52px 1L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 3.7,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": false,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T31",
+          "phrase": "web developer"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": false,
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [],
+      "stills": [],
+      "page_errors": []
+    },
+    {
+      "variant": "16x9:en",
+      "ratio": "16x9",
+      "lang": "en",
+      "pointer": null,
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 96px 2L ok",
+        "T40/header 72px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 56px 1L ok",
+        "M03 32px 1L ok",
+        "T42 88px 2L ok",
+        "T09 46px 1L ok",
+        "T30 80px 1L ok",
+        "T31 52px 2L ok",
+        "T32 64px 1L ok",
+        "wordmark 88px 1L ok",
+        "T50 48px 2L ok",
+        "T51 48px 2L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 3.9,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": false,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T31",
+          "phrase": "web developer"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": false,
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [],
+      "stills": [],
+      "page_errors": []
+    },
+    {
+      "variant": "9x16:en:li",
+      "ratio": "9x16",
+      "lang": "en",
+      "pointer": "li",
+      "frames": 900,
+      "fonts_ok": true,
+      "images_ok": true,
+      "fit": [
+        "T40/hook 120px 2L ok",
+        "T40/header 72px 1L ok",
+        "T41 78px 3L ok",
+        "M01 32px 1L ok",
+        "M02 56px 1L ok",
+        "M03 32px 1L ok",
+        "T42 96px 2L ok",
+        "T09 48px 1L ok",
+        "T30 80px 1L ok",
+        "T31 56px 2L ok",
+        "T32 72px 1L ok",
+        "wordmark 88px 1L ok",
+        "T50 52px 2L ok",
+        "T51 52px 2L ok",
+        "T52 52px 1L ok"
+      ],
+      "sweep": {
+        "frames_checked": 900,
+        "seconds": 3.8,
+        "violations": 0,
+        "groups": {},
+        "splices": 0,
+        "splice_groups": {},
+        "crop_checked": true,
+        "crop_cuts": 0,
+        "crop_groups": {}
+      },
+      "nobreak": [
+        {
+          "key": "T31",
+          "phrase": "web developer"
+        }
+      ],
+      "separators_hidden": {
+        "T50": 1,
+        "T51": 1
+      },
+      "crop45": {
+        "window": [
+          90,
+          1440
+        ],
+        "9x16": {
+          "faq3": null,
+          "light": [
+            280,
+            1000,
+            800,
+            433
+          ],
+          "bench": [
+            170,
+            1012,
+            740,
+            413
+          ]
+        }
+      },
+      "mirror": [
+        "image 470->40",
+        "card1 40->40",
+        "card2 285->285",
+        "card3 530->530",
+        "button 40->590",
+        "p1 40->400",
+        "p2 40->470",
+        "c40a 62->98",
+        "c40b 62->148",
+        "c285a 307->343",
+        "c285b 307->393",
+        "c530a 552->588",
+        "c530b 552->638"
+      ],
+      "yields": [
+        "logo slot under the tab row",
+        "image under the text column"
+      ],
+      "warm": {
+        "frames": [
+          0,
+          220,
+          380,
+          600,
+          800
+        ],
+        "rounds": 3,
+        "stable": true
+      },
+      "seams": [],
+      "stills": [],
+      "page_errors": []
+    }
+  ]
+}

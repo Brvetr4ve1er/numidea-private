@@ -1,0 +1,33 @@
+{
+  "name": "numidea-motion-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PRIVATE: coded motion design rendered to MP4 (HTML/CSS/JS scenes, deterministic clock, Playwright capture, ffmpeg-static libx264 + AAC). Never copy into the public site repository. Documentation: ../pipeline.md",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "lint": "node tools/copy-lint.mjs",
+    "test": "node tools/copy-lint.mjs && node render.mjs videos/test-3s.html --ratios 9x16,16x9 --langs fr --still 45 --determinism",
+    "test:langs": "node render.mjs videos/test-3s.html --ratios 9x16,16x9 --langs ar,en --still 60 --determinism --out out/langs",
+    "test:safe": "node tools/safe-negative.mjs && node tools/safe-negative-v01.mjs",
+    "bench": "node tools/bench2.mjs",
+    "determinism": "node tools/det-flags.mjs shell",
+    "snap": "node tools/snap.mjs",
+    "contact": "node tools/contact-sheet.mjs",
+    "v01:s1": "node render.mjs videos/v01.html --name v01-s1 --tag silent --params cut=s1 --ratios 9x16,16x9 --langs fr --still 45 --determinism --out ../out/v01/checks --contact 0,6,18,24,36,54,66,78,99,106,115,119",
+    "v01:s2": "node render.mjs videos/v01.html --name v01-s2 --tag silent --params cut=s2 --ratios 9x16,16x9 --langs fr --still 139 --determinism --out ../out/v01/checks --contact 0,5,10,15,22,28,34,60,110,119,132,139,148,180,210,215,219,225,232,239 --contact-labels \"f100 S2 starts|T40 to header|T41 enters|header set|fill|fill|FR placeholders|faq3 inked|state 2 EN|EN grey bars|mirror starts|mid-glide|AR layout mirrored|hold|S2 wipes out|S2 wiping out|S2 last frame (cleared)|T42 wipes in|T42 wiping in|T42 set, end of cut\"",
+    "v01:s3": "node render.mjs videos/v01.html --name v01-s3 --tag silent --params cut=s3 --ratios 9x16,16x9 --langs fr --still 26 --determinism --out ../out/v01/checks --contact 0,5,10,18,21,26,32,38,44,50,56,64,80,110,130,135,139,145,154 --contact-labels \"f320 T42 wipes in|T42 wiping|T42 wiping|T42 set, horse inking|horse inked, turn|horse turning|palm in|T09 set|turns|turns|both settled|hold|hold|hold|S3 wipes out|S3 wiping out|S3 last frame (cleared)|founder card wipes in|end of cut\"",
+    "v01:s4": "node render.mjs videos/v01.html --name v01-s4 --tag silent --params cut=s4 --ratios 9x16,16x9 --langs fr --still 40 --determinism --out ../out/v01/checks --contact 0,5,10,20,28,40,48,60,124,180,210,215,219,225,232,239 --contact-labels \"f460 founder card wipes in|card wiping|T30 enters|ring drawn|T30 set|bench inking|T31 set|bench inked|T32 set|hold|S4 wipes out|S4 wiping out|S4 last frame (cleared)|wordmark wipes in|wordmark wiping|wordmark set, end of cut\"",
+    "v01:s5": "node render.mjs videos/v01.html --name v01-s5 --tag silent --params cut=s5 --ratios 9x16,16x9 --langs fr --still 50 --determinism --out ../out/v01/checks --contact 0,5,10,18,20,28,38,46,50,60,70,90,108,150,184,210,219 --contact-labels \"f680 wordmark wipes in|wordmark wiping|T50 enters, Plate V inking|wordmark set|T51 enters|T50 set|T51 set|Plate V inked|beam sweeps|beam sweeps|beam still|T52 enters (9:16 only)|T52 set (9:16 only)|hold|f864 audio fade|f890 carousel still|f899 last frame\"",
+    "v01:master": "bash tools/render-v01-master.sh",
+    "v01:preflight": "node tools/v01-preflight.mjs",
+    "v01:stills": "node tools/v01-stills.mjs --out ../out/v01/stills --langs fr,en",
+    "loudness": "node tools/loudness.mjs",
+    "v01:checks": "npm run v01:s1 && npm run v01:s2 && npm run v01:s3 && npm run v01:s4 && npm run v01:s5"
+  },
+  "dependencies": {
+    "@ffprobe-installer/ffprobe": "2.1.2",
+    "ffmpeg-static": "5.3.0",
+    "playwright-core": "1.61.1"
+  }
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kūro — dodo</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  .layer { position: absolute; left: 0; top: 0; transform-origin: 50% 100%; will-change: transform; }
+  .shadow { position: absolute; left: 540px; top: 860px; width: 640px; height: 70px; margin-left: -320px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .32), rgba(20, 16, 12, 0)); }
+  svg.z { position: absolute; overflow: visible; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow" id="shadow"></div>
+  <div class="layer" id="cat" style="left: 210px; top: 380px;"><img src="../assets/k-sleep.png" width="660" alt=""></div>
+  <svg class="z" id="z1" width="120" height="120" viewBox="0 0 120 120"><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#1b1712" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#efe6d6" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="z" id="z2" width="120" height="120" viewBox="0 0 120 120"><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#1b1712" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#efe6d6" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="z" id="z3" width="120" height="120" viewBox="0 0 120 120"><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#1b1712" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 30 H92 L28 90 H92" fill="none" stroke="#efe6d6" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, osc, win, set } = Motion;
+  const cat = document.getElementById('cat'), shadow = document.getElementById('shadow');
+  const zs = ['z1', 'z2', 'z3'].map((id) => document.getElementById(id));
+  // each Z rises from the cat's head and fades; three Zs offset by a third of the loop
+  function z(el, p) {
+    const t = p % 1;
+    const rise = ease.out(t);
+    const x = 690 + 70 * rise + 16 * Math.sin(t * Math.PI * 2);
+    const y = 470 - 300 * rise;
+    const s = 0.45 + 0.75 * rise;
+    const o = Math.min(win(t, 0, 0.18), 1 - win(t, 0.62, 1));
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    set(el, { s, r: -12 + 18 * rise, o });
+  }
+  Sticker({
+    seconds: 3, fps: 30, poster: 40,
+    draw(p) {
+      // two slow breaths per loop: the body swells up and out from the ground line
+      const b = 0.5 - 0.5 * osc(p, 2, 0.25);
+      set(cat, { sx: 1 + 0.012 * b, sy: 1 + 0.03 * b });
+      shadow.style.transform = `scaleX(${1 + 0.02 * b})`;
+      zs.forEach((el, i) => z(el, p + i / 3));
+    },
+  });
+</script>
+</body>
+</html>

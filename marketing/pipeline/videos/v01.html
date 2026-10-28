@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>V01 « L'atlas »</title>
+<!--
+  PRIVATE. V01-30 « L'atlas », the 30 s brand trailer of Numidea Labs
+  (scripts-trailer.md §4; PLAN.md §9). Coded motion design only: no generated
+  image, footage or music; no face or figure for the founder; no client
+  screen or name; no price figure, no Aperçu, no call to action, no URL.
+  Arcanum throughout. Every on-screen string comes from copy/trailer.json
+  (scripts-trailer.md Appendix A) with its fact ID; none is written here.
+  ARABIC: every ar string is « à relire par un arabophone natif »; AR masters
+  are not rendered until the native review (gate G1).
+
+  URL: ?ratio=9x16|16x9 &lang=fr|en|ar &cut=s1|s2|s3|s4|s5|s1-s3|s4-s5 (none = the 30 s master)
+       &pointer=li (the LinkedIn 4:5 source; implies the crop layout) &frame=45 (the crop layout
+       alone: Instagram carousel stills) &guides &render
+  data-scene: the scene(s) a block belongs to; scene.overlapCheck() fails a frame
+  where blocks of different scenes share rows (a spliced line at a scene change).
+  The scene code is videos/v01.js.
+-->
+<link rel="stylesheet" href="/brand/base.css">
+<style>
+  /* Ground: --void with the brass grid (§4.1 S1). */
+  .stage.v01{background:var(--void)}
+  .stage.v01::before,.stage.v01::after{display:none}
+  .stage.v01>*{position:absolute}
+
+  /* Headings: Arcanum's heading face (Cinzel 700, .01em), solid --ice;
+     the swash half in --font-head-em and --teal-text (no gradient text).
+     Arabic: IBM Plex Sans Arabic 700, never tracked (§1). The [lang] rules
+     come after .head so they win over its face. */
+  .head{margin:0;font-family:var(--font-head);font-weight:var(--head-weight);letter-spacing:var(--head-tracking);
+    color:var(--ice);text-align:start;white-space:normal;overflow-wrap:normal;hyphens:none}
+  .head .swash{font-family:var(--font-head-em);color:var(--teal-text)}
+  /* T41 is the second half of the site's hero title, which is its swash
+     span (F06): the whole block in the swash face and colour. */
+  .head.t41{font-family:var(--font-head-em);color:var(--teal-text)}
+  .head[lang="ar"],.head.t41[lang="ar"]{font-family:var(--font-ar-display);font-weight:700;letter-spacing:0}
+
+  /* T09: the three package names on one card row, names only (F12), in the
+     site's tab face (Geist Mono 500). Each name is its own card (--navy,
+     hairline border), as the site sets its tiers side by side; the « · »
+     separators of the copy are carried by the gaps between the cards. The
+     cards are part of the text block, so fit-text and the safe check
+     measure them. */
+  .t09{margin:0;font-family:var(--font-mono);font-weight:500;letter-spacing:0;color:var(--ice);
+    text-align:center;white-space:normal;overflow-wrap:normal;hyphens:none}
+  .t09 .w{padding:.1em .45em;background:var(--navy);border:1px solid var(--hairline-2);border-radius:var(--r-sm)}
+  .t09 .w:nth-child(even){display:none}
+  .t09[lang="ar"]{font-family:var(--font-ar-display);font-weight:600}
+
+  /* Plates: luminance masks over currentColor (.ink, base.css). */
+  .faq3{color:var(--teal)}
+  .faq3 .ink{opacity:.5}
+  html[data-ratio="16x9"] .faq3 .ink{opacity:.2}      /* behind the text column at 20 % (§4.2) */
+  .contour{color:var(--teal)}
+  .contour .ink{opacity:.12}                          /* px-contour at 12 % (§4.1 S3) */
+  /* A texture, not a picture: its edges are feathered (an elliptical white
+     ramp, read as luminance like the plate) so no rectangle shows. */
+  .contour .ink{-webkit-mask-image:var(--mask),radial-gradient(closest-side,#fff 40%,rgba(255,255,255,0));
+    mask-image:var(--mask),radial-gradient(closest-side,#fff 40%,rgba(255,255,255,0));
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .coin{color:var(--crimson-text)}                    /* Plate III's ink on the site (.pc) */
+  .coin .ink{transform-origin:50% 50%;
+    -webkit-mask-image:var(--mask),var(--ring);mask-image:var(--mask),var(--ring);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .coin.near .ink{opacity:.85}
+  .coin.far .ink{opacity:.55}
+
+  /* S4 · the founder's lines (F17-F19). T30 is a heading (.head, Cinzel);
+     T31, the role, in Geist 500 and --teal-text (the site's .fd-role ink);
+     T32, the founder's promise, in Geist 600. Arabic: Plex 600, never
+     tracked. */
+  .role,.promise,.label,.pointer{margin:0;text-align:start;white-space:normal;overflow-wrap:normal;hyphens:none}
+  .role{font-family:var(--font-display);font-weight:500;letter-spacing:0;color:var(--teal-text)}
+  .promise{font-family:var(--font-display);font-weight:600;letter-spacing:-.005em;color:var(--ice)}
+  /* S5 · the series end card: T50, the label (F07), in Geist 500 and
+     --teal-text (the hero eyebrow's ink); T51, the motto (F29), in the
+     heading face and --crimson-text (brass); T52, the pointer (F30), in
+     Geist Mono 500 and --muted. */
+  .label{font-family:var(--font-display);font-weight:500;letter-spacing:0;color:var(--teal-text)}
+  .motto{margin:0;font-family:var(--font-head);font-weight:var(--head-weight);letter-spacing:var(--head-tracking);
+    color:var(--crimson-text);text-align:start;white-space:normal;overflow-wrap:normal;hyphens:none}
+  .pointer{font-family:var(--font-mono);font-weight:500;letter-spacing:.02em;color:var(--muted)}
+  :is(.role,.promise,.label,.motto,.pointer)[lang="ar"]{font-family:var(--font-ar-display);font-weight:600;letter-spacing:0}
+
+  /* The workbench (bench.webp, the founder stand-in, no person) and Plate V
+     (lighthouse.webp): inked in --teal at 40 % (§4.1 S4, S5). Plate V's box
+     clips its beam, and its edges are feathered where the engraving would
+     end on a hard line (--fl / --fr / --fb: left, right and bottom, set per
+     ratio in v01.js). */
+  .bench,.light{color:var(--teal)}
+  .bench .ink,.light .ink{opacity:.4}
+  .light{overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 var(--fl,0%),#000 calc(100% - var(--fr,0%)),transparent),linear-gradient(0deg,transparent,#000 var(--fb,0%));
+    mask-image:linear-gradient(90deg,transparent,#000 var(--fl,0%),#000 calc(100% - var(--fr,0%)),transparent),linear-gradient(0deg,transparent,#000 var(--fb,0%));
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .light .burin{top:0;bottom:0}
+
+  .vista,.contour,.bench,.light{z-index:1}
+  .sky,.faq3,.coin{z-index:2}
+  .mock{z-index:3}
+  .bp,.founder{z-index:4}
+  .head,.t09,.role,.promise,.wordmark,.label,.motto,.pointer{z-index:5}
+</style>
+</head>
+<body>
+<div class="stage v01">
+  <div class="safe"></div>
+  <div class="grid"></div>
+
+  <!-- S1 · Plate I (vista far / mid / near), its sky, the blueprint, T40 -->
+  <svg class="sky" id="sky" aria-hidden="true"></svg>
+  <div class="vista" id="vista" aria-hidden="true">
+    <div class="v-l v-far"><i class="v-fill"></i><i class="v-base"></i><i class="v-ink"></i></div>
+    <div class="v-l v-mid"><i class="v-fill"></i><i class="v-base"></i><i class="v-ink"></i></div>
+    <div class="v-l v-near"><i class="v-fill"></i><i class="v-base"></i><i class="v-ink"></i></div>
+    <i class="burin"></i>
+  </div>
+
+  <!-- S2 · faq3, « Votre site » (the blueprint fills into it), T41 under T40 -->
+  <div class="ink-plate faq3" id="faq3" aria-hidden="true"><i class="ink"></i><i class="burin"></i></div>
+  <div class="mock" id="mock" data-safe data-scene="s2" aria-hidden="true"><i class="mk-chrome"></i></div>
+  <svg class="bp" id="bp" data-safe data-scene="s1 s2" aria-hidden="true"></svg>
+  <h1 class="head t40" id="t40" data-copy="T40" data-words data-scene="s1 s2"></h1>
+  <h2 class="head t41" id="t41" data-copy="T41" data-scene="s2"></h2>
+
+  <!-- S3 · px-contour, Plate III (coin-horse near, coin-palm far), T42, T09 -->
+  <div class="ink-plate contour" id="contour" aria-hidden="true"><i class="ink"></i></div>
+  <div class="ink-plate coin near" id="coin-horse" data-safe data-scene="s3" aria-hidden="true"><i class="ink"></i><i class="burin"></i></div>
+  <div class="ink-plate coin far" id="coin-palm" data-safe data-scene="s3" aria-hidden="true"><i class="ink"></i><i class="burin"></i></div>
+  <h2 class="head t42" id="t42" data-copy="T42" data-scene="s3"></h2>
+  <p class="t09" id="t09" data-copy="T09" data-words data-scene="s3"></p>
+
+  <!-- S4 · the founder card (the monogram « Y » in its ring: no photo, no
+       drawing, no figure), the workbench seen from above (no person), T30-T32 -->
+  <div class="ink-plate bench" id="bench" data-scene="s4" aria-hidden="true"><i class="ink"></i><i class="burin"></i></div>
+  <div class="founder" id="founder" data-safe data-scene="s4" aria-hidden="true"></div>
+  <h2 class="head t30" id="t30" data-copy="T30" data-scene="s4"></h2>
+  <p class="role t31" id="t31" data-copy="T31" data-scene="s4"></p>
+  <p class="promise t32" id="t32" data-copy="T32" data-scene="s4"></p>
+
+  <!-- S5 · the series end card before Gate B: wordmark, label, motto,
+       pointer (none in 16:9). No call to action, no URL, no conditions.
+       Plate V, the lighthouse, with one beam sweep. -->
+  <div class="ink-plate light" id="light" data-scene="s5" aria-hidden="true"><i class="ink"></i><b class="beam"></b><i class="burin"></i></div>
+  <p class="wordmark" id="wordmark" data-safe data-scene="s5"></p>
+  <p class="label t50" id="t50" data-copy="T50" data-keep="·" data-scene="s5"></p>
+  <p class="motto t51" id="t51" data-copy="T51" data-keep="·" data-scene="s5"></p>
+  <p class="pointer t52" id="t52" data-copy="T52" data-scene="s5"></p>
+
+  <div class="draft-stamp" id="draft" hidden></div>
+</div>
+<script type="module" src="/videos/v01.js"></script>
+</body>
+</html>

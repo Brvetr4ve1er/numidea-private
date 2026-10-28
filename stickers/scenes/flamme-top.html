@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Flamme — top</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* the bust works in asset pixels (284 x 363) and is scaled by K = 2.3 about its pivot,
+     the middle of the bottom cut (asset 142, 363), which sits at stage (576.6, 1030):
+     the bust lands at stage x 250..903, y 195..1030 (element offset = stage pivot - asset pivot) */
+  .fig { position: absolute; left: 434.6px; top: 667px; width: 284px; height: 363px; transform-origin: 142px 363px; will-change: transform; }
+  .fig img { position: absolute; left: 0; top: 0; width: 284px; height: 363px; display: block; }
+  /* the flame hair is its own copy, cut by a straight line across the forehead (asset y 150);
+     it flickers in scaleY and sways in skewX about that line, so the seam itself never moves.
+     The body copy reaches 4 px above the line, under the hair, so no hairline gap shows */
+  #hair { transform-origin: 142px 150px; will-change: transform; clip-path: inset(0 0 213px 0); }
+  #body { clip-path: inset(146px 0 0 0); }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="fig" id="fig">
+    <img id="body" src="../assets/f-thumbs.png" alt="">
+    <img id="hair" src="../assets/f-thumbs.png" alt="">
+  </div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080"></svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, osc, set } = Motion;
+  const K = 2.3;                          // asset px to stage px
+  const O = { x: 142, y: 363 };           // pivot, asset px (middle of the bottom cut)
+  const S = { x: 576.6, y: 1030 };        // pivot, stage px
+  const TIP = { x: 38, y: 244 };          // top of the thumb, asset px
+  const fig = document.getElementById('fig'), hair = document.getElementById('hair'), fx = document.getElementById('fx');
+  const NS = 'http://www.w3.org/2000/svg';
+  const INK = '#1b1712', BONE = '#efe6d6', BRASS = '#e6b450';
+  const clamp = (v) => Math.min(Math.max(v, 0), 1);
+
+  // asset point -> stage point under the figure's current transform (translate, rotate, scale about O)
+  function toStage(P, t) {
+    const a = t.r * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+    const dx = (P.x - O.x) * K * t.sx, dy = (P.y - O.y) * K * t.sy;
+    return { x: S.x + t.x + c * dx - s * dy, y: S.y + t.y + s * dx + c * dy };
+  }
+
+  // four-point sparkle, drawn at radius 50, ink outline under the fill (as in the other stickers)
+  const STAR = 'M0 -50 Q8 -8 38 0 Q8 8 0 50 Q-8 8 -38 0 Q-8 -8 0 -50 Z';
+  function sparkle(fill) {
+    const g = document.createElementNS(NS, 'g');
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', STAR); path.setAttribute('fill', fill);
+    path.setAttribute('stroke', INK); path.setAttribute('stroke-width', '13');
+    path.setAttribute('stroke-linejoin', 'round'); path.setAttribute('paint-order', 'stroke');
+    g.appendChild(path); fx.appendChild(g);
+    return g;
+  }
+  // a glint ray: a short bone dash with an ink outline
+  function ray() {
+    const g = document.createElementNS(NS, 'g');
+    [[INK, 15], [BONE, 6]].forEach(([c, w]) => {
+      const l = document.createElementNS(NS, 'path');
+      l.setAttribute('fill', 'none'); l.setAttribute('stroke', c); l.setAttribute('stroke-width', String(w));
+      l.setAttribute('stroke-linecap', 'round'); g.appendChild(l);
+    });
+    fx.appendChild(g);
+    return g;
+  }
+
+  // the "ting": rays fan out on the open side (away from the ear), a big brass star sits on the
+  // thumb tip, a bone star and a small brass star follow a frame or two later
+  const rays = [-70, -115, -160, 155].map((a) => ({ a: a * Math.PI / 180, el: ray() }));
+  const stars = [
+    { dx: 0,    dy: 0,    R: 72, d: 0,    spin: 28,  el: sparkle(BRASS) },
+    { dx: -132, dy: -86,  R: 32, d: 0.07, spin: -22, el: sparkle(BONE) },
+    { dx: -34,  dy: -160, R: 21, d: 0.12, spin: 18,  el: sparkle(BRASS) },
+  ];
+
+  function hide(el) { el.style.opacity = '0'; el.setAttribute('transform', 'scale(0)'); }
+
+  // t: 0..1 over the flash (about 15 frames); C: where the main star sits, stage px
+  function drawFlash(t, C) {
+    stars.forEach((s) => {
+      const u = (t - s.d) / (1 - s.d);
+      if (u <= 0 || u >= 1) { hide(s.el); return; }
+      // pops out with a little overshoot, holds, twinkles out by shrinking (no see-through brass)
+      const k = (s.R / 50) * ease.back(clamp(u / 0.2)) * (1 - ease.in(clamp((u - 0.42) / 0.58)));
+      const rot = s.spin * ease.out(u);
+      s.el.style.opacity = '1';
+      s.el.setAttribute('transform', `translate(${(C.x + s.dx).toFixed(2)} ${(C.y + s.dy).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${Math.max(k, 0).toFixed(4)})`);
+    });
+    // rays shoot out and vanish: the tail chases the head
+    const u = (t - 0.06) / 0.5;
+    rays.forEach((r) => {
+      if (u <= 0 || u >= 1) { r.el.style.opacity = '0'; return; }
+      const r2 = 74 + 58 * ease.out(u), r1 = 74 + 58 * ease.in(u);
+      const d = `M${(C.x + r1 * Math.cos(r.a)).toFixed(2)} ${(C.y + r1 * Math.sin(r.a)).toFixed(2)} L${(C.x + r2 * Math.cos(r.a)).toFixed(2)} ${(C.y + r2 * Math.sin(r.a)).toFixed(2)}`;
+      r.el.childNodes.forEach((l) => l.setAttribute('d', d));
+      r.el.style.opacity = r2 - r1 > 2 ? '1' : '0';
+    });
+  }
+
+  Sticker({
+    seconds: 1.6, fps: 30, poster: 11,
+    draw(p) {
+      // two bounces per loop: a quick lift off the bottom cut that hangs at the top (|sin|),
+      // with a soft squash spread over about four frames either side of each landing
+      const q = (p * 2) % 1;
+      const lift = Math.sin(Math.PI * q);
+      const land = 0.5 + 0.5 * Math.cos(Math.PI * clamp(Math.min(q, 1 - q) / 0.16));
+      // the bust rocks towards the thumb on the first bounce and away on the second
+      const r = -1.4 * osc(p, 1);
+      const t = { x: 0, y: -16 * lift, r, sx: 1 + 0.007 * land, sy: 1 - 0.014 * land + 0.006 * lift };
+      set(fig, { x: t.x, y: t.y, r: t.r, s: K, sx: t.sx, sy: t.sy });
+
+      // the flame hair: a fast uneven flicker (6 and 4 whole cycles) plus a little drag from the
+      // bounce (squashed as the head kicks up, stretched as it starts to fall), and a slow sway
+      const flick = 0.6 * osc(p, 6) + 0.4 * osc(p, 4, 0.1);
+      const drag = -Math.cos(2 * Math.PI * (q - 0.1));
+      const hy = 1 + 0.01 * flick + 0.007 * drag;
+      const sk = 0.9 * osc(p, 3, 0.3);
+      hair.style.transform = `skewX(${sk.toFixed(3)}deg) scaleY(${hy.toFixed(4)})`;
+
+      // the flash rides on the thumb, peaking at the top of the first bounce
+      const tip = toStage(TIP, t);
+      drawFlash((p - 0.15) / 0.32, { x: tip.x - 26, y: tip.y - 32 });
+    },
+  });
+</script>
+</body>
+</html>

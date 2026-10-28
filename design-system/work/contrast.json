@@ -1,0 +1,362 @@
+{
+ "ice on void": {
+  "need": 4.5,
+  "arcanum": 16.26,
+  "noir": 17.58,
+  "daylight": 16.06,
+  "mono": 18.16,
+  "altneon": 17.51,
+  "engineering": 16.51
+ },
+ "ice on navy": {
+  "need": 4.5,
+  "arcanum": 14.76,
+  "noir": 16.43,
+  "daylight": 17.79,
+  "mono": 16.9,
+  "altneon": 16.57,
+  "engineering": 15.43
+ },
+ "ice on plum": {
+  "need": 4.5,
+  "arcanum": 13.16,
+  "noir": 15.33,
+  "daylight": 14.83,
+  "mono": 15.63,
+  "altneon": 15.5,
+  "engineering": 14.35
+ },
+ "ice on band@void": {
+  "need": 4.5,
+  "arcanum": 15.29,
+  "noir": 16.85,
+  "daylight": 15.15,
+  "mono": 17.27,
+  "altneon": 16.66,
+  "engineering": 15.88
+ },
+ "ice on field-bg@navy": {
+  "need": 4.5,
+  "arcanum": 15.69,
+  "noir": 17.27,
+  "daylight": 17.79,
+  "mono": 17.83,
+  "altneon": 17.2,
+  "engineering": 16.26
+ },
+ "body-strong on void": {
+  "need": 4.5,
+  "arcanum": 12.39,
+  "noir": 13.07,
+  "daylight": 11.97,
+  "mono": 13.36,
+  "altneon": 13.24,
+  "engineering": 12.13
+ },
+ "body-strong on navy": {
+  "need": 4.5,
+  "arcanum": 11.25,
+  "noir": 12.21,
+  "daylight": 13.27,
+  "mono": 12.43,
+  "altneon": 12.53,
+  "engineering": 11.34
+ },
+ "body-strong on plum": {
+  "need": 4.5,
+  "arcanum": 10.03,
+  "noir": 11.39,
+  "daylight": 11.06,
+  "mono": 11.5,
+  "altneon": 11.72,
+  "engineering": 10.55
+ },
+ "muted on void": {
+  "need": 4.5,
+  "arcanum": 8.48,
+  "noir": 7.78,
+  "daylight": 6.75,
+  "mono": 7.85,
+  "altneon": 8.11,
+  "engineering": 7.62
+ },
+ "muted on navy": {
+  "need": 4.5,
+  "arcanum": 7.7,
+  "noir": 7.28,
+  "daylight": 7.48,
+  "mono": 7.3,
+  "altneon": 7.67,
+  "engineering": 7.13
+ },
+ "muted on plum": {
+  "need": 4.5,
+  "arcanum": 6.87,
+  "noir": 6.79,
+  "daylight": 6.23,
+  "mono": 6.76,
+  "altneon": 7.18,
+  "engineering": 6.63
+ },
+ "muted on band@void": {
+  "need": 4.5,
+  "arcanum": 7.98,
+  "noir": 7.46,
+  "daylight": 6.37,
+  "mono": 7.47,
+  "altneon": 7.71,
+  "engineering": 7.33
+ },
+ "muted on nav-glass@void": {
+  "need": 4.5,
+  "arcanum": 8.48,
+  "noir": 7.78,
+  "daylight": 6.75,
+  "mono": 7.85,
+  "altneon": 8.11,
+  "engineering": 7.62
+ },
+ "faint on void": {
+  "need": 4.5,
+  "arcanum": 5.76,
+  "noir": 6.72,
+  "daylight": 5.7,
+  "mono": 6.95,
+  "altneon": 7.06,
+  "engineering": 6.75
+ },
+ "faint on navy": {
+  "need": 4.5,
+  "arcanum": 5.23,
+  "noir": 6.28,
+  "daylight": 6.32,
+  "mono": 6.47,
+  "altneon": 6.68,
+  "engineering": 6.31
+ },
+ "faint on plum": {
+  "need": 4.5,
+  "arcanum": 4.66,
+  "noir": 5.86,
+  "daylight": 5.27,
+  "mono": 5.98,
+  "altneon": 6.25,
+  "engineering": 5.87
+ },
+ "faint on field-bg@navy": {
+  "need": 4.5,
+  "arcanum": 5.56,
+  "noir": 6.6,
+  "daylight": 6.32,
+  "mono": 6.82,
+  "altneon": 6.94,
+  "engineering": 6.65
+ },
+ "faint on field-bg@void": {
+  "need": 4.5,
+  "arcanum": 5.76,
+  "noir": 6.72,
+  "daylight": 6.25,
+  "mono": 6.95,
+  "altneon": 7.06,
+  "engineering": 6.75
+ },
+ "crimson-text on void": {
+  "need": 4.5,
+  "arcanum": 9.71,
+  "noir": 7.1,
+  "daylight": 6.24,
+  "mono": 18.16,
+  "altneon": 7.25,
+  "engineering": 7.37
+ },
+ "crimson-text on navy": {
+  "need": 4.5,
+  "arcanum": 8.82,
+  "noir": 6.64,
+  "daylight": 6.91,
+  "mono": 16.9,
+  "altneon": 6.86,
+  "engineering": 6.89
+ },
+ "crimson-text on plum": {
+  "need": 4.5,
+  "arcanum": 7.86,
+  "noir": 6.19,
+  "daylight": 5.76,
+  "mono": 15.63,
+  "altneon": 6.42,
+  "engineering": 6.41
+ },
+ "crimson-text on band@void": {
+  "need": 4.5,
+  "arcanum": 9.13,
+  "noir": 6.8,
+  "daylight": 5.88,
+  "mono": 17.27,
+  "altneon": 6.9,
+  "engineering": 7.09
+ },
+ "teal-text on void": {
+  "need": 4.5,
+  "arcanum": 10.0,
+  "noir": 12.43,
+  "daylight": 6.65,
+  "mono": 13.36,
+  "altneon": 13.21,
+  "engineering": 10.26
+ },
+ "teal-text on navy": {
+  "need": 4.5,
+  "arcanum": 9.08,
+  "noir": 11.62,
+  "daylight": 7.37,
+  "mono": 12.43,
+  "altneon": 12.5,
+  "engineering": 9.59
+ },
+ "teal-text on plum": {
+  "need": 4.5,
+  "arcanum": 8.09,
+  "noir": 10.84,
+  "daylight": 6.14,
+  "mono": 11.5,
+  "altneon": 11.69,
+  "engineering": 8.92
+ },
+ "teal-text on band@void": {
+  "need": 4.5,
+  "arcanum": 9.4,
+  "noir": 11.91,
+  "daylight": 6.27,
+  "mono": 12.7,
+  "altneon": 12.56,
+  "engineering": 9.87
+ },
+ "on-crimson on crimson": {
+  "need": 4.5,
+  "arcanum": 9.71,
+  "noir": 5.02,
+  "daylight": 5.64,
+  "mono": 18.16,
+  "altneon": 6.13,
+  "engineering": 6.14
+ },
+ "on-crimson on crimson-hi": {
+  "need": 4.5,
+  "arcanum": 12.65,
+  "noir": 6.78,
+  "daylight": 4.06,
+  "mono": 19.8,
+  "altneon": 7.68,
+  "engineering": 7.37
+ },
+ "on-teal on teal": {
+  "need": 4.5,
+  "arcanum": 10.0,
+  "noir": 12.43,
+  "daylight": 5.97,
+  "mono": 10.54,
+  "altneon": 13.21,
+  "engineering": 10.26
+ },
+ "void on teal-text": {
+  "need": 4.5,
+  "arcanum": 10.0,
+  "noir": 12.43,
+  "daylight": 6.65,
+  "mono": 13.36,
+  "altneon": 13.21,
+  "engineering": 10.26
+ },
+ "teal on void": {
+  "need": 3,
+  "arcanum": 10.0,
+  "noir": 12.43,
+  "daylight": 5.38,
+  "mono": 10.54,
+  "altneon": 13.21,
+  "engineering": 10.26
+ },
+ "teal on navy": {
+  "need": 3,
+  "arcanum": 9.08,
+  "noir": 11.62,
+  "daylight": 5.97,
+  "mono": 9.81,
+  "altneon": 12.5,
+  "engineering": 9.59
+ },
+ "crimson on void": {
+  "need": 3,
+  "arcanum": 9.71,
+  "noir": 5.02,
+  "daylight": 5.09,
+  "mono": 18.16,
+  "altneon": 6.13,
+  "engineering": 6.14
+ },
+ "crimson on navy": {
+  "need": 3,
+  "arcanum": 8.82,
+  "noir": 4.69,
+  "daylight": 5.64,
+  "mono": 16.9,
+  "altneon": 5.8,
+  "engineering": 5.74
+ },
+ "hairline on void": {
+  "need": 3,
+  "arcanum": 1.48,
+  "noir": 1.28,
+  "daylight": 1.21,
+  "mono": 1.31,
+  "altneon": 1.28,
+  "engineering": 1.28
+ },
+ "hairline on navy": {
+  "need": 3,
+  "arcanum": 1.34,
+  "noir": 1.19,
+  "daylight": 1.34,
+  "mono": 1.22,
+  "altneon": 1.21,
+  "engineering": 1.2
+ },
+ "hairline-2 on void": {
+  "need": 3,
+  "arcanum": 1.99,
+  "noir": 1.64,
+  "daylight": 1.48,
+  "mono": 1.74,
+  "altneon": 1.62,
+  "engineering": 1.65
+ },
+ "hairline-2 on navy": {
+  "need": 3,
+  "arcanum": 1.8,
+  "noir": 1.54,
+  "daylight": 1.64,
+  "mono": 1.62,
+  "altneon": 1.53,
+  "engineering": 1.54
+ },
+ "hairline-2 on field-bg@navy": {
+  "need": 3,
+  "arcanum": 1.92,
+  "noir": 1.61,
+  "daylight": 1.64,
+  "mono": 1.71,
+  "altneon": 1.59,
+  "engineering": 1.63
+ },
+ "teal on crimson": {
+  "need": 1,
+  "arcanum": 1.03,
+  "noir": 2.48,
+  "daylight": 1.06,
+  "mono": 1.72,
+  "altneon": 2.15,
+  "engineering": 1.67
+ }
+}

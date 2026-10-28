@@ -1,0 +1,240 @@
+{
+  "coverage": {
+    "new916": {
+      "pct": 14.73,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    },
+    "new916_90": {
+      "pct": 16.72,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    },
+    "new169": {
+      "pct": 15.45,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    },
+    "new45": {
+      "pct": 4.01,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    },
+    "old916": {
+      "pct": 1.95,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    },
+    "old169": {
+      "pct": 1.29,
+      "ground": [
+        10,
+        20,
+        31
+      ]
+    }
+  },
+  "grid": {
+    "new916": {
+      "line": [
+        18.7,
+        25.1,
+        33
+      ],
+      "ground": [
+        10,
+        20,
+        31
+      ],
+      "delta": [
+        8.66,
+        5.07,
+        1.96
+      ],
+      "brass": true
+    },
+    "new169": {
+      "line": [
+        17.6,
+        25.6,
+        33
+      ],
+      "ground": [
+        10,
+        20,
+        31
+      ],
+      "delta": [
+        7.56,
+        5.6,
+        2.01
+      ],
+      "brass": true
+    },
+    "new45": {
+      "line": [
+        18.8,
+        25.2,
+        33
+      ],
+      "ground": [
+        10,
+        20,
+        31
+      ],
+      "delta": [
+        8.83,
+        5.2,
+        2.02
+      ],
+      "brass": true
+    },
+    "browser916": {
+      "line": [
+        18,
+        25.5,
+        33
+      ],
+      "ground": [
+        10,
+        20,
+        32
+      ],
+      "delta": [
+        8,
+        5.51,
+        1
+      ],
+      "brass": true
+    },
+    "old916": {
+      "line": [
+        14,
+        25,
+        35.9
+      ],
+      "ground": [
+        10,
+        20,
+        31
+      ],
+      "delta": [
+        4,
+        5,
+        4.88
+      ],
+      "brass": false
+    },
+    "old169": {
+      "line": [
+        14.2,
+        25.1,
+        35.2
+      ],
+      "ground": [
+        10,
+        20,
+        31
+      ],
+      "delta": [
+        4.19,
+        5.13,
+        4.24
+      ],
+      "brass": false
+    }
+  },
+  "lines": {
+    "9x16:fr": {
+      "hook": [
+        "Votre site",
+        "sur mesure,"
+      ],
+      "t31": [
+        "Designer graphique &",
+        "développeur web · Fondateur"
+      ],
+      "t50": [
+        "Studio web & logiciel",
+        "Bordj Bou Arréridj, Algérie"
+      ],
+      "t51": [
+        "Enraciné en Numidie",
+        "bâti sur des idées"
+      ]
+    },
+    "16x9:fr": {
+      "hook": [
+        "Votre site",
+        "sur mesure,"
+      ],
+      "t31": [
+        "Designer graphique &",
+        "développeur web · Fondateur"
+      ],
+      "t50": [
+        "Studio web & logiciel",
+        "Bordj Bou Arréridj, Algérie"
+      ],
+      "t51": [
+        "Enraciné en Numidie",
+        "bâti sur des idées"
+      ]
+    },
+    "9x16:en": {
+      "hook": [
+        "Custom",
+        "websites,"
+      ],
+      "t31": [
+        "Graphic designer &",
+        "web developer · Founder"
+      ],
+      "t50": [
+        "Web & software studio",
+        "Bordj Bou Arréridj, Algeria"
+      ],
+      "t51": [
+        "Rooted in Numidia",
+        "built on ideas"
+      ]
+    },
+    "16x9:en": {
+      "hook": [
+        "Custom",
+        "websites,"
+      ],
+      "t31": [
+        "Graphic designer &",
+        "web developer · Founder"
+      ],
+      "t50": [
+        "Web & software studio",
+        "Bordj Bou Arréridj, Algeria"
+      ],
+      "t51": [
+        "Rooted in Numidia",
+        "built on ideas"
+      ]
+    }
+  },
+  "kbps_round1": {
+    "v01__9x16__fr__silent.mp4": 1609,
+    "v01__16x9__fr__silent.mp4": 1353
+  }
+}

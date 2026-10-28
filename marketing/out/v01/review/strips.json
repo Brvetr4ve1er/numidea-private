@@ -1,0 +1,142 @@
+[
+  {
+    "file": "review/v01__9x16__fr__s2s3__f306-f341.png",
+    "what": "S2 -> S3: S2 wipes out f310-f320, T42 wipes in f320-f338 (text band x 140-940, y 290-990)",
+    "frames": [
+      306,
+      341
+    ],
+    "lang": "fr",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__fr__s3s4__f446-f481.png",
+    "what": "S3 -> S4: S3 wipes out f450-f460, the founder card wipes in f460-f478 (text band)",
+    "frames": [
+      446,
+      481
+    ],
+    "lang": "fr",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__fr__s4s5__f666-f701.png",
+    "what": "S4 -> S5: S4 wipes out f670-f680, the wordmark wipes in f680-f698 (text band)",
+    "frames": [
+      666,
+      701
+    ],
+    "lang": "fr",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__fr__mirror__f226-f251.png",
+    "what": "the mirror glide f230-f248 on « Votre site » (x 140-940, y 700-1200)",
+    "frames": [
+      226,
+      251
+    ],
+    "lang": "fr",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__16x9__fr__s2s3__f306-f341.png",
+    "what": "S2 -> S3 on the text column (x 110-910, y 80-720)",
+    "frames": [
+      306,
+      341
+    ],
+    "lang": "fr",
+    "ratio": "16x9"
+  },
+  {
+    "file": "review/v01__16x9__fr__s4s5__f666-f701.png",
+    "what": "S4 -> S5 on the text column (x 110-910, y 80-720)",
+    "frames": [
+      666,
+      701
+    ],
+    "lang": "fr",
+    "ratio": "16x9"
+  },
+  {
+    "file": "review/v01__16x9__fr__mirror__f226-f251.png",
+    "what": "the mirror glide f230-f248 on « Votre site » (visual column x 980-1780, y 190-690)",
+    "frames": [
+      226,
+      251
+    ],
+    "lang": "fr",
+    "ratio": "16x9"
+  },
+  {
+    "file": "review/v01__9x16__en__s2s3__f306-f341.png",
+    "what": "S2 -> S3: S2 wipes out f310-f320, T42 wipes in f320-f338 (text band x 140-940, y 290-990)",
+    "frames": [
+      306,
+      341
+    ],
+    "lang": "en",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__en__s3s4__f446-f481.png",
+    "what": "S3 -> S4: S3 wipes out f450-f460, the founder card wipes in f460-f478 (text band)",
+    "frames": [
+      446,
+      481
+    ],
+    "lang": "en",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__en__s4s5__f666-f701.png",
+    "what": "S4 -> S5: S4 wipes out f670-f680, the wordmark wipes in f680-f698 (text band)",
+    "frames": [
+      666,
+      701
+    ],
+    "lang": "en",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__9x16__en__mirror__f226-f251.png",
+    "what": "the mirror glide f230-f248 on « Votre site » (x 140-940, y 700-1200)",
+    "frames": [
+      226,
+      251
+    ],
+    "lang": "en",
+    "ratio": "9x16"
+  },
+  {
+    "file": "review/v01__16x9__en__s2s3__f306-f341.png",
+    "what": "S2 -> S3 on the text column (x 110-910, y 80-720)",
+    "frames": [
+      306,
+      341
+    ],
+    "lang": "en",
+    "ratio": "16x9"
+  },
+  {
+    "file": "review/v01__16x9__en__s4s5__f666-f701.png",
+    "what": "S4 -> S5 on the text column (x 110-910, y 80-720)",
+    "frames": [
+      666,
+      701
+    ],
+    "lang": "en",
+    "ratio": "16x9"
+  },
+  {
+    "file": "review/v01__16x9__en__mirror__f226-f251.png",
+    "what": "the mirror glide f230-f248 on « Votre site » (visual column x 980-1780, y 190-690)",
+    "frames": [
+      226,
+      251
+    ],
+    "lang": "en",
+    "ratio": "16x9"
+  }
+]

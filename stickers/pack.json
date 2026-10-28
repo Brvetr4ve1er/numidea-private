@@ -1,0 +1,22 @@
+{
+  "identifier": "numidea_yasser_kuro",
+  "name": "Yasser & Kūro · Numidea",
+  "publisher": "Numidea Labs",
+  "tray": "assets/k-sit.png",
+  "stickers": [
+    { "name": "yasser-salut", "emojis": ["👋", "😊"] },
+    { "name": "kuro-coucou", "emojis": ["👋", "🐈‍⬛"] },
+    { "name": "yasser-hmm", "emojis": ["🤔", "🧐"] },
+    { "name": "yasser-au-travail", "emojis": ["💻", "⌨️"] },
+    { "name": "kuro-clavier", "emojis": ["⌨️", "🐈‍⬛"] },
+    { "name": "yasser-euh", "emojis": ["😅", "❓"] },
+    { "name": "yasser-voila", "emojis": ["🎉", "✨"] },
+    { "name": "yasser-perdu", "emojis": ["🤷", "🗺️"] },
+    { "name": "kuro-quoi", "emojis": ["😳", "❗"] },
+    { "name": "kuro-vole", "emojis": ["😼", "🏃"] },
+    { "name": "kuro-dodo", "emojis": ["😴", "💤"] },
+    { "name": "flamme-humeur", "emojis": ["🔥", "😤"] },
+    { "name": "flamme-top", "emojis": ["👍", "🔥"] },
+    { "name": "flamme-go", "emojis": ["🚀", "🔥"] }
+  ]
+}

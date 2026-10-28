@@ -1,0 +1,68 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Numidea Labs</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--void); color:var(--ice); font-family:var(--font-body); overflow:hidden; }
+  .cv { position:relative; width:960px; height:288px; overflow:hidden; background:var(--void); }
+  /* the composition: one box from x = 480 to the right edge, clear of the name */
+  .cv-art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .cv-art svg { display:block; width:480px; height:288px; overflow:hidden; }
+  /* blocks: identity fills, each bound to a token */
+  .cv-brass { fill:var(--crimson); }
+  .cv-gold  { fill:var(--crimson-hi); }
+  .cv-teal  { fill:var(--teal); }
+  .cv-field { fill:var(--hairline-2); }
+  .cv-cut   { fill:var(--void); }
+  /* corners: plates and cards take r-md; the title block is square on the site (.titleblock has no radius) */
+  .cv-plate { rx:var(--r-md); ry:var(--r-md); }
+  /* the pattern: plate corner brackets (.pk), crimson on the ground of the window, void cut into the teal slab */
+  .cv-pk     { fill:none; stroke:var(--crimson); stroke-width:2; stroke-linecap:square; stroke-linejoin:miter; }
+  .cv-pk-cut { fill:none; stroke:var(--void); stroke-width:2; stroke-linecap:square; stroke-linejoin:miter; }
+  /* name and tagline, bottom-left on the ground, pinned s-6 from the edges; the
+     name takes the theme's head face (Cinzel only in Arcanum: bundle.css --ds-head) */
+  .cv-words { position:absolute; left:var(--s-6); bottom:var(--s-6); max-width:440px; }
+  .cv-name { margin:0; font-family:var(--ds-head); font-size:88px; line-height:.95; font-weight:var(--ds-head-w);
+    letter-spacing:var(--ds-head-ls); color:var(--ice); }
+  .cv-tag { margin:var(--s-2) 0 0 2px; font-family:var(--font-body); font-size:14px; line-height:20px;
+    font-weight:400; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="cv">
+<div class="cv-art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      crimson (Arcanum's brass, the primary accent: the colour the brand is known by) 320×224 sheet bled off the top and right, a void plate window 192×128 cut out of it · teal (the secondary accent) 128×192 slab · crimson-hi (the tint) 64×32 · hairline-2 (the arcane blue) only as the long title-block field — about 28% of 960×288, brass first, teal second
+  arrangement a drafting sheet: the bled brass sheet with its plate window, a tall teal slab beside it, over a title-block strip of two unequal fields (64 · the rest), flush and square as the site's .titleblock is; gutters s-4; everything ends s-6 above the bottom edge, on the name's own bottom line
+  pattern     plate corner brackets, from "1px crimson L-brackets, 14–15px long, at the four corners of a framed plate, screenshot or sheet" (README › Drafting devices): the mark on every plate, the share card and the hero sheet, where a brass grid is what any technical system would draw; four crimson inside the plate window, four void cut into the teal slab — eight, stroke 2 so the site's 1px survives the cover's scaling
+  scales      sides s-6 · s-8 · s-10 and sums (192 = s-10 + s-8, 224 = s-10 + s-9, 320 = 2 × s-10 + s-8); gutters s-4; bracket arm s-4, insets s-3; corners r-md on the slab, sheet and plate (plates and cards), none on the title block
+-->
+<!-- the teal slab, with its four void brackets cut in -->
+<rect class="cv-teal cv-plate" x="32" y="16" width="128" height="192" rx="14"/>
+<path class="cv-pk-cut" d="M44 44V28H60"/>
+<path class="cv-pk-cut" d="M132 28H148V44"/>
+<path class="cv-pk-cut" d="M44 180V196H60"/>
+<path class="cv-pk-cut" d="M132 196H148V180"/>
+<!-- the brass sheet, bled off the top and right; the plate window cut out of it in the ground -->
+<rect class="cv-brass cv-plate" x="176" y="-16" width="320" height="224" rx="14"/>
+<rect class="cv-cut cv-plate" x="208" y="32" width="192" height="128" rx="14"/>
+<path class="cv-pk" d="M220 60V44H236"/>
+<path class="cv-pk" d="M372 44H388V60"/>
+<path class="cv-pk" d="M220 132V148H236"/>
+<path class="cv-pk" d="M372 148H388V132"/>
+<!-- the title-block strip: two unequal fields, flush and square like the site's .titleblock -->
+<rect class="cv-gold" x="32" y="224" width="64" height="32"/>
+<rect class="cv-field" x="96" y="224" width="400" height="32"/>
+</svg>
+</div>
+<div class="cv-words">
+<h1 class="cv-name">Numidea Labs</h1>
+<p class="cv-tag" lang="fr">Enraciné en Numidie · bâti sur des idées</p>
+</div>
+</div>
+</body>
+</html>

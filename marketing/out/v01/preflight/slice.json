@@ -1,0 +1,98 @@
+[
+  {
+    "ratio": "9x16",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      0,
+      12
+    ],
+    "what": "S1 start: Plate I, the outline, T40 (the thumbnail frame)",
+    "compared": 13,
+    "mismatches": []
+  },
+  {
+    "ratio": "9x16",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      226,
+      251
+    ],
+    "what": "the mirror glide",
+    "compared": 26,
+    "mismatches": []
+  },
+  {
+    "ratio": "9x16",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      306,
+      345
+    ],
+    "what": "S2 -> S3, the coins inking in and turning",
+    "compared": 40,
+    "mismatches": []
+  },
+  {
+    "ratio": "16x9",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      666,
+      735
+    ],
+    "what": "S4 -> S5, Plate V inking in, the beam sweeping",
+    "compared": 70,
+    "mismatches": []
+  },
+  {
+    "ratio": "16x9",
+    "lang": "en",
+    "variant": null,
+    "frames": [
+      380,
+      481
+    ],
+    "what": "S3 -> S4 (EN): the coins drifting to the end of their eased drift, sub-pixel per frame",
+    "compared": 102,
+    "mismatches": []
+  },
+  {
+    "ratio": "9x16",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      380,
+      459
+    ],
+    "what": "S3 (FR 9:16): the coins drifting to the end of their eased drift",
+    "compared": 80,
+    "mismatches": []
+  },
+  {
+    "ratio": "9x16",
+    "lang": "en",
+    "variant": "li",
+    "frames": [
+      676,
+      760
+    ],
+    "what": "S5 in the crop layout (EN li): Plate V moved, the beam",
+    "compared": 85,
+    "mismatches": []
+  },
+  {
+    "ratio": "9x16",
+    "lang": "fr",
+    "variant": null,
+    "frames": [
+      0,
+      899
+    ],
+    "what": "the whole 9:16 FR master, every frame",
+    "compared": 900,
+    "mismatches": []
+  }
+]

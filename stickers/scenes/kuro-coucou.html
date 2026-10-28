@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kūro — coucou</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  .shadow { position: absolute; left: 452px; top: 984px; width: 440px; height: 50px; margin-left: -220px; margin-top: -25px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, 0)); }
+  /* the cat works in asset pixels (525 x 744) and is scaled by the transform;
+     the pivot is his seat, under the haunch on the ground line (asset 225, 700),
+     which sits at stage (480, 970) */
+  .fig { position: absolute; left: 255px; top: 270px; width: 525px; height: 744px; transform-origin: 225px 700px; will-change: transform; }
+  .fig img { position: absolute; left: 0; top: 0; width: 525px; height: 744px; display: block; }
+  /* the raised foreleg is its own cut-out behind the body, bending at the elbow seam
+     (397,238)-(470,252); a lip below the seam, outline included, fills the joint when it turns */
+  #paw { transform-origin: 432px 245px; will-change: transform;
+    clip-path: polygon(392px 60px, 525px 60px, 525px 250px, 480px 250px, 474px 274px, 440px 274px, 398px 262px, 388px 250px, 388px 238px, 392px 238px); }
+  /* the body with the foreleg cut away above the seam */
+  #body { clip-path: polygon(0 0, 392px 0, 392px 238px, 397px 238px, 470px 252px, 525px 252px, 525px 744px, 0 744px); }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow" id="shadow"></div>
+  <div class="fig" id="fig">
+    <img id="paw" src="../assets/k-paw.png" alt="">
+    <img id="body" src="../assets/k-paw.png" alt="">
+  </div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080"></svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, set, bezier } = Motion;
+  const K = 1.12;                         // asset px to stage px
+  const O = { x: 225, y: 700 };           // seat pivot, asset px
+  const S = { x: 480, y: 970 };           // seat pivot, stage px
+  const E = { x: 432, y: 245 };           // elbow pivot, asset px
+  const PAW = { x: 478, y: 132 };         // centre of the paw pad, asset px
+  const fig = document.getElementById('fig'), paw = document.getElementById('paw'), shadow = document.getElementById('shadow');
+  const swing = bezier(0.45, 0, 0.2, 1);  // quick out of the extreme, firm stop into the next
+
+  // keyframes: [[t, value, easeIntoThisKey], ...], first and last at rest
+  function kf(q, keys) {
+    for (let i = 1; i < keys.length; i++) {
+      if (q <= keys[i][0]) {
+        const [t0, v0] = keys[i - 1], [t1, v1, e = ease.inOut] = keys[i];
+        return v0 + (v1 - v0) * e((q - t0) / (t1 - t0));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+
+  // one pose per phase: two waves, the first with a tiny hop, then a held beat
+  function pose(q) {
+    // the whole cat rocks on his seat towards the raised paw (+) and back (-)
+    const r = kf(q, [[0, 0], [0.06, -1.6, ease.out], [0.17, 4.6, swing], [0.30, -3.4, swing], [0.42, 4.2, swing], [0.54, -2.4, swing], [0.64, 0.9, swing], [0.73, 0], [1, 0]]);
+    // the foreleg follows through a couple of frames late, so the paw flicks past the body
+    const pr = kf(q, [[0, 0], [0.08, -4, ease.out], [0.20, 6.5, swing], [0.33, -6, swing], [0.45, 6, swing], [0.57, -4, swing], [0.67, 1.5, swing], [0.77, 0], [1, 0]]);
+    // tiny hop on the first wave: crouch, lift with a stretch, land with a squash
+    const lift = kf(q, [[0, 0], [0.06, 0], [0.15, -24, ease.out], [0.25, 0, ease.in], [1, 0]]);
+    const sy = kf(q, [[0, 1], [0.06, 0.972, ease.out], [0.12, 1.03, ease.out], [0.20, 1], [0.25, 1], [0.28, 0.976, ease.out], [0.36, 1], [1, 1]]);
+    return { r, pr, lift, sy, sx: 1 - (sy - 1) * 0.5 };
+  }
+
+  // where an asset point of the foreleg lands on the stage for a pose
+  const rot = (v, deg) => { const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a); return { x: v.x * c - v.y * s, y: v.x * s + v.y * c }; };
+  function pawOnStage(P, ps) {
+    const l = rot({ x: P.x - E.x, y: P.y - E.y }, ps.pr);
+    const v = { x: (E.x + l.x - O.x) * K * ps.sx, y: (E.y + l.y - O.y) * K * ps.sy };
+    const w = rot(v, ps.r);
+    return { x: S.x + w.x, y: S.y + ps.lift + w.y };
+  }
+
+  // wave arcs: three short strokes on the outer side of the paw, drawn as an ink stroke
+  // under a bone stroke so they match the hand-drawn outline; one set per wave, placed
+  // where the paw peaks, so the paw swings away and leaves them behind as a trail
+  const NS = 'http://www.w3.org/2000/svg';
+  const fx = document.getElementById('fx');
+  function arcSet(qPeak, on, off) {
+    const c = pawOnStage(PAW, pose(qPeak));
+    const dir = -28;                        // arcs face up and out from the paw
+    return [{ r: 80, span: 28 }, { r: 108, span: 32 }, { r: 136, span: 24 }].map((d, i) => {
+      const pt = (a) => [c.x + d.r * Math.cos(a * Math.PI / 180), c.y + d.r * Math.sin(a * Math.PI / 180)];
+      const [x0, y0] = pt(dir - d.span), [x1, y1] = pt(dir + d.span);
+      const dAttr = `M${x0.toFixed(1)} ${y0.toFixed(1)} A${d.r} ${d.r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+      const g = document.createElementNS(NS, 'g');
+      const ink = document.createElementNS(NS, 'path'), bone = document.createElementNS(NS, 'path');
+      for (const [el, col, w] of [[ink, '#1b1712', 19], [bone, '#efe6d6', 8]]) {
+        el.setAttribute('d', dAttr); el.setAttribute('fill', 'none'); el.setAttribute('stroke', col);
+        el.setAttribute('stroke-width', w); el.setAttribute('stroke-linecap', 'round');
+        g.appendChild(el);
+      }
+      fx.appendChild(g);
+      return { g, ink, bone, c, i, on, off, len: d.r * 2 * d.span * Math.PI / 180 };
+    });
+  }
+  const sets = [arcSet(0.19, 0.11, 0.22), arcSet(0.44, 0.36, 0.47)].flat();
+
+  function drawArc(a, q) {
+    const d = 0.012 * a.i;
+    const head = ease.out((q - (a.on + d)) / 0.07);       // draws on with the swing
+    const tail = Math.max(0, Math.min(1, ease.inOut((q - (a.off + d)) / 0.06)));   // the tail chases it off as the paw swings back
+    const start = a.len * tail, end = a.len * Math.max(0, Math.min(1, head));
+    const vis = end - start;
+    if (vis < 0.5 || tail >= 1) { a.g.style.opacity = '0'; return; }
+    a.g.style.opacity = (1 - tail * tail).toFixed(3);     // fades as it goes, so no stray dots are left behind
+    for (const el of [a.ink, a.bone]) {
+      el.setAttribute('stroke-dasharray', `${vis.toFixed(2)} ${(a.len * 3).toFixed(1)}`);
+      el.setAttribute('stroke-dashoffset', (-start).toFixed(2));
+    }
+    const s = 1 + 0.07 * ease.out((q - (a.on + d)) / 0.25);   // a small outward flick
+    a.g.setAttribute('transform', `translate(${a.c.x.toFixed(1)} ${a.c.y.toFixed(1)}) scale(${s.toFixed(4)}) translate(${(-a.c.x).toFixed(1)} ${(-a.c.y).toFixed(1)})`);
+  }
+
+  Sticker({
+    seconds: 2, fps: 30, poster: 27,
+    draw(p) {
+      const ps = pose(p);
+      set(fig, { y: ps.lift, r: ps.r, s: K, sx: ps.sx, sy: ps.sy });
+      set(paw, { r: ps.pr });
+      const up = -ps.lift / 24;
+      shadow.style.transform = `scaleX(${(1 - 0.1 * up).toFixed(4)})`;
+      shadow.style.opacity = (1 - 0.3 * up).toFixed(3);
+      sets.forEach((a) => drawArc(a, p));
+    },
+  });
+</script>
+</body>
+</html>

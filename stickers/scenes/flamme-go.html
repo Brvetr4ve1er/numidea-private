@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Flamme — go</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  .shadow { position: absolute; left: 0; top: 0; width: 470px; height: 46px; border-radius: 50%; will-change: transform;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, 0)); }
+  /* the runner works in figure px (the asset, mirrored so he faces right: x' = 389 - x).
+     Pivot: the sole of the front shoe (317, 447), which sits on the ground line G.
+     The asset's baked grey ground shadow (rows 447..461, right of the front shoe from row 447) is cut away; a coded shadow stays on the ground instead. */
+  .fig { position: absolute; left: 0; top: 0; width: 389px; height: 448px; transform-origin: 317px 447px; will-change: transform; }
+  .mir { position: absolute; left: 0; top: 0; width: 389px; height: 462px; transform: scaleX(-1); transform-origin: 194.5px 0; }
+  .mir img { position: absolute; left: 0; top: 0; width: 389px; height: 462px; display: block; }
+  /* three copies of the same raster (coordinates below are the unmirrored asset):
+     body  everything from the forehead down, minus the heel flame and the baked shadow
+     heel  the heel flame, cut by a vertical line through its pale base (x 320); it stretches and wags about that line
+     hair  the flame hair above a line across the hair (y 95); it flickers and leans back about that line */
+  #body { clip-path: polygon(0 91px, 389px 91px, 389px 280px, 321px 280px, 321px 362px, 389px 362px, 389px 446px, 100px 446px, 100px 448px, 0 448px); }
+  #heel { clip-path: polygon(319px 278px, 389px 278px, 389px 364px, 319px 364px); transform-origin: 320px 322px; will-change: transform; }
+  #hair { clip-path: inset(0 0 367px 0); transform-origin: 160px 95px; will-change: transform; }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="shadow" id="shadow"></div>
+  <svg class="fx" id="fx" viewBox="0 0 1080 1080"></svg>
+  <div class="fig" id="fig">
+    <div class="mir">
+      <img id="body" src="../assets/f-run.png" alt="">
+      <img id="heel" src="../assets/f-run.png" alt="">
+      <img id="hair" src="../assets/f-run.png" alt="">
+    </div>
+  </div>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, osc, win, set, TAU } = Motion;
+  const K = 1.75;                         // figure px to stage px
+  const PIV = { x: 317, y: 447 };         // pivot, figure px (front sole)
+  const G = 960;                          // ground line, stage px
+  const X0 = -176, X1 = 1700;             // pivot x at phase 0 and 1: the whole runner is off-frame at both
+  const RAMP = 0.55;                      // speed ramp: fast at the edges, slow pass through the middle
+  const SEC = 2, FRAMES = 60;
+  const INK = '#1b1712', BONE = '#efe6d6', BRASS = '#e6b450', FLAME = '#e0702a';
+  const NS = 'http://www.w3.org/2000/svg';
+  const fig = document.getElementById('fig'), heel = document.getElementById('heel'), hair = document.getElementById('hair');
+  const shadow = document.getElementById('shadow'), fx = document.getElementById('fx');
+  const clamp = (v) => Math.min(Math.max(v, 0), 1);
+  const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+  const frac = (v) => v - Math.floor(v);
+  // flickers are held for two frames (drawn "on twos")
+  const twos = (p) => Math.floor(frac(p) * FRAMES / 2) * 2 / FRAMES;
+
+  // relative speed: 1 at the edges, (1 - RAMP) / (1 + RAMP) in the middle
+  const speed = (p) => (1 + RAMP * Math.cos(TAU * p)) / (1 + RAMP);
+  const runX = (p) => X0 + (X1 - X0) * (p + RAMP * Math.sin(TAU * p) / TAU);
+
+  // the runner at phase p: four bounces per crossing, airborne at the middle of the loop
+  function state(p) {
+    const q = frac(4 * p + 0.5);
+    const lift = Math.sin(Math.PI * q);                                         // hangs at the top, sharp contact
+    const land = 0.5 + 0.5 * Math.cos(Math.PI * clamp(Math.min(q, 1 - q) / 0.14)); // squash around each contact
+    const push = Math.sin(Math.PI * clamp((q - 0.05) / 0.3));                   // stretch on the push-off
+    const pq = twos(p), sp = speed(p);
+    const flick = 0.6 * osc(pq, 10) + 0.4 * osc(pq, 7, 0.3);
+    return {
+      x: runX(p), y: G - 30 * lift, lift, q, sp,
+      r: 0.6 + 2.0 * land - 1.0 * lift,                                        // pitches forward over the planted foot
+      sx: 1 + 0.03 * land - 0.01 * push,
+      sy: 1 - 0.05 * land + 0.025 * push,
+      heelS: 1 + 0.2 * sp + 0.08 * flick,                                      // the heel flame streams longer when he is fast
+      heelK: 4 * osc(pq, 4, 0.15) - 3 * Math.cos(TAU * q),
+      hairK: -(2.5 + 3 * sp) + 1.2 * osc(pq, 6, 0.1),                            // leans back with the speed
+      hairS: 1 + 0.025 * flick - 0.02 * Math.cos(TAU * (q - 0.1)),
+    };
+  }
+
+  // figure px -> stage px under the runner's transform (translate, rotate, scale about the pivot)
+  function toStage(P, t) {
+    const a = t.r * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+    const dx = (P.x - PIV.x) * K * t.sx, dy = (P.y - PIV.y) * K * t.sy;
+    return { x: t.x + c * dx - s * dy, y: t.y + s * dx + c * dy };
+  }
+
+  // ---- coded effects: speed lines (behind the runner) and sparks (shed from the heel flame)
+  function svgEl(tag, attrs, parent = fx) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e);
+    return e;
+  }
+  // a speed line is a bone streak with the ink outline of the drawing, thick at the head (just
+  // behind him) and tapering to a thin tail away from him, as in kuro-vole
+  function streak(xh, xt, y, rh, rt) {
+    const f1 = (v) => v.toFixed(1), sw = xt > xh ? 1 : 0;
+    return `M${f1(xh)} ${f1(y - rh)} L${f1(xt)} ${f1(y - rt)} A${rt} ${rt} 0 0 ${sw} ${f1(xt)} ${f1(y + rt)} L${f1(xh)} ${f1(y + rh)} A${rh} ${rh} 0 0 ${sw} ${f1(xh)} ${f1(y - rh)} Z`;
+  }
+  // a small flame: round base at the origin, the main tongue up (-y) with a little side lick,
+  // ink outline, and a hot core
+  const SPARK = 'M3 -40 C9 -30 13 -21 13 -9 C13 3 7 10 0 10 C-7 10 -13 3 -13 -6 C-13 -13 -10 -18 -7 -22 C-6 -17 -4 -14 -2 -13 C-3 -22 -1 -31 3 -40 Z';
+  const CORE = 'M1 -16 C5 -10 7 -6 7 -1 C7 4 4 7 0 7 C-4 7 -7 4 -7 -1 C-7 -6 -3 -10 1 -16 Z';
+  const INKW = 7;                         // outline width in stage px (half of it shows outside the fill)
+  function spark(fill, core) {
+    const g = svgEl('g', { opacity: 0 });
+    const outer = svgEl('path', { d: SPARK, fill, stroke: INK, 'stroke-linejoin': 'round', 'paint-order': 'stroke' }, g);
+    svgEl('path', { d: CORE, fill: core, transform: 'translate(0 2)' }, g);
+    return { g, outer };
+  }
+
+  // speed lines: head just behind his back (figure px), streaming left
+  const LINES = [
+    { x: 126, y: 140, len: 200, w: 0.9 },
+    { x: 66,  y: 228, len: 290, w: 1 },
+    { x: 50,  y: 396, len: 170, w: 0.85 },
+  ].map((l) => ({ ...l, el: svgEl('path', { fill: BONE, stroke: INK, 'stroke-width': 10, 'paint-order': 'stroke', 'stroke-linejoin': 'round', opacity: 0 }) }));
+
+  // sparks: peeled off the heel flame while he crosses (never while it is near an edge), each
+  // keeping part of his speed, so it lags behind him while it is kicked up; then it keeps rising
+  // (towards a slow rise speed, never falling), sways, flickers and burns down to nothing.
+  // All of them are born and gone inside the crossing: phase 0 and the exit frames stay clear.
+  const NE = 16;
+  const E0 = 21 / FRAMES, E1 = 46 / FRAMES, DIE = 50.5 / FRAMES;
+  const SPARKS = [...Array(NE)].map((_, i) => {
+    const b = E0 + (E1 - E0) * (i + 0.15 + 0.7 * hash(i)) / NE;
+    return {
+      b,
+      life: Math.min((8 + 5 * hash(i + 40)) / FRAMES, DIE - b),
+      ox: 14 + 44 * hash(i + 80),             // along the flame from the seam, unmirrored px
+      oy: 296 + 24 * hash(i + 120),           // the upper half of the flame, so it rises clear of it
+      keep: 0.15 + 0.3 * hash(i + 160),       // share of his speed it keeps when it peels off
+      vy: -(220 + 170 * hash(i + 200)),       // kicked up, stage px/s
+      k: 0.5 + 0.28 * hash(i + 240),
+      sw: 3 + 4 * hash(i + 280), fp: hash(i + 320),
+      flip: hash(i + 360) < 0.5 ? -1 : 1,     // side lick on the left or on the right
+      ...spark(i % 3 === 1 ? BRASS : FLAME, i % 3 === 1 ? BONE : BRASS),
+    };
+  });
+  const DRAG = 7, RISE = 70, CY = 6, SWAY = 2.6;   // the rise stays short of the middle speed line
+  const VRUN = (X1 - X0) * (1 + RAMP) / SEC;   // his speed in stage px/s is VRUN * speed(p)
+
+  function hideFx(el) { el.setAttribute('opacity', '0'); }
+
+  function drawSpark(e, p) {
+    const u = (p - e.b) / e.life;
+    if (u < 0 || u >= 1) { hideFx(e.g); return; }
+    const t = state(e.b);
+    // the birth point rides on the stretched heel flame
+    const xo = 320 + e.ox * t.heelS;
+    const yo = e.oy + Math.tan(t.heelK * Math.PI / 180) * (xo - 320);
+    const P0 = toStage({ x: 389 - xo, y: yo }, t);
+    const ts = u * e.life * SEC;
+    const vx0 = e.keep * VRUN * t.sp;
+    const ex = Math.exp(-DRAG * ts), ey = Math.exp(-CY * ts);
+    const sa = TAU * (SWAY * ts + e.fp);
+    const x = P0.x + vx0 * (1 - ex) / DRAG + e.sw * clamp(ts / 0.12) * Math.sin(sa);
+    const y = P0.y - RISE * ts + (e.vy + RISE) * (1 - ey) / CY;
+    // the tongue trails the motion through the air: leans back while it still has his speed
+    const lean = -Math.min(vx0 * ex / 16, 28) + 7 * Math.cos(sa);
+    const flick = (Math.round(p * FRAMES / 2) + Math.round(e.fp * 7)) % 2 === 0 ? 1.08 : 0.93;   // on twos
+    const s = e.k * ease.back(clamp(u / 0.2)) * (1 - ease.inOut(clamp((u - 0.35) / 0.65)));
+    if (s < 0.06) { hideFx(e.g); return; }
+    e.g.setAttribute('opacity', '1');
+    e.outer.setAttribute('stroke-width', (INKW * Math.min(1, s / 0.3) / s).toFixed(2));
+    e.g.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${lean.toFixed(2)}) scale(${(e.flip * s).toFixed(4)} ${(s * flick).toFixed(4)})`);
+  }
+
+  function drawLines(p, t) {
+    const pq = twos(p);
+    const out = 1 - ease.in(win(p, 0.86, 0.975));   // the lines get pulled off-frame after him
+    LINES.forEach((l, j) => {
+      const H = toStage({ x: l.x, y: l.y }, t);
+      const jit = 0.8 + 0.32 * hash(Math.round(pq * FRAMES) * 3 + j);
+      const L = l.len * (0.55 + 0.45 * t.sp) * jit * out;
+      if (L < 4 || H.x < -40) { hideFx(l.el); return; }
+      l.el.setAttribute('d', streak(H.x, H.x - L, H.y, 6 * l.w, 1.6 * l.w));
+      l.el.setAttribute('opacity', '1');
+    });
+  }
+
+  Sticker({
+    seconds: SEC, fps: 30, poster: 30,
+    draw(p) {
+      const t = state(p);
+      set(fig, { x: t.x - PIV.x, y: t.y - PIV.y, r: t.r, s: K, sx: t.sx, sy: t.sy });
+      heel.style.transform = `skewY(${t.heelK.toFixed(3)}deg) scaleX(${t.heelS.toFixed(4)})`;
+      hair.style.transform = `skewX(${t.hairK.toFixed(3)}deg) scaleY(${t.hairS.toFixed(4)})`;
+      // the shadow stays on the ground under his feet and shrinks while he is in the air
+      set(shadow, { x: t.x - 143 - 235, y: G - 23 + 6, sx: 1 - 0.2 * t.lift, sy: 1 - 0.12 * t.lift, o: 1 - 0.35 * t.lift });
+      drawLines(p, t);
+      SPARKS.forEach((e) => drawSpark(e, p));
+    },
+  });
+</script>
+</body>
+</html>

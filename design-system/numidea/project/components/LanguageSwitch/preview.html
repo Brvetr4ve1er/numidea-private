@@ -1,0 +1,36 @@
+<!-- @dsCard group="Controls" height=280 subtitle="Static rendition · styles.css › .lang, .lang button[aria-pressed]" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>LanguageSwitch — preview</title></head>
+<body>
+<div class="ds-stage">
+  <div class="ds-row">
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" aria-pressed="true" lang="fr" aria-label="Français (FR)">FR</button><button type="button" aria-pressed="false" lang="en" aria-label="English (EN)">EN</button><button type="button" aria-pressed="false" lang="ar" aria-label="العربية (ع)">ع</button>
+    </div>
+    <span class="ds-label">French page · FR pressed</span>
+  </div>
+  <div class="ds-row">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" aria-pressed="false" lang="fr" aria-label="Français (FR)" class="is-hover">FR</button><button type="button" aria-pressed="true" lang="en" aria-label="English (EN)">EN</button><button type="button" aria-pressed="false" lang="ar" aria-label="العربية (ع)">ع</button>
+    </div>
+    <span class="ds-label">English page · EN pressed · FR under the pointer</span>
+  </div>
+  <div class="ds-row" dir="rtl" lang="ar">
+    <div class="lang" role="group" aria-label="اللغة">
+      <button type="button" aria-pressed="false" lang="fr" aria-label="Français (FR)">FR</button><button type="button" aria-pressed="false" lang="en" aria-label="English (EN)">EN</button><button type="button" aria-pressed="true" lang="ar" aria-label="العربية (ع)">ع</button>
+    </div>
+    <span class="ds-label" dir="ltr">Arabic page · RTL · ع pressed</span>
+  </div>
+  <div class="ds-row">
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" aria-pressed="true" lang="fr" aria-label="Français (FR)" class="is-focus">FR</button><button type="button" aria-pressed="false" lang="en" aria-label="English (EN)">EN</button><button type="button" aria-pressed="false" lang="ar" aria-label="العربية (ع)">ع</button>
+    </div>
+    <div class="lang" role="group" aria-label="Langue">
+      <button type="button" aria-pressed="true" lang="fr" aria-label="Français (FR)">FR</button><button type="button" aria-pressed="false" lang="en" aria-label="English (EN)" class="is-focus">EN</button><button type="button" aria-pressed="false" lang="ar" aria-label="العربية (ع)">ع</button>
+    </div>
+    <span class="ds-label">Keyboard focus · the ring is drawn inside</span>
+  </div>
+</div>
+</body>
+</html>

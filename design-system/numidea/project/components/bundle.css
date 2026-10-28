@@ -1,0 +1,544 @@
+/* Numidea Labs — components (static).
+   Hand-written from assets/styles.css of Brvetr4ve1er/Numidea.tech
+   (claude/numidea-labs-landing-c4jokc@ed1e6ad). The site is plain HTML/CSS/JS
+   with no component library, so nothing is built: this sheet recreates the
+   site's own rules, values unchanged, as they compute at desktop width after
+   the sheet's last word (its DESIGN SYSTEM block at styles.css:2381 wins over
+   the per-section sizes above it).
+
+   It reads ONLY the custom properties tokens.css declares. Where the site reads
+   a per-theme variable tokens.json does not carry, this sheet takes Arcanum's
+   value (the default theme, as tokens.css does) or leaves the effect out, and
+   says so at the rule:
+     --font-head / --head-weight / --head-tracking / --font-logo / --logo-weight /
+     --logo-tracking / --kicker-node / --grid-opacity / --grid-size -> re-declared
+        below per theme, on the same [data-theme] selectors tokens.css uses,
+        under this sheet's own --ds-* names (Cinzel in Arcanum, Geist elsewhere);
+        `.face-geist` shows the Geist set inside an Arcanum page, at Noir's values
+     --ink-k       -> 1 (Arcanum), so engraving strengths are the site's at k=1
+     --shade / --shade-k -> card drop shadows left out (the inset highlight stays)
+     --grad-noir   -> the founder roundel only: a gradient from navy to void
+     --grad-blood  -> not used: no screenshot slot is filled here
+   Sizes the site writes as clamp() are set at their desktop end, as tokens.json
+   does. Durations and easing are the site's literals (--dur-*, --ease-out are
+   not tokens). Motion is left at the site's no-script state: everything drawn,
+   nothing armed. The only theme selectors are the --ds-* block below.
+   `[dir="rtl"]` stands for the site's html[dir="rtl"] so one preview can show
+   both directions. */
+
+/* ───────────── per-theme faces, kicker node and grid (themes.css) ───────────── */
+:root,[data-theme="arcanum"]{--ds-head:var(--font-deco);--ds-head-w:700;--ds-head-ls:.01em;
+  --ds-logo:var(--font-deco);--ds-logo-w:700;--ds-logo-ls:.04em;--ds-node:6px;--ds-grid-o:.07;--ds-grid-s:64px}
+[data-theme="noir"]{--ds-head:var(--font-display);--ds-head-w:700;--ds-head-ls:-.035em;
+  --ds-logo:var(--font-display);--ds-logo-w:700;--ds-logo-ls:-.02em;--ds-node:0px;--ds-grid-o:.035;--ds-grid-s:64px}
+[data-theme="daylight"]{--ds-head:var(--font-display);--ds-head-w:600;--ds-head-ls:-.03em;
+  --ds-logo:var(--font-display);--ds-logo-w:600;--ds-logo-ls:-.015em;--ds-node:0px;--ds-grid-o:.045;--ds-grid-s:64px}
+[data-theme="mono"]{--ds-head:var(--font-display);--ds-head-w:500;--ds-head-ls:-.035em;
+  --ds-logo:var(--font-display);--ds-logo-w:600;--ds-logo-ls:-.02em;--ds-node:0px;--ds-grid-o:.04;--ds-grid-s:64px}
+[data-theme="altneon"]{--ds-head:var(--font-display);--ds-head-w:700;--ds-head-ls:-.025em;
+  --ds-logo:var(--font-display);--ds-logo-w:700;--ds-logo-ls:-.01em;--ds-node:0px;--ds-grid-o:.06;--ds-grid-s:48px}
+[data-theme="engineering"]{--ds-head:var(--font-display);--ds-head-w:600;--ds-head-ls:-.03em;
+  --ds-logo:var(--font-display);--ds-logo-w:600;--ds-logo-ls:-.02em;--ds-node:0px;--ds-grid-o:.09;--ds-grid-s:32px}
+/* the Geist set inside an Arcanum page (Noir's values); in the other themes it changes nothing */
+:is(:root:not([data-theme]),[data-theme="arcanum"]) .face-geist{
+  --ds-head:var(--font-display);--ds-head-w:700;--ds-head-ls:-.035em;
+  --ds-logo:var(--font-display);--ds-logo-w:700;--ds-logo-ls:-.02em;--ds-node:0px}
+
+/* ───────────── base (styles.css:77-120) ───────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--void);color:var(--ice);font-family:var(--font-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Arabic: the whole run takes IBM Plex Sans Arabic and loses all tracking,
+   which breaks the joins of a cursive script (styles.css:84-96); the Latin
+   wordmark keeps its own */
+[dir="rtl"]{font-family:var(--font-arabic)}
+[dir="rtl"] :not(.logo,.logo *){letter-spacing:0!important}
+[lang="ar"]{font-family:var(--font-arabic);letter-spacing:0}
+
+/* ───────────── Wordmark (styles.css:43, :139-142, :730, :2289, :2515) ───────────── */
+/* Arcanum: Cinzel 700 at .04em; "idea" in Geist 600 teal-text; a solid
+   crimson block after "Labs". No drawn logo exists: the name is set in type. */
+.logo{font-family:var(--ds-logo);font-weight:var(--ds-logo-w);font-size:22px;letter-spacing:var(--ds-logo-ls);text-decoration:none;
+  white-space:pre;direction:ltr;unicode-bidi:isolate}
+.logo i{font-family:var(--font-display);font-style:normal;font-weight:600;color:var(--teal-text);
+  transition:color .3s}
+.logo:hover i{filter:hue-rotate(40deg) saturate(1.3)}
+.cursor{display:inline-block;width:9px;height:20px;background:var(--crimson);margin-left:5px;transform:translateY(3px);
+  box-shadow:var(--glow-crimson)}
+.footer .logo{font-size:24px}
+/* Intentional addition: scaled up (zoom or transform on a wrapper), the block
+   keeps its proportion but not its glow: a scaled 1px ring reads as an outline
+   and the 34px halo as a bloom. The site never draws the mark above 24px. */
+.logo-scaled .cursor,.logo-scaled.cursor{box-shadow:none}
+/* on an Arabic page the site's ltr-only logo rule does not apply: Geist 600, -.01em */
+[dir="rtl"] .logo{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em}
+
+/* ───────────── Button (styles.css:393-402, :706, :1755-1762, :1881-1884, :1944) ───────────── */
+.btn{font-family:var(--font-mono);font-size:14px;font-weight:700;padding:14px 28px;border-radius:var(--r-sm);
+  border:1px solid transparent;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+  transition-property:color,background-color,border-color,box-shadow,transform,opacity,filter}
+.btn-primary{background:var(--crimson);color:var(--on-crimson);border-color:var(--crimson);box-shadow:var(--btn-glow)}
+.btn-primary:is(:hover,:focus-visible,.is-hover,.is-focus){box-shadow:var(--glow-crimson);transform:translateY(-2px)}
+.btn-teal{background:transparent;color:var(--teal-text);border-color:var(--teal)}
+.btn-teal:is(:hover,:focus-visible,.is-hover,.is-focus){box-shadow:var(--glow-teal);
+  background:color-mix(in srgb,var(--teal) 8%,transparent)}
+.btn-ghost{background:transparent;color:var(--ice);border-color:var(--hairline-2)}
+.btn-ghost:is(:hover,:focus-visible,.is-hover,.is-focus){border-color:var(--ice)}
+.btn.is-focus{outline:2px solid var(--teal);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.btn:active{transform:translateY(0) scale(.97);transition-duration:.08s}}
+.form .btn{padding:15px 40px}
+/* WhatsApp: the icon slot beside the label */
+.wa-link{display:inline-flex;align-items:center;gap:9px}
+.wa-i{flex:none;width:19px;height:19px;display:block}
+.wa-i svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ───────────── Pill (styles.css:403-407, :2408, :588) ───────────── */
+.pill{font-family:var(--font-mono);font-size:11px;letter-spacing:.02em;padding:5px 11px;border:1px solid var(--hairline-2);
+  border-radius:var(--r-pill);color:var(--muted);background:var(--navy);display:inline-block}
+.pill.live{color:var(--teal-text);border-color:var(--teal)}
+/* a portfolio piece, not client work: dashed, and never hidden */
+.pill.concept{border-style:dashed}
+.pill.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);
+  margin-inline-end:7px;box-shadow:0 0 8px var(--teal);vertical-align:middle}
+.fd-pills .pill{font-size:11px;letter-spacing:.04em;padding:4px 10px}
+
+/* ───────────── Kicker + section heading (styles.css:39-47, :122-127, :768, :977-992, :2402-2407) ───────────── */
+.kicker{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--crimson-text);display:flex;align-items:center;gap:var(--s-2);margin-bottom:var(--s-5)}
+.kicker::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--crimson),transparent)}
+[dir="rtl"] .kicker::before{background:linear-gradient(270deg,var(--crimson),transparent)}
+/* the node: 6px in Arcanum, 0 (hidden) in the other five themes */
+.kicker::after{content:"";width:var(--ds-node);height:var(--ds-node);margin-inline-start:calc(var(--ds-node) * -.66);
+  background:var(--crimson);transform:rotate(45deg);box-shadow:0 0 10px color-mix(in srgb,var(--crimson) 70%,transparent)}
+/* h2.sec on the site; a class here so a post can set it on any element.
+   The theme's head face: Arcanum Cinzel 700 .01em; Noir 700 -.035em; Daylight and
+   Engineering 600 -.03em; Mono 500 -.035em; Alt-neon 700 -.025em (Geist).
+   62px = the desktop end of clamp(26px,14px + 3.33vw,62px) */
+.sec{font-family:var(--ds-head);font-weight:var(--ds-head-w);letter-spacing:var(--ds-head-ls);font-size:62px;line-height:1.04;
+  margin-bottom:var(--s-7);max-width:11.934em}
+.sec em{font-family:inherit;font-style:normal;color:var(--crimson-text)}
+[dir="rtl"] .sec{font-family:var(--font-arabic);font-weight:600}
+.sec-lead{font-size:18px;line-height:1.5;color:var(--muted);max-width:39.78em;margin:0 0 var(--s-7)}
+
+/* ───────────── Plate (THE ATLAS, styles.css:2024-2154; frame and ticks from the hero plate, :314-336) ───────────── */
+/* The hero's plate frame and its drafting corner ticks */
+.plate{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:var(--r-md);background:var(--navy);
+  border:1px solid var(--hairline-2);box-shadow:0 0 0 6px color-mix(in srgb,var(--void) 55%,transparent)}
+.pk{position:absolute;width:14px;height:14px;z-index:4;border:1px solid var(--crimson)}
+.pk.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.pk.tr{top:-1px;right:-1px;border-left:0;border-bottom:0}
+.pk.bl{bottom:-1px;left:-1px;border-right:0;border-top:0}
+.pk.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
+/* Intentional addition: a positioned box around .plate that carries the ticks.
+   On the site the four .pk are children of .plate, whose overflow:hidden clips
+   them away entirely (checked in a render of index.html); outside the clip,
+   on the frame's outer corners, they draw. */
+.plate-frame{position:relative}
+.plate-frame>.pk{z-index:5}
+/* the engraving: white line art on black, used as a LUMINANCE mask over the
+   theme ink (currentColor), so one file re-inks itself in all six themes.
+   The consumer sets mask-image on the inner <i> (the site assigns it per
+   plate class, lazily). */
+.pi{position:absolute;display:block}
+.pi>i{position:absolute;inset:0}
+.v-ink,.pi>i,.fd-ink{display:block;background:currentColor;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  -webkit-mask-source-type:luminance;mask-mode:luminance}
+/* each figure's ink and strength (the site's opacity × --ink-k, at Arcanum's k = 1) */
+.pi-arch{aspect-ratio:1000/558;color:var(--teal-text)}
+.pi-arch>i{opacity:.13}
+.pi-coins{position:absolute;aspect-ratio:1.35;display:block}
+.pc{width:44%;aspect-ratio:1;color:var(--crimson-text)}
+.pc>i{opacity:.5}
+.pc-king{top:0;left:28%;width:46%}
+.pc-horse{top:46%;left:0}
+.pc-palm{top:40%;left:56%}
+.pi-bench{aspect-ratio:1100/614;color:var(--teal-text)}
+.pi-bench>i{opacity:.1}
+.pi-lantern{aspect-ratio:560/835;color:var(--crimson-text)}
+.pi-lantern>i{opacity:.6}
+.pi-light{aspect-ratio:1100/595;color:var(--teal-text)}
+.pi-light>i{opacity:.16}
+/* the Pricing texture (px-contour.webp): crimson-hi at .1, uncaptioned */
+.pi-contour{aspect-ratio:1400/594;color:var(--crimson-hi)}
+.pi-contour>i{opacity:.1}
+.fd-ink{position:absolute;aspect-ratio:1500/596;color:var(--crimson-text);opacity:.2}
+/* Intentional addition: a plate as the sole figure of a marketing frame, with no
+   text over it, at the share card's strength (.62, build-og.mjs); behind text
+   keep the watermark strengths above */
+.pi.pi-figure>i,.pi-figure .pi>i{opacity:.62}
+/* the engraved caption: a solid void chip, because line work behind small
+   type fell under 4.5:1 wherever the hatching is dense.
+   11px / .14em is the computed value (the DESIGN SYSTEM label rule, :2402,
+   overrides the 10px / .18em written at :2046). */
+.pl-cap{position:absolute;font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;pointer-events:none;background:var(--void);padding:3px 7px;border-radius:3px}
+[dir="rtl"] .pl-cap{letter-spacing:0;font-family:var(--font-arabic);font-size:11px}
+.pi .pl-cap{inset-inline-start:0;top:calc(100% + 8px)}
+
+/* ───────────── TierCard (PRICING, styles.css:1366-1400, :1589-1616, :1893, :2174-2237, :2433-2440) ───────────── */
+.tiers{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-5);margin-bottom:var(--s-5)}
+@media (min-width:720px){.tiers{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}}
+/* a row 1,200px wide: the site's clamp(19px,1.9vw,30px) computes to 22.8px there */
+.tiers.at-1200 .t-range b{font-size:22.8px}
+.tier{position:relative;display:flex;flex-direction:column;padding:var(--s-6) var(--s-5) var(--s-5);
+  border:1px solid var(--hairline);border-radius:var(--r-lg);background:var(--navy);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0) 42%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .3s cubic-bezier(.16,1,.3,1),transform .3s cubic-bezier(.16,1,.3,1)}
+.tier:is(:hover,.is-hover){border-color:var(--hairline-2);transform:translateY(-3px)}
+/* the chosen tier earns a ring and a label, not a different size */
+.tier-pop{border-color:color-mix(in srgb,var(--teal) 45%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px color-mix(in srgb,var(--teal) 18%,transparent)}
+.t-pop{position:absolute;top:0;inset-inline-start:var(--s-5);transform:translateY(-50%);
+  font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--void);background:var(--teal-text);padding:4px 10px;border-radius:var(--r-pill)}
+.tier h3{font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.15;letter-spacing:-.015em;
+  color:var(--ice);margin-bottom:6px}
+[dir="rtl"] .tier h3{font-family:var(--font-arabic)}
+.t-for{color:var(--body-strong);font-size:15px;line-height:1.6;margin-bottom:var(--s-5);min-height:2.8em}
+/* 25px and 30px: the desktop ends of clamp(19px,2.2vw,25px) and clamp(19px,1.9vw,30px) */
+.t-range{font-family:var(--font-display);font-size:25px;letter-spacing:-.02em;color:var(--ice);margin-bottom:4px}
+.t-range b{font-weight:700;font-size:30px;letter-spacing:-.02em}
+.t-range .cur{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;color:var(--teal-text);margin-inline-start:4px}
+/* Intentional addition: marketing writes « env. » before the figure (the site
+   shows the bare range); set in the currency's style, spaced on its far side */
+.t-range .cur:first-child{margin-inline:0 4px}
+.t-time{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:var(--s-5);margin-bottom:var(--s-5);border-bottom:1px solid var(--hairline)}
+/* with the weeks ruler under it (the site's scripted state) */
+.tier .t-time:has(+.t-weeks){padding-bottom:var(--s-3);margin-bottom:0;border-bottom:0}
+.t-weeks{display:block;padding-bottom:var(--s-4);margin-bottom:var(--s-5);border-bottom:1px solid var(--hairline)}
+.t-wk{position:relative;display:block;height:5px;border-radius:min(var(--r-sm),3px);
+  background:color-mix(in srgb,var(--hairline-2) 70%,transparent)}
+/* week ticks under the bar, one per week of a 16-week ruler (the longest tier) */
+.t-wk::after{content:"";position:absolute;inset-inline:0;top:8px;height:4px;border-inline:1px solid var(--hairline-2);
+  background:repeating-linear-gradient(90deg,var(--hairline-2) 0 1px,transparent 1px calc(100% / 16))}
+/* the consumer places the bar: inset-inline-start = first week / 16, inline-size = (last - first) / 16 */
+.t-wk b{position:absolute;inset-block:0;inset-inline-start:0;border-radius:inherit;background:var(--teal)}
+.t-wk-n{display:flex;justify-content:space-between;gap:var(--s-3);height:16px;margin-top:12px;
+  font-family:var(--font-mono);font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.t-list{list-style:none;display:grid;gap:var(--s-3)}
+.t-list li{position:relative;padding-inline-start:22px;color:var(--body-strong);font-size:15px;line-height:1.6}
+.t-list li::before{content:"";position:absolute;inset-inline-start:0;top:.52em;width:9px;height:9px;
+  border-inline-start:1.5px solid var(--teal);border-bottom:1.5px solid var(--teal);transform:rotate(-45deg) translateY(-1px)}
+[dir="rtl"] .t-list li::before{transform:rotate(45deg) translateY(-1px)}
+.price-note{color:var(--muted);font-size:15px;line-height:1.6;max-width:52em;margin-bottom:var(--s-8)}
+/* the corner icons: 24×24, stroke 1.5, currentColor, drawn (their draw-in and idle motion are left out) */
+.ai{width:26px;height:26px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  overflow:visible;color:var(--teal-text)}
+.ai .f{fill:currentColor;stroke:none}
+.ai-corner{position:absolute;top:var(--s-5);inset-inline-end:var(--s-5);width:28px;height:28px}
+.tier-pop .ai-corner{color:var(--crimson-text)}
+
+/* ───────────── ApercuCard (signature offer, styles.css:746-758, :796-815, :925, :969-971, :1139-1156, :1503-1587) ───────────── */
+/* The card has NO fill of its own on the site: its grad-noir background is
+   overridden by the white top sheen (:969), so the section ground shows through. */
+.preview{position:relative;border:1px solid var(--hairline-2);border-radius:var(--r-lg);padding:var(--s-7);margin-bottom:var(--s-8);
+  overflow:hidden;display:grid;grid-template-columns:46px minmax(0,1fr);gap:var(--s-5);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,0) 38%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.preview .glow{position:absolute;width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--teal) 22%,transparent),transparent 65%);
+  top:-140px;right:-60px;filter:blur(24px);pointer-events:none}
+[dir="rtl"] .preview .glow{right:auto;left:-60px}
+.glyph{width:46px;height:46px;border:1px solid var(--hairline-2);border-radius:var(--r-sm);display:grid;place-items:center;
+  color:var(--teal-text);flex:none}
+.glyph svg{width:26px;height:26px;display:block;overflow:visible}
+.glyph svg :is(path,circle,line,polyline,polygon,rect){fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.preview .glyph{border-color:var(--crimson);color:var(--crimson-text)}
+.preview .body{position:relative}
+.preview .tag{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson-text)}
+.preview h3{font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.15;letter-spacing:-.015em;margin:var(--s-3) 0 6px}
+[dir="rtl"] .preview h3{font-family:var(--font-arabic)}
+.preview .promise{font-family:var(--font-display);font-style:normal;font-weight:600;letter-spacing:-.01em;font-size:18px;line-height:1.5;
+  color:var(--teal-text);margin:4px 0 var(--s-3)}
+[dir="rtl"] .preview .promise{font-family:var(--font-arabic)}
+.preview .brief{font-size:15px;line-height:1.6;color:var(--muted);max-width:41.106em;margin-bottom:var(--s-4)}
+/* the offer's terms: they travel with every mention of the offer */
+.preview .prev-terms{font-family:var(--font-mono);font-size:12px;line-height:1.6;color:var(--body-strong);max-width:52em;margin-bottom:var(--s-5)}
+.preview .prev-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-5);margin-bottom:var(--s-5)}
+.preview .prev-wa{font-family:var(--font-mono);font-size:13px;color:var(--teal-text);text-decoration:underline;text-underline-offset:3px;
+  min-height:44px;display:inline-flex;align-items:center}
+.preview .outcome{font-size:14px;color:var(--ice);padding-left:14px;border-left:2px solid var(--crimson)}
+.preview .outcome span{font-size:15px;line-height:1.6}
+[dir="rtl"] .preview .outcome{padding-left:0;padding-right:14px;border-left:none;border-right:2px solid var(--crimson)}
+.preview .outcome b{display:block;font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal-text);margin-bottom:5px}
+/* the path, from the first message to the decision: a vertical rail, laid
+   along a line once its own box is 720px wide (a container query) */
+.ptl-w{container-type:inline-size;margin:0 0 var(--s-5)}
+.ptl{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-4)}
+.ptl-s{position:relative;display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:var(--s-3);align-content:start}
+.ptl-s:not(:last-child)::after{content:"";position:absolute;z-index:0;inset-inline-start:11px;top:10px;
+  width:2px;height:calc(100% + var(--s-4));background:color-mix(in srgb,var(--teal) 45%,transparent)}
+.ptl-m{position:relative;z-index:1;grid-row:1/span 2;justify-self:center;margin-top:4px;
+  width:12px;height:12px;border:2px solid var(--teal);border-radius:50%;background:var(--void)}
+/* the five working days, one cell each */
+.ptl-build .ptl-m{margin-top:0;width:8px;height:auto;border:0;border-radius:0;background:none;
+  display:grid;grid-template-rows:repeat(5,6px);gap:2px}
+.ptl-build .ptl-m i{display:block;border-radius:1px;background:var(--teal)}
+/* the decision is the visitor's, in the primary accent */
+.ptl-dec .ptl-m{border:0;border-radius:2px;background:var(--crimson);transform:rotate(45deg) scale(.86)}
+.ptl-t{grid-column:2;font-size:13px;line-height:1.4;color:var(--body-strong)}
+.ptl-d{grid-column:2;font-family:var(--font-mono);font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-top:2px}
+.ptl-zero{grid-column:2;justify-self:start;margin-top:2px;font-family:var(--font-display);font-weight:700;font-size:22px;line-height:1.15;
+  letter-spacing:-.01em;color:var(--ice);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ptl-zero .cur{font-family:var(--font-mono);font-size:13px;font-weight:400;letter-spacing:.06em;color:var(--teal-text)}
+.ptl-p{grid-column:2;font-size:13px;line-height:1.55;color:var(--muted);margin-top:4px;max-width:38em}
+@container (min-width:720px){
+  .ptl{grid-template-columns:repeat(5,minmax(0,1fr));gap:0 var(--s-5)}
+  .ptl-s{grid-template-columns:minmax(0,1fr);grid-template-rows:24px;row-gap:0}
+  .ptl-s:not(:last-child)::after{top:11px;inset-inline-start:6px;width:calc(100% + var(--s-5));height:2px}
+  .ptl-m{grid-row:1;justify-self:start;margin-top:6px}
+  .ptl-build .ptl-m{justify-self:stretch;width:auto;height:8px;margin-top:8px;
+    grid-template-rows:none;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+  .ptl-dec .ptl-m{margin-inline-start:1px}
+  .ptl-t,.ptl-d,.ptl-zero,.ptl-p{grid-column:1}
+  .ptl-t{margin-top:6px}
+  .ptl-zero{margin-top:4px}
+  .ptl-p{margin-top:6px}
+}
+/* from 1100px the card splits: identity left, argument right, the path a row under both */
+@media (min-width:1100px){
+  .preview{grid-template-columns:46px minmax(0,.8fr) minmax(0,1.1fr);column-gap:72px;align-items:start;padding:52px}
+  .preview .body{display:contents}
+  .preview .tag{grid-column:2;align-self:end}
+  .preview h3{grid-column:2;margin-top:6px}
+  .preview .promise{grid-column:2;grid-row:3;margin-bottom:0}
+  .preview .brief{grid-column:3;grid-row:1/span 3;max-width:34.476em;align-self:start;margin:0}
+  .preview .ptl-w{grid-column:2/-1;grid-row:4;align-self:start;margin:var(--s-6) 0 var(--s-2)}
+  .preview .prev-terms{grid-column:3;grid-row:5;align-self:start;margin:var(--s-4) 0 0}
+  .preview .outcome{grid-column:3;grid-row:6;align-self:start;margin-top:var(--s-4)}
+  .preview .prev-actions{grid-column:2;grid-row:5/span 2;align-self:start;margin:var(--s-4) 0 0}
+  .preview .glyph{grid-row:1/span 2}
+}
+
+/* ───────────── TrustLine (PROOF, styles.css:409-411, :2422, :2465) ───────────── */
+.proof{background:var(--void)}
+.proof-line{text-align:center;color:var(--muted);font-size:15px;line-height:1.6}
+
+/* ───────────── LanguageSwitch (styles.css:148-152, :886-889, :1341, :1944) ───────────── */
+.lang{display:inline-flex;gap:2px;font-family:var(--font-mono);font-size:12px;border:1px solid var(--hairline-2);
+  border-radius:var(--r-pill);overflow:hidden}
+.lang button{font-family:var(--font-mono);font-size:12px;background:transparent;border:none;color:var(--muted);padding:5px 9px;
+  cursor:pointer;transition:all .2s;transition-property:color,background-color,border-color,box-shadow,transform,opacity,filter}
+.lang button[aria-pressed="true"]{color:var(--on-teal);background:var(--teal)}
+.lang button:is(:hover,.is-hover){color:var(--ice)}
+.lang button[aria-pressed="true"]:is(:hover,.is-hover){color:var(--on-teal)}
+/* the group clips its overflow, so the ring is drawn inside */
+.lang button:is(:focus-visible,.is-focus){outline:2px solid var(--teal);outline-offset:-3px}
+.lang button[aria-pressed="true"]:is(:focus-visible,.is-focus){outline-color:var(--on-teal)}
+.lang [lang="ar"]{font-family:var(--font-arabic);letter-spacing:0}
+@media (pointer:coarse){.lang button{min-height:40px;padding-inline:12px}}
+
+/* ───────────── FormField (CONTACT, styles.css:686-706, :2402-2407, :2679-2684) ───────────── */
+.form-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 var(--s-5)}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:var(--s-5)}
+.field label{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.field input,.field textarea{background:var(--field-bg);border:1px solid var(--hairline-2);border-radius:var(--r-sm);padding:13px 16px;
+  color:var(--ice);font-family:var(--font-body);font-size:15px;width:100%;resize:vertical;
+  transition:all .2s;transition-property:color,background-color,border-color,box-shadow,transform,opacity,filter}
+/* a real ring, outside the border: a field in error keeps its error border and still reads as focused */
+.field :is(input,textarea):is(:focus,.is-focus){outline:2px solid var(--teal);outline-offset:2px;border-color:var(--teal);box-shadow:var(--glow-teal)}
+.field :is(input,textarea)::placeholder{color:var(--faint)}
+.field .err{font-family:var(--font-mono);font-size:11px;color:var(--crimson-text);min-height:14px}
+.field .err.hint{color:var(--muted)}
+.field.invalid :is(input,textarea){border-color:var(--crimson)}
+[dir="rtl"] .field :is(input,textarea){font-family:var(--font-arabic)}
+.form-note{font-family:var(--font-mono);font-size:12px;line-height:1.6;color:var(--muted);margin-top:var(--s-4);max-width:52ch}
+@media (max-width:560px){.form-row{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px),(pointer:coarse){.field input,.field textarea{font-size:16px}}
+
+/* ───────────── ProjectCard (SELECTED WORK, styles.css:503-541, :969-974, :2312-2315, :2431-2432, :2491) ───────────── */
+.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6)}
+.proj{background:var(--navy);border:1px solid var(--hairline);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,0) 38%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+  transition:transform .7s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.proj:is(:hover,.is-hover){transform:translateY(-4px);border-color:color-mix(in srgb,var(--teal) 35%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px color-mix(in srgb,var(--teal) 22%,transparent),
+    0 0 34px -8px color-mix(in srgb,var(--teal) 28%,transparent)}
+.proj .thumb{aspect-ratio:16/10;display:grid;place-items:center;position:relative;overflow:hidden}
+/* the address bar over the picture (left blank in marketing) */
+.proj .browser{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:5px;padding:9px 12px;
+  background:color-mix(in srgb,var(--void) 88%,transparent);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.proj .browser i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--ice) 45%,transparent)}
+.proj .browser span{font-family:var(--font-mono);font-size:11px;color:color-mix(in srgb,var(--ice) 85%,transparent);margin-inline-start:8px;
+  letter-spacing:.03em}
+.proj .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;z-index:1}
+/* Intentional addition: a neutral slot where a client screenshot goes once
+   that client has given written permission (none has yet). */
+.proj .thumb.thumb-slot{background:var(--plum);outline:1px dashed var(--hairline-2);outline-offset:-14px}
+.thumb-slot .slot-note{position:relative;z-index:1;max-width:26ch;padding:0 var(--s-4);text-align:center;
+  font-family:var(--font-mono);font-size:11px;line-height:1.6;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.proj .body{padding:var(--s-5);flex:1;display:flex;flex-direction:column}
+.proj .cat{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-text);
+  display:block;margin-bottom:var(--s-3)}
+.proj h3{font-family:var(--font-display);font-weight:600;font-size:22px;line-height:1.2;letter-spacing:-.01em;margin-bottom:var(--s-3)}
+[dir="rtl"] .proj h3{font-family:var(--font-arabic)}
+.proj .body p{font-size:15px;line-height:1.6;color:var(--muted);margin-bottom:var(--s-4);min-height:calc(1.5em * 3)}
+/* what a visitor can do on the site, in one line; never a result or a figure */
+.proj .body .gain{position:relative;display:block;min-height:0;margin:0 0 var(--s-4);padding:var(--s-3) 0 0;padding-inline-start:20px;
+  border-top:1px solid var(--hairline);font-size:13px;line-height:1.55;color:var(--body-strong);text-decoration:none}
+.proj .body .gain::before{content:"";position:absolute;inset-inline-start:2px;top:calc(var(--s-3) + .5em);width:7px;height:7px;
+  border:1.5px solid var(--teal);transform:rotate(45deg)}
+.proj .body a.gain::after{content:"→";display:inline-block;margin-inline-start:.4em;color:var(--teal-text)}
+[dir="rtl"] .proj .body a.gain::after{content:"←"}
+.proj .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:var(--s-4)}
+.proj .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.proj .actions a{font-family:var(--font-mono);font-size:12px;font-weight:700;padding:9px 16px;min-height:38px;display:inline-flex;align-items:center;
+  border:1px solid var(--hairline-2);border-radius:var(--r-pill);color:var(--ice);text-decoration:none;
+  transition:all .2s;transition-property:color,background-color,border-color,box-shadow,transform,opacity,filter}
+.proj .actions a:is(:hover,.is-hover){border-color:var(--teal);color:var(--teal-text)}
+
+/* ───────────── FounderCard (FOUNDER, styles.css:574-589, :2433, :2585-2587) ───────────── */
+.founder-card{background:var(--navy);border:1px solid var(--hairline-2);border-radius:var(--r-lg);padding:40px;max-width:940px;
+  position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.founder-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--crimson) 70%,transparent),transparent)}
+.fd-top{display:flex;gap:26px;align-items:center;margin-bottom:var(--s-5)}
+/* the roundel stands where a photo would be: a monogram, never a face.
+   The site paints its grad-noir gradient (not a token); navy to void stands in. */
+.fd-photo{width:100px;height:100px;flex:none;border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:radial-gradient(120% 120% at 20% 0%,var(--navy) 45%,var(--void) 100%);
+  border:2px solid color-mix(in srgb,var(--crimson) 50%,transparent)}
+.fd-photo::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--crimson) 22%,transparent),transparent 60%)}
+.fd-photo .mono{font-family:var(--font-display);font-weight:700;font-size:46px;color:var(--crimson-hi);position:relative;z-index:1}
+/* a real portrait only (never generated): the monogram steps aside */
+.fd-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.fd-photo:has(img) .mono{visibility:hidden}
+.fd-id h3{font-family:var(--font-display);font-weight:600;font-size:30px;line-height:1.15;letter-spacing:-.015em}
+.fd-role{font-family:var(--font-mono);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-text);
+  margin:6px 0 12px}
+.fd-pills{display:flex;flex-wrap:wrap;gap:6px}
+.fd-bio{color:var(--body-strong);font-size:18px;line-height:1.5;max-width:43.758em;margin-bottom:var(--s-5)}
+@media (max-width:640px){.fd-top{flex-direction:column;text-align:center;align-items:center}}
+
+/* ───────────── Marketing formats (StoryFrame, CarouselPage, PricePost, EndCard) ─────────────
+   Intentional addition: the site has no social formats. These rules set the
+   components above on real canvases, at their pixel sizes, with the README's
+   "Marketing formats" rules (canvases, safe zones, phone text sizes). A piece is
+   one .fmt element, exported at 1:1. Sizes: hook 96-140px, body 52-60px, small
+   print 44px or more, mono labels and kickers about 40px; Arabic 10% larger,
+   line height 1.5. */
+.fmt{position:relative;overflow:hidden;isolation:isolate;background:var(--void);color:var(--ice);font-family:var(--font-body);
+  text-align:start}
+.fmt-916{width:1080px;height:1920px}
+.fmt-45{width:1080px;height:1350px}
+.fmt-11{width:1080px;height:1080px}
+.fmt-169{width:1920px;height:1080px}
+/* the atmosphere, drawn from the tokens at Arcanum's strengths (the site's
+   --atmos is a composite the tokens do not carry): a crimson crown top right,
+   a teal glow top left, a deep floor */
+.fmt::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(55% 50% at 84% 6%,color-mix(in srgb,var(--crimson) 16%,transparent),transparent 70%),
+    radial-gradient(50% 45% at 10% 22%,color-mix(in srgb,var(--teal) 14%,transparent),transparent 72%),
+    radial-gradient(80% 70% at 50% 112%,color-mix(in srgb,var(--navy) 60%,transparent),transparent 70%)}
+.fmt[dir="rtl"]::before{transform:scaleX(-1)}
+/* the construction grid: top of the frame only, gone by 76% of its height */
+.fmt::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:var(--ds-grid-o);
+  background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:var(--ds-grid-s) var(--ds-grid-s);
+  -webkit-mask-image:linear-gradient(#000,#000 32%,transparent 76%);mask-image:linear-gradient(#000,#000 32%,transparent 76%)}
+/* where text and key visuals go: 9:16, one box for every language
+   (x 140-940, y 290-1240); 4:5 and 1:1, 5% margins (54px) */
+.fmt-safe{position:absolute;z-index:1;display:flex;flex-direction:column;align-items:flex-start}
+.fmt-916 .fmt-safe{left:140px;top:290px;width:800px;height:950px}
+.fmt-45 .fmt-safe,.fmt-11 .fmt-safe{inset:54px}
+.fmt-169 .fmt-safe{inset:54px 96px}
+.fmt[dir="rtl"] .fmt-safe{text-align:right}
+.fmt-push{margin-top:auto}
+/* below y 1240 on 9:16, or under the text on 4:5: decoration only */
+.fmt-deco{position:absolute;z-index:0;pointer-events:none}
+/* type on the canvas */
+.fmt .kicker{zoom:3.6;margin-bottom:var(--s-5)}
+.fmt .sec{font-size:96px;line-height:1.04;max-width:none;margin-bottom:var(--s-7);text-wrap:balance}
+.fmt .sec.fmt-hook{font-size:120px}
+.fmt[dir="rtl"] .sec{font-size:106px;line-height:1.5}
+.fmt[dir="rtl"] .sec.fmt-hook{font-size:132px}
+.fmt-lead{font-size:52px;line-height:1.35;color:var(--body-strong);max-width:none;text-wrap:balance}
+.fmt-916 .fmt-lead{font-size:60px}
+.fmt[dir="rtl"] .fmt-lead{font-family:var(--font-arabic);font-size:58px;line-height:1.6}
+.fmt-916[dir="rtl"] .fmt-lead{font-size:66px}
+.fmt-small{font-size:44px;line-height:1.35;color:var(--muted);text-wrap:balance}
+.fmt[dir="rtl"] .fmt-small{font-family:var(--font-arabic);font-size:48px;line-height:1.6}
+.fmt-label{font-family:var(--font-mono);font-size:40px;line-height:1.4;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fmt-label.is-teal{color:var(--teal-text)}
+.fmt-label.is-ice{color:var(--ice)}
+/* the wordmark as a signature (x2, 44px) or as the end card's figure (x4, 88px):
+   scaled as one piece, without its glow */
+.fmt-mark{zoom:2;line-height:1}
+.fmt-mark.is-xl{zoom:4}
+.fmt-mark .cursor{box-shadow:none}
+/* a site component on the canvas, scaled as one piece */
+.fmt .t-list{zoom:3.4}
+.fmt .pl-cap{zoom:3}
+/* the page's one thing, filling what the text leaves */
+.fmt-figure{align-self:stretch;flex:1 1 auto;min-height:0;margin-top:var(--s-7)}
+.fmt-figure .plate{aspect-ratio:auto;height:100%}
+.fmt .t-list.fmt-push{margin-top:auto}
+/* the top row of a carousel page: the signature left, the page count right */
+.fmt-top{display:flex;justify-content:space-between;align-items:center;align-self:stretch;margin-bottom:var(--s-9)}
+/* PricePost: the three packages as rows */
+.pp-rows{align-self:stretch;display:grid}
+.pp-row{padding:30px 0 28px;border-top:2px solid var(--hairline)}
+.pp-row:last-child{border-bottom:2px solid var(--hairline)}
+.pp-head{display:flex;align-items:center;gap:24px;margin-bottom:6px}
+.pp-name{font-family:var(--font-display);font-weight:600;font-size:52px;line-height:1.15;letter-spacing:-.015em;color:var(--ice)}
+.pp-pop{font-family:var(--font-mono);font-size:30px;line-height:1.3;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--void);background:var(--teal-text);padding:6px 16px;border-radius:var(--r-pill)}
+.pp-time{margin-inline-start:auto;font-family:var(--font-mono);font-size:36px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pp-range{font-family:var(--font-display);font-weight:700;font-size:60px;line-height:1.2;letter-spacing:-.02em;color:var(--ice);white-space:nowrap}
+.pp-range .cur{font-family:var(--font-mono);font-weight:400;font-size:40px;letter-spacing:.06em;color:var(--teal-text)}
+.pp-range .cur:first-child{margin-inline-end:16px}
+.pp-range .cur:last-child{margin-inline-start:16px}
+/* the smaller ≈ € line under a dinar figure (Algeria); the conversion note goes in the caption */
+.pp-alt{font-size:44px;line-height:1.3;color:var(--muted);white-space:nowrap}
+.pp-foot{display:flex;justify-content:space-between;align-items:center;gap:var(--s-6);align-self:stretch}
+/* EndCard: the signature stack. 9:16 centres it in the safe box with the
+   pointer at the box's foot (fmt-push on both); 4:5 stacks it from the top,
+   clear of the decoration under it */
+.fmt-end{gap:40px}
+.fmt-45 .fmt-end{padding-top:180px}
+.fmt-45 .fmt-end .fmt-label.is-ice{margin-top:var(--s-7)}
+/* the guide: the 9:16 safe box drawn over the frame, for checking a layout.
+   Remove it before export. */
+.fmt-guide{position:absolute;inset:0;z-index:20;pointer-events:none}
+.fmt-guide .g-box{position:absolute;left:140px;top:290px;width:800px;height:950px;outline:4px dashed var(--teal);
+  box-shadow:0 0 0 2400px color-mix(in srgb,var(--void) 45%,transparent)}
+.fmt-guide .g-lab{position:absolute;left:140px;top:226px;font-family:var(--font-mono);font-size:28px;line-height:1.4;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--teal-text);background:var(--void);padding:4px 12px}
+.fmt-guide .g-low{top:1258px}
+
+/* ───────────── RTL: the mono stack hands Arabic letters to Plex Arabic ─────────────
+   The site redefines --font-mono on html[dir="rtl"]; tokens.css carries that
+   stack as --font-mono-rtl, so every mono rule above switches to it here. */
+[dir="rtl"] :is(.kicker,.btn,.pill,.lang,.lang button,.t-pop,.t-range .cur,.t-time,.t-wk-n,.preview .tag,.preview .prev-terms,
+  .preview .prev-wa,.preview .outcome b,.ptl-d,.ptl-zero .cur,.proj .browser span,.proj .cat,.proj .actions a,.slot-note,
+  .fd-role,.field label,.field .err,.form-note,.ds-label,.fmt-label,.pp-time,.pp-pop,.pp-range .cur){font-family:var(--font-mono-rtl)}
+
+/* ───────────── Preview scaffolding (not from the site) ─────────────
+   Layout for the cards on this page only; nothing a consumer needs. */
+.ds-stage{display:grid;gap:var(--s-6);padding:var(--s-6) var(--s-5)}
+/* the card ends where its content ends: the site's section margins stay out of the row */
+.ds-stage>:last-child,.ds-stage>:last-child>:last-child{margin-bottom:0}
+.ds-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-4)}
+.ds-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-6);align-items:start}
+.ds-label{display:block;font-family:var(--font-mono);font-size:11px;line-height:1.6;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:var(--s-3)}
+.ds-row .ds-label{margin-bottom:0}
+.ds-zoom{zoom:3}
+.ds-frames{display:flex;flex-wrap:wrap;gap:var(--s-6);align-items:flex-start}
+.ds-frames>figure{display:block;flex:0 0 auto;width:min-content}
+.ds-caption{width:280px;font-size:14px;line-height:1.6;color:var(--body-strong);border-top:1px solid var(--hairline);padding-top:var(--s-3)}
+.ds-caption p+p{margin-top:var(--s-3)}

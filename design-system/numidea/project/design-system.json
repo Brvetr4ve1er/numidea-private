@@ -1,0 +1,217 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-27T12:52:56Z"
+ },
+ "title": "Numidea Labs Design System",
+ "namespace": "NumideaLabs",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Engravings",
+  "Line drawings",
+  "Marks",
+  "Social",
+  "Fonts"
+ ],
+ "assetGroups": {
+  "Engravings": {
+   "name": "Engravings",
+   "tile": "l",
+   "order": [
+    "vista-far.webp",
+    "vista-mid.webp",
+    "vista-near.webp",
+    "arch.webp",
+    "coin-king.webp",
+    "coin-horse.webp",
+    "coin-palm.webp",
+    "lighthouse.webp",
+    "dunes.webp",
+    "bench.webp",
+    "lantern.webp",
+    "px-plan.webp",
+    "px-contour.webp",
+    "px-stars.webp"
+   ],
+   "files": {
+    "vista-far.webp": {
+     "name": "vista-far.webp",
+     "blob": "2355faeb991edbb78fa8243e36be26d2",
+     "size": 136520,
+     "type": "image/webp"
+    },
+    "vista-mid.webp": {
+     "name": "vista-mid.webp",
+     "blob": "8d518443c83e729443ed8c68099b3218",
+     "size": 96102,
+     "type": "image/webp"
+    },
+    "vista-near.webp": {
+     "name": "vista-near.webp",
+     "blob": "c6d15628bf023586111f5ee0d2895ee1",
+     "size": 183670,
+     "type": "image/webp"
+    },
+    "arch.webp": {
+     "name": "arch.webp",
+     "blob": "9fc71a3b3da417d373f851cf960be296",
+     "size": 86364,
+     "type": "image/webp"
+    },
+    "coin-king.webp": {
+     "name": "coin-king.webp",
+     "blob": "27ffab1cf65c8d6f5bf03a2668af59a0",
+     "size": 30638,
+     "type": "image/webp"
+    },
+    "coin-horse.webp": {
+     "name": "coin-horse.webp",
+     "blob": "7f41109de62e6f7d3e70a1d000988f22",
+     "size": 15390,
+     "type": "image/webp"
+    },
+    "coin-palm.webp": {
+     "name": "coin-palm.webp",
+     "blob": "3c2ab2b7c3212b4e3ab6423b5c170456",
+     "size": 19402,
+     "type": "image/webp"
+    },
+    "lighthouse.webp": {
+     "name": "lighthouse.webp",
+     "blob": "dadbaf1322cbea2f181c15df9920bb5d",
+     "size": 96732,
+     "type": "image/webp"
+    },
+    "dunes.webp": {
+     "name": "dunes.webp",
+     "blob": "4a41117027fec6a7d331c066a212c47c",
+     "size": 118084,
+     "type": "image/webp"
+    },
+    "bench.webp": {
+     "name": "bench.webp",
+     "blob": "16afcbaa7f6d74ed62d293b6e93794d7",
+     "size": 50708,
+     "type": "image/webp"
+    },
+    "lantern.webp": {
+     "name": "lantern.webp",
+     "blob": "8ff3ef65e3c2e4c4e6a5956ea7c71410",
+     "size": 32562,
+     "type": "image/webp"
+    },
+    "px-plan.webp": {
+     "name": "px-plan.webp",
+     "blob": "029455f19a625bfcfdf3d4363cd39507",
+     "size": 78832,
+     "type": "image/webp"
+    },
+    "px-contour.webp": {
+     "name": "px-contour.webp",
+     "blob": "4fa20baf1989b2aa8c8aa5195b9df7c0",
+     "size": 173510,
+     "type": "image/webp"
+    },
+    "px-stars.webp": {
+     "name": "px-stars.webp",
+     "blob": "af5e10243cb358a4426939fbbf181be5",
+     "size": 67280,
+     "type": "image/webp"
+    }
+   }
+  },
+  "Line drawings": {
+   "name": "Line drawings",
+   "tile": "s",
+   "order": [
+    "faq1.png",
+    "faq2.png",
+    "faq3.png",
+    "faq4.png",
+    "faq5.png",
+    "faq6.png"
+   ],
+   "files": {
+    "faq1.png": {
+     "name": "faq1.png",
+     "blob": "ce38295f7644c3277f4eb4fccae59e07",
+     "size": 11255,
+     "type": "image/png"
+    },
+    "faq2.png": {
+     "name": "faq2.png",
+     "blob": "33b78a1dacb5b47935f51449351a3506",
+     "size": 7797,
+     "type": "image/png"
+    },
+    "faq3.png": {
+     "name": "faq3.png",
+     "blob": "d1f4c03433bf6a9597ded2a7f9609f4e",
+     "size": 16305,
+     "type": "image/png"
+    },
+    "faq4.png": {
+     "name": "faq4.png",
+     "blob": "0335a2751f551a983482616d10a3c4c8",
+     "size": 15310,
+     "type": "image/png"
+    },
+    "faq5.png": {
+     "name": "faq5.png",
+     "blob": "e56c2208962fe9c3333026347a401afc",
+     "size": 12755,
+     "type": "image/png"
+    },
+    "faq6.png": {
+     "name": "faq6.png",
+     "blob": "7d430fa162559c551a074d293cd72139",
+     "size": 3555,
+     "type": "image/png"
+    }
+   }
+  },
+  "Marks": {
+   "name": "Marks",
+   "tile": "xs",
+   "order": [
+    "favicon.svg"
+   ],
+   "files": {
+    "favicon.svg": {
+     "name": "favicon.svg",
+     "blob": "befcecdf12684979aee336c85de45af5",
+     "size": 883,
+     "type": "image/svg+xml"
+    }
+   }
+  },
+  "Social": {
+   "name": "Social",
+   "tile": "l",
+   "order": [
+    "og.jpg"
+   ],
+   "files": {
+    "og.jpg": {
+     "name": "og.jpg",
+     "blob": "ed9524d6a0f2ba1d1c1501a5746bfa08",
+     "size": 82975,
+     "type": "image/jpeg"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Br4ve",
+  "at": "2026-10-27T12:52:56Z",
+  "via": "Claude Code · Brvetr4ve1er/Numidea.tech@ed1e6ad",
+  "note": "Built from the website codebase and the project and marketing context"
+ }
+}

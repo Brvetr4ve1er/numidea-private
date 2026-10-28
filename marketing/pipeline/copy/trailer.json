@@ -1,0 +1,372 @@
+{
+  "_meta": {
+    "built": "2026-10-26",
+    "revised": "2026-10-26 (after review); 2026-10-27: T52.en_li « Link in comments » (F30 label, EN LinkedIn 4:5)",
+    "site_commit": "ecf48bb",
+    "ar_marker": "à relire par un arabophone natif",
+    "rule": "No new facts. Re-check every string against assets/app.js at the render commit. No URL, email, phone number or ref code on screen.",
+    "source": "scripts-trailer.md, Appendix A (extracted verbatim by script; edit the source first, then re-extract)",
+    "ar_status": "Every ar value is a draft: à relire par un arabophone natif. arReviewed stays false until a native reviewer signs off (gate G1). AR masters are not rendered before that."
+  },
+  "T01": {
+    "src": "F01",
+    "use": [
+      "v10-s30",
+      "v10-s15"
+    ],
+    "fr": "Votre page d'accueil, avant de payer.",
+    "en": "Your homepage, before you pay.",
+    "ar": "صفحتك الرئيسية، قبل أن تدفع.",
+    "swash": {
+      "fr": "avant de payer.",
+      "en": "before you pay."
+    },
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T02a": {
+    "src": "F04",
+    "use": [
+      "v10-s30"
+    ],
+    "fr": "5 jours ouvrés",
+    "en": "5 working days",
+    "ar": "5 أيام عمل",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T02b": {
+    "src": "F04",
+    "use": [
+      "v10-s30"
+    ],
+    "fr": "à réception de vos contenus",
+    "en": "once we have your content",
+    "ar": "من استلام المحتوى",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T03": {
+    "src": "F03",
+    "use": [
+      "v10-s30",
+      "v10-s15"
+    ],
+    "fr": "Gratuit et sans engagement · réservé aux entreprises immatriculées · 4 Aperçus par mois au maximum, tous clients confondus.",
+    "en": "Free, no obligation · registered businesses only · at most 4 Previews a month, across all clients.",
+    "ar": "مجّاناً ودون التزام · للشركات المسجّلة فقط · 4 معاينات في الشهر كحدّ أقصى لجميع العملاء.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T04a": {
+    "src": "F05",
+    "use": [
+      "v10-s30"
+    ],
+    "fr": "Vous décidez",
+    "en": "You decide",
+    "ar": "أنت تقرّر",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T04b": {
+    "src": "F05",
+    "use": [
+      "v10-s30",
+      "v10-s15"
+    ],
+    "fr": "Payé jusqu'ici : 0",
+    "en": "Paid so far: 0",
+    "ar": "المدفوع حتى الآن: 0",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T40": {
+    "src": "F06",
+    "use": [
+      "v01-30"
+    ],
+    "fr": "Votre site sur mesure,",
+    "en": "Custom websites,",
+    "ar": "موقعك المخصّص،",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T41": {
+    "src": "F06",
+    "use": [
+      "v01-30"
+    ],
+    "fr": "en français, anglais ou arabe.",
+    "en": "in English, French and Arabic.",
+    "ar": "بالعربية والفرنسية والإنجليزية.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T41b": {
+    "src": "F06",
+    "use": [
+      "v01-06"
+    ],
+    "fr": "En français, anglais ou arabe.",
+    "en": "In English, French and Arabic.",
+    "ar": "بالعربية والفرنسية والإنجليزية.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T42": {
+    "src": "F28",
+    "use": [
+      "v01-30"
+    ],
+    "fr": "Un prix avant le devis.",
+    "en": "A price before the quote.",
+    "ar": "سعر قبل عرض السعر.",
+    "swash": {
+      "fr": "avant le devis.",
+      "en": "before the quote."
+    },
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T06": {
+    "src": "F09",
+    "use": [
+      "v10-s30-a"
+    ],
+    "owner": "OWNER PREREQUISITE: approve per language with the client-or-employer decision (G4)",
+    "fr": "Quelques réalisations",
+    "en": "Selected projects",
+    "ar": "نماذج من الأعمال",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T07": {
+    "src": "F10",
+    "use": [
+      "v10-s30-a"
+    ],
+    "permission": "Bordj Steel: REQUIRES CLIENT PERMISSION",
+    "fr": "Bordj Steel · Construction métallique",
+    "en": "Bordj Steel · Structural steel",
+    "ar": "إنشاءات معدنية · Bordj Steel",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T08": {
+    "src": "F11",
+    "use": [
+      "v10-s30-a"
+    ],
+    "permission": "Alliance Travel: REQUIRES CLIENT PERMISSION",
+    "fr": "Alliance Travel · Agence de voyages",
+    "en": "Alliance Travel · Travel agency",
+    "ar": "وكالة سفر · Alliance Travel",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T09": {
+    "src": "F12",
+    "use": [
+      "v01-30",
+      "slot"
+    ],
+    "fr": "Essentiel · Studio · Moteur",
+    "en": "Essential · Studio · Engine",
+    "ar": "الأساسي · الاستوديو · المحرّك",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T30": {
+    "src": "F17",
+    "use": [
+      "v01-30",
+      "v10-s30-n"
+    ],
+    "owner": "OWNER PREREQUISITE P4: Arabic-script spelling of the name; until then the AR line starts with an Arabic word",
+    "fr": "Yasser Hamisse",
+    "en": "Yasser Hamisse",
+    "ar": "المؤسّس: Yasser Hamisse",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T31": {
+    "src": "F18",
+    "use": [
+      "v01-30",
+      "v10-s30-n"
+    ],
+    "fr": "Designer graphique & développeur web · Fondateur",
+    "en": "Graphic designer & web developer · Founder",
+    "ar": "مصمّم غرافيك ومطوّر ويب",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T32": {
+    "src": "F19",
+    "use": [
+      "v01-30",
+      "v10-s30-n"
+    ],
+    "fr": "Je reste à vos côtés après le lancement.",
+    "en": "I stay once it's live.",
+    "ar": "أبقى بعد الإطلاق.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T50": {
+    "src": "F07",
+    "use": [
+      "v01-30",
+      "v10-s30"
+    ],
+    "fr": "Studio web & logiciel · Bordj Bou Arréridj, Algérie",
+    "en": "Web & software studio · Bordj Bou Arréridj, Algeria",
+    "ar": "استوديو ويب وبرمجيات · برج بوعريريج، الجزائر",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T51": {
+    "src": "F29",
+    "use": [
+      "v01-30",
+      "v10-s30"
+    ],
+    "fr": "Enraciné en Numidie · bâti sur des idées",
+    "en": "Rooted in Numidia · built on ideas",
+    "ar": "جذورها في نوميديا · مبنيّة على الأفكار",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T52": {
+    "src": "F30",
+    "use": [
+      "v01-30",
+      "v01-06",
+      "v10-s30",
+      "v10-s15"
+    ],
+    "note": "none in 16:9 and in story=1 renders",
+    "fr": "Lien en bio",
+    "fr_li": "Lien en commentaire",
+    "en": "Link in bio",
+    "en_li": "Link in comments",
+    "ar": "الرابط في الملف التعريفي",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T53": {
+    "src": "F07",
+    "use": [
+      "v01-06",
+      "v10-s15"
+    ],
+    "fr": "Bordj Bou Arréridj, Algérie",
+    "en": "Bordj Bou Arréridj, Algeria",
+    "ar": "برج بوعريريج، الجزائر",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "T13": {
+    "src": "F08",
+    "use": [
+      "v10-s30",
+      "v10-s15"
+    ],
+    "gate": "after Gate B only (cta=1)",
+    "fr": "Demander mon Aperçu →",
+    "en": "Request my Preview →",
+    "ar": "اطلب معاينتك ←",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "M01": {
+    "src": "F25",
+    "fr": "Votre logo",
+    "en": "Your logo",
+    "ar": "شعارك هنا",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "M02": {
+    "src": "F25",
+    "fr": "Votre entreprise",
+    "en": "Your business",
+    "ar": "اسم نشاطك",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "M03": {
+    "src": "F31",
+    "fr": "FR · EN · AR",
+    "en": "FR · EN · AR",
+    "ar": "الفرنسية · الإنجليزية · العربية",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S10a": {
+    "src": "F13",
+    "deferred": "slot module §5.6",
+    "fr": "Essentiel · site vitrine",
+    "en": "Essential · showcase site",
+    "ar": "الأساسي · موقع تعريفي",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S10b": {
+    "src": "F14",
+    "deferred": "slot module §5.6",
+    "fr_dz": "env. 90 000 – 160 000 DA HT",
+    "fr_fr": "env. 600 – 1 100 € HT",
+    "en_usd": "about $670 – 1,200 excl. tax",
+    "ar": "من نحو 90 000 إلى 160 000 دج، غير شاملة الضريبة",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S11a": {
+    "src": "F32",
+    "deferred": "slot module §5.6",
+    "fr": "Studio · trilingue FR / EN / AR",
+    "en": "Studio · trilingual FR / EN / AR",
+    "ar": "الاستوديو · ثلاثي اللغة: فرنسي / إنجليزي / عربي",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S11b": {
+    "src": "F32",
+    "deferred": "slot module §5.6",
+    "fr_dz": "env. 180 000 – 420 000 DA HT",
+    "fr_fr": "env. 1 200 – 2 800 € HT",
+    "en_usd": "about $1,300 – 3,100 excl. tax",
+    "ar": "من نحو 180 000 إلى 420 000 دج، غير شاملة الضريبة",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S20": {
+    "src": "F15",
+    "deferred": "slot module §5.6 (P-GU)",
+    "en": "Studio based in Algeria.",
+    "ar": "مقرّنا في برج بوعريريج، الجزائر.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "S21": {
+    "src": "F16",
+    "deferred": "slot module §5.6 (P-GU)",
+    "en": "UTC+1 · 2 h behind Riyadh · 3 h behind Dubai",
+    "ar": "أقلّ بساعتين من توقيت الرياض، وبثلاث ساعات من توقيت دبي",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  },
+  "CAP_PRICE": {
+    "src": "F33",
+    "use": [
+      "captions of any post showing a price"
+    ],
+    "fr": "Fourchette indicative, pas un devis. Le prix ferme suit, une fois le périmètre cadré ensemble — et il ne bouge plus ensuite.",
+    "en": "An indicative range, not a quote. The firm price follows once we have scoped it together — and it does not move after that.",
+    "ar": "تقدير استرشادي، لا عرض سعر رسمي. السعر النهائي نحدّده بعد أن نضبط معاً نطاق العمل — ولا يتغيّر بعدها.",
+    "ar_review": "à relire par un arabophone natif",
+    "arReviewed": false
+  }
+}

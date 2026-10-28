@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Yasser — perdu</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* One ground line for both characters: y = 1030. y-map is 619x849 drawn at its native size; the asset is
+     cut at the knees, and that flat cut sits on the ground line so it reads as the bottom edge of the sticker,
+     the floor Kuro walks on. His lean pivots well below the cut, where his feet would be; the clip holds the
+     cut flat on the line while he leans (the drawing reaches 4 px below it, so neither end lifts off). */
+  .yclip { position: absolute; left: 0; top: 0; width: 1080px; height: 1030px; overflow: hidden; }
+  .yasser { position: absolute; left: 80px; top: 185px; width: 619px; height: 849px; transform-origin: 50% 150%; will-change: transform; }
+  .yasser img { display: block; width: 619px; height: 849px; }
+  /* Yasser's contact shadow, centred under the cut (x 223..631), same tone and line as Kuro's */
+  .yshadow { position: absolute; left: 117px; top: 1013px; width: 620px; height: 26px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, .20) 55%, rgba(20, 16, 12, 0)); }
+  /* Kuro: k-walk is 826x628, drawn at 0.46 = 380x289, half Yasser's scale, paws on y = 1032,
+     the same ground line as Yasser's cut, passing in front of him */
+  .kuro { position: absolute; left: 0; top: 743px; width: 380px; height: 289px; will-change: transform; }
+  .kpose { position: absolute; left: 0; top: 0; width: 380px; height: 289px; transform-origin: 175px 285px; will-change: transform; }
+  .kscale { position: absolute; left: 0; top: 0; width: 826px; height: 628px; transform: scale(0.46); transform-origin: 0 0; }
+  .kscale img { position: absolute; left: 0; top: 0; width: 826px; height: 628px; display: block; }
+  /* the tail is the same drawing clipped to the tail and rotated at its root; the body is clipped to the rest
+     (the tail piece reaches a few px into the rump so the seam stays covered when it swings) */
+  .kbody { clip-path: polygon(0 0, 560px 0, 560px 186px, 596px 186px, 582px 246px, 598px 252px, 640px 250px, 826px 250px, 826px 628px, 0 628px); }
+  .ktail { position: absolute; left: 0; top: 0; width: 826px; height: 628px; transform-origin: 589px 216px; will-change: transform; }
+  .ktail img { clip-path: polygon(552px 0, 826px 0, 826px 250px, 640px 250px, 598px 252px, 576px 250px, 574px 238px, 588px 182px, 552px 182px); }
+  .shadow { position: absolute; left: 0; top: 1014px; width: 280px; height: 24px; border-radius: 50%; will-change: transform;
+    background: radial-gradient(closest-side, rgba(20, 16, 12, .30), rgba(20, 16, 12, 0)); }
+  svg.q { position: absolute; overflow: visible; will-change: transform; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="yshadow"></div>
+  <div class="yclip"><div class="yasser" id="yasser"><img src="../assets/y-map.png" width="619" height="849" alt=""></div></div>
+  <svg class="q" id="q" width="132" height="187" viewBox="0 0 120 170">
+    <path d="M30 54 C28 22 92 12 94 50 C96 80 60 82 60 112" fill="none" stroke="#1b1712" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="148" r="15" fill="#1b1712"/>
+    <path d="M30 54 C28 22 92 12 94 50 C96 80 60 82 60 112" fill="none" stroke="#efe6d6" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="148" r="8" fill="#efe6d6"/>
+  </svg>
+  <svg class="q" id="q2" width="132" height="187" viewBox="0 0 120 170">
+    <path d="M30 54 C28 22 92 12 94 50 C96 80 60 82 60 112" fill="none" stroke="#1b1712" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="148" r="15" fill="#1b1712"/>
+    <path d="M30 54 C28 22 92 12 94 50 C96 80 60 82 60 112" fill="none" stroke="#efe6d6" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="148" r="8" fill="#efe6d6"/>
+  </svg>
+  <div class="shadow" id="shadow"></div>
+  <div class="kuro" id="kuro">
+    <div class="kpose" id="kpose">
+      <div class="kscale">
+        <img class="kbody" src="../assets/k-walk.png" width="826" height="628" alt="">
+        <div class="ktail" id="ktail"><img src="../assets/k-walk.png" width="826" height="628" alt=""></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, osc, win, set } = Motion;
+  const yasser = document.getElementById('yasser'), q = document.getElementById('q'), q2 = document.getElementById('q2');
+  const kuro = document.getElementById('kuro'), kpose = document.getElementById('kpose');
+  const ktail = document.getElementById('ktail'), shadow = document.getElementById('shadow');
+
+  const Q = { x: 586, y: 180 }, Q2 = { x: 711, y: 267 };   // the big "?" right of the bun, a small one beside it
+  q.style.left = (Q.x - 66) + 'px'; q.style.top = (Q.y - 94) + 'px';
+  q2.style.left = (Q2.x - 66) + 'px'; q2.style.top = (Q2.y - 94) + 'px';
+
+  // Story (4 s): Kuro walks in from the right and stops beside Yasser; the "?" flips and Yasser re-tilts
+  // over the map; Kuro waits, flicks his tail twice, then walks off left past Yasser's legs; once he is gone
+  // the "?" flips back. One thing moves at a time: the "?" and Yasser hold while the cat walks
+  // (which also keeps the WhatsApp file small). Kuro is fully off-frame at phase 0 and 1.
+  const KW = 380, X0 = 1090, XSTOP = 640, X1 = -KW - 10;
+  const IN = [0.05, 0.27], OUT = [0.50, 0.88];
+  const STEP = 225;                         // px per step: the entrance is exactly two steps, so he lands planted
+  const BEAT1 = 0.29, BEAT2 = 0.90;         // "?" flip + Yasser re-tilt
+
+  // walk in at a steady pace, easing into the stop over the last 30%
+  function cruiseStop(e) {
+    const F = e < 0.7 ? e : 0.7 + 0.5 * (e - 0.7) + 0.5 * (0.3 / Math.PI) * Math.sin(Math.PI * (e - 0.7) / 0.3);
+    return F / 0.85;
+  }
+  // set off from rest, reaching the same pace after the first quarter
+  function startCruise(e) {
+    const F = e < 0.25 ? 0.5 * e - 0.5 * (0.25 / Math.PI) * Math.sin(Math.PI * e / 0.25) : 0.125 + (e - 0.25);
+    return F / 0.875;
+  }
+  function kuroX(p) {
+    if (p < OUT[0]) return X0 + (XSTOP - X0) * cruiseStop(win(p, IN[0], IN[1]));
+    return XSTOP + (X1 - XSTOP) * startCruise(win(p, OUT[0], OUT[1]));
+  }
+  // a tail flick: snaps up fast, settles slower
+  const flick = (p, a) => ease.out(win(p, a, a + 0.025)) - ease.inOut(win(p, a + 0.035, a + 0.085));
+
+  // Yasser holds each lean (a moving full figure is the costliest thing for the WhatsApp encoder);
+  // he re-tilts 1.6 degrees, pivoting at his feet, on the two beats
+  const lean = (p) => -0.8 + 1.6 * ease.inOut(win(p, BEAT1, BEAT1 + 0.07)) - 1.6 * ease.inOut(win(p, BEAT2, BEAT2 + 0.07));
+  // the question mark bobs only while the cat is still: twice during the pause, once over the loop seam;
+  // each bob starts and ends at rest, so the holds never cut a motion short
+  function qBob(p) {
+    if (p >= 0.27 && p <= 0.50) return 0.5 - 0.5 * Math.cos(2 * Math.PI * 2 * win(p, 0.27, 0.50));
+    const pb = p < 0.5 ? p + 1 : p;
+    return 0.5 - 0.5 * Math.cos(2 * Math.PI * win(pb, 0.88, 1.05));
+  }
+  // the small "?" pops in just after the cat stops (more confused) and out when the big one flips back;
+  // it bobs against the big one while the cat is still
+  const q2Pop = (p) => ease.back(win(p, BEAT1 + 0.03, BEAT1 + 0.08)) * (1 - ease.in(win(p, BEAT2, BEAT2 + 0.04)));
+  const q2Bob = (p) => (p >= 0.27 && p <= 0.50) ? 0.5 + 0.5 * Math.cos(2 * Math.PI * 2 * win(p, 0.27, 0.50)) : 1;
+  // the question mark holds a tilt and snaps to the other side with a small overshoot on the same beats
+  const qTilt = (p) => -9 + 18 * ease.back(win(p, BEAT1, BEAT1 + 0.05)) - 18 * ease.back(win(p, BEAT2, BEAT2 + 0.05));
+
+  Sticker({
+    seconds: 4, fps: 30, poster: 46,
+    draw(p) {
+      set(yasser, { r: lean(p) });
+
+      const bob = qBob(p);
+      set(q, { y: -14 * bob, r: qTilt(p), s: 1 + 0.04 * bob });
+      const pop = q2Pop(p);
+      set(q2, { y: -10 * q2Bob(p), r: 16 - 10 * (1 - Math.min(pop, 1)), s: 0.62 * pop, o: pop > 0.001 ? 1 : 0 });
+
+      // Kuro: the step phase follows the distance walked, so the bob slows into the stop and restarts with him
+      const x = kuroX(p);
+      const u = (X0 - x) / STEP;
+      const lift = Math.abs(Math.sin(Math.PI * u));          // 0 when a pair of paws plants, 1 mid-step
+      set(kuro, { x: x + 4 * Math.sin(2 * Math.PI * u) });
+      set(kpose, { y: -6 * lift, r: 1.2 * Math.sin(Math.PI * u) });
+      // tail swings once per stride, a quarter behind the body rock; two flicks while he waits
+      const tail = 5 * Math.sin(Math.PI * u - Math.PI / 2) - 11 * (flick(p, 0.33) + flick(p, 0.42));
+      set(ktail, { r: tail });
+      shadow.style.transform = `translate(${(x + 175 - 140).toFixed(2)}px, 0) scale(${(1 - 0.06 * lift).toFixed(4)}, 1)`;
+      shadow.style.opacity = (1 - 0.25 * lift).toFixed(3);
+    },
+  });
+</script>
+</body>
+</html>

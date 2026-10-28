@@ -1,0 +1,191 @@
+{
+  "pack": "Yasser & Kūro · Numidea",
+  "tray": {
+    "kb": 4.5,
+    "ok": true
+  },
+  "stickers": [
+    {
+      "name": "yasser-salut",
+      "file": "01_yasser-salut.webp",
+      "emojis": [
+        "👋",
+        "😊"
+      ],
+      "kb": 474.1,
+      "frames": 33,
+      "seconds": 2.4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "kuro-coucou",
+      "file": "02_kuro-coucou.webp",
+      "emojis": [
+        "👋",
+        "🐈‍⬛"
+      ],
+      "kb": 308.6,
+      "frames": 25,
+      "seconds": 2,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "yasser-hmm",
+      "file": "03_yasser-hmm.webp",
+      "emojis": [
+        "🤔",
+        "🧐"
+      ],
+      "kb": 448.5,
+      "frames": 31,
+      "seconds": 2.4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "yasser-au-travail",
+      "file": "04_yasser-au-travail.webp",
+      "emojis": [
+        "💻",
+        "⌨️"
+      ],
+      "kb": 425.7,
+      "frames": 30,
+      "seconds": 2,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "kuro-clavier",
+      "file": "05_kuro-clavier.webp",
+      "emojis": [
+        "⌨️",
+        "🐈‍⬛"
+      ],
+      "kb": 352,
+      "frames": 24,
+      "seconds": 2.4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "yasser-euh",
+      "file": "06_yasser-euh.webp",
+      "emojis": [
+        "😅",
+        "❓"
+      ],
+      "kb": 282.2,
+      "frames": 35,
+      "seconds": 2.4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "yasser-voila",
+      "file": "07_yasser-voila.webp",
+      "emojis": [
+        "🎉",
+        "✨"
+      ],
+      "kb": 341.7,
+      "frames": 24,
+      "seconds": 2.4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "yasser-perdu",
+      "file": "08_yasser-perdu.webp",
+      "emojis": [
+        "🤷",
+        "🗺️"
+      ],
+      "kb": 483.6,
+      "frames": 60,
+      "seconds": 4,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "kuro-quoi",
+      "file": "09_kuro-quoi.webp",
+      "emojis": [
+        "😳",
+        "❗"
+      ],
+      "kb": 258.7,
+      "frames": 20,
+      "seconds": 1.6,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "kuro-vole",
+      "file": "10_kuro-vole.webp",
+      "emojis": [
+        "😼",
+        "🏃"
+      ],
+      "kb": 226.5,
+      "frames": 28,
+      "seconds": 2,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "kuro-dodo",
+      "file": "11_kuro-dodo.webp",
+      "emojis": [
+        "😴",
+        "💤"
+      ],
+      "kb": 487.3,
+      "frames": 45,
+      "seconds": 3,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "flamme-humeur",
+      "file": "12_flamme-humeur.webp",
+      "emojis": [
+        "🔥",
+        "😤"
+      ],
+      "kb": 483.7,
+      "frames": 41,
+      "seconds": 3.2,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "flamme-top",
+      "file": "13_flamme-top.webp",
+      "emojis": [
+        "👍",
+        "🔥"
+      ],
+      "kb": 412.8,
+      "frames": 24,
+      "seconds": 1.6,
+      "loop": 0,
+      "problems": []
+    },
+    {
+      "name": "flamme-go",
+      "file": "14_flamme-go.webp",
+      "emojis": [
+        "🚀",
+        "🔥"
+      ],
+      "kb": 410.3,
+      "frames": 30,
+      "seconds": 2,
+      "loop": 0,
+      "problems": []
+    }
+  ]
+}

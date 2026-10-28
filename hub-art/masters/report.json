@@ -1,0 +1,157 @@
+{
+ "nV5x8JoYQD": {
+  "size": [
+   2752,
+   1536
+  ],
+  "painted_px": 777,
+  "src_sha256": "a1fd2ab3e226b298e233bcfc716d9a9d07a95c93cd2f52391dd11a3527f170e4"
+ },
+ "WDkgWegcXe": {
+  "size": [
+   2752,
+   1536
+  ],
+  "painted_px": 771,
+  "src_sha256": "a81843a09bf0de125dac7240d496d3358966d837d6f7d2da495177bedff0fd14"
+ },
+ "IfONrR5tvE": {
+  "size": [
+   2752,
+   1536
+  ],
+  "painted_px": 1033,
+  "src_sha256": "c9e8d44da0e9d7fffa79327d6e8ee249edd981e79799acb8d92ac7b3fd8af4f3",
+  "master": "band-design"
+ },
+ "3zEkVHLREY": {
+  "size": [
+   2752,
+   1536
+  ],
+  "painted_px": 0,
+  "src_sha256": "1490ca8af1ce8467b5f2e39abfa1e32936d97da38fb0534684e4e465ca80e7fd",
+  "master": "band-diary"
+ },
+ "mEP2bXIhJQ": {
+  "size": [
+   2528,
+   1696
+  ],
+  "painted_px": 2166,
+  "src_sha256": "3cf3a775c01f780ece51533c446c9356602b0707ce8ce68aeba658ef27dd0c67",
+  "master": "diary-4am"
+ },
+ "mEPZBKNhJQ": {
+  "size": [
+   1264,
+   848
+  ],
+  "painted_px": 409,
+  "src_sha256": "83d0f21d6c614ba3030a49724ef9bfd891c36cf486bfe1dbf4b062f99549d43b",
+  "master": "diary-buried"
+ },
+ "8aJipYmIrU": {
+  "size": [
+   1264,
+   848
+  ],
+  "painted_px": 660,
+  "src_sha256": "60f3e58b339fa7f3621830fd1a0371d36aef0c2f6cc69962970b551298acce6c",
+  "master": "diary-art-director"
+ },
+ "WDkg2YLcXe": {
+  "size": [
+   1264,
+   848
+  ],
+  "painted_px": 2537,
+  "src_sha256": "a426acf1c77ebe581c97805552ef4f46977672dc1b321a2de201515bd3dacb08",
+  "master": "diary-second-brain"
+ },
+ "P3mQU8C42C": {
+  "size": [
+   2528,
+   1696
+  ],
+  "painted_px": 0,
+  "src_sha256": "9f329f9d233e4b47079862e97537badb8f934401d8e3feba314410c0282dbd33",
+  "master": "diary-miniature"
+ },
+ "JN8Cg30Oq4": {
+  "size": [
+   1376,
+   768
+  ],
+  "painted_px": 0,
+  "src_sha256": "6ad007cd128c8c503dc2eca18a0a15ba93a15e62fa7aa47a4693a105fc0e79da",
+  "master": "diary-morning"
+ },
+ "LwM8kSlswO": {
+  "size": [
+   1264,
+   848
+  ],
+  "painted_px": 462,
+  "src_sha256": "a5c55db897adb39032843b624c33d8dce0b64d59c8a69d7b6c837491648d6fa9",
+  "master": "diary-wandering"
+ },
+ "hu42BwkvqL": {
+  "size": [
+   2528,
+   1696
+  ],
+  "painted_px": 0,
+  "src_sha256": "80400bd451fd00c71ec080c0c8e6e80f6058b94453f94a55ee5ab800629a27a9",
+  "master": "diary-traveler"
+ },
+ "hero": {
+  "paper_bgr": [
+   218.0,
+   235.0,
+   251.0
+  ],
+  "yasser_bbox": [
+   2071,
+   47,
+   2581,
+   1491
+  ],
+  "kuro_bbox": [
+   1731,
+   1152,
+   2019,
+   1463
+  ]
+ },
+ "ksWMyqe16B": {
+  "painted_px_make-designer": 1684
+ },
+ "make-designer": {
+  "from": "ksWMyqe16B",
+  "size": [
+   1036,
+   1023
+  ],
+  "holes_filled_px": 13031
+ },
+ "make-developer": {
+  "from": "ksWMyqe16B",
+  "size": [
+   903,
+   776
+  ],
+  "holes_filled_px": 3349
+ },
+ "6AfFeoKiJO": {
+  "painted_px_make-artist": 386
+ },
+ "make-artist": {
+  "from": "6AfFeoKiJO",
+  "size": [
+   981,
+   804
+  ],
+  "holes_filled_px": 0
+ }
+}

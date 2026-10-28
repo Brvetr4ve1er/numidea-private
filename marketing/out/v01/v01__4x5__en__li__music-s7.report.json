@@ -1,0 +1,208 @@
+{
+  "source": "../out/v01/src/v01__9x16__en__li__music-s7.mp4",
+  "crop": "crop=1080:1350:0:90",
+  "encoder_args": [
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-y",
+    "-i",
+    "../out/v01/src/v01__9x16__en__li__music-s7.mp4",
+    "-map",
+    "0:v:0",
+    "-map",
+    "0:a:0",
+    "-vf",
+    "crop=1080:1350:0:90",
+    "-c:v",
+    "libx264",
+    "-preset",
+    "slow",
+    "-crf",
+    "18",
+    "-x264-params",
+    "chroma-qp-offset=-4",
+    "-profile:v",
+    "high",
+    "-level:v",
+    "4.1",
+    "-pix_fmt",
+    "yuv420p",
+    "-g",
+    "60",
+    "-colorspace",
+    "bt709",
+    "-color_primaries",
+    "bt709",
+    "-color_trc",
+    "bt709",
+    "-color_range",
+    "tv",
+    "-r",
+    "30",
+    "-c:a",
+    "copy",
+    "-map_metadata",
+    "-1",
+    "-movflags",
+    "+faststart",
+    "../out/v01/v01__4x5__en__li__music-s7.mp4"
+  ],
+  "timing_s": {
+    "crop_encode": 11.18,
+    "verify_and_contact": 7.83,
+    "total": 19.01
+  },
+  "verify": {
+    "file": "../out/v01/v01__4x5__en__li__music-s7.mp4",
+    "ok": true,
+    "checks": [
+      {
+        "name": "video codec h264",
+        "ok": true,
+        "value": "h264"
+      },
+      {
+        "name": "profile High",
+        "ok": true,
+        "value": "High"
+      },
+      {
+        "name": "pix_fmt yuv420p",
+        "ok": true,
+        "value": "yuv420p"
+      },
+      {
+        "name": "size",
+        "ok": true,
+        "value": "1080x1350"
+      },
+      {
+        "name": "fps",
+        "ok": true,
+        "value": "30/1"
+      },
+      {
+        "name": "frame count",
+        "ok": true,
+        "value": "900"
+      },
+      {
+        "name": "colour tags bt709",
+        "ok": true,
+        "value": "bt709/bt709/bt709"
+      },
+      {
+        "name": "audio aac",
+        "ok": true,
+        "value": "aac"
+      },
+      {
+        "name": "audio 48 kHz stereo",
+        "ok": true,
+        "value": "48000 Hz, 2 ch"
+      },
+      {
+        "name": "faststart (moov before mdat)",
+        "ok": true,
+        "value": "ftyp > moov > free > mdat"
+      },
+      {
+        "name": "container duration",
+        "ok": true,
+        "value": "30.000000"
+      },
+      {
+        "name": "MP4 frame 500 vs browser frame 500: colour shift < 1.5/255 per channel",
+        "ok": true,
+        "value": "mean shift R,G,B = 0.07, 0.06, -0.74"
+      },
+      {
+        "name": "MP4 frame 500 vs browser frame 500: PSNR >= 32 dB",
+        "ok": true,
+        "value": "40.51 dB"
+      },
+      {
+        "name": "MP4 frame 500 is closest to browser frame 500 (not 499 / 501)",
+        "ok": true,
+        "value": "40.51 dB vs f499 39.61 dB, f501 39.10 dB"
+      },
+      {
+        "name": "the per-block-checked 9:16 band sits inside the 4:5 safe area (90 px)",
+        "ok": true,
+        "value": "9:16 band x 140-940, y 290-1240 lands at x 140-940, y 200-1150; 4:5 safe area x 90-990, y 90-1260"
+      },
+      {
+        "name": "browser reference f500 identical to the source render's own still",
+        "ok": true,
+        "value": "../out/v01/src/v01__9x16__en__li__music-s7__f500.png"
+      },
+      {
+        "name": "audio stream copied from the 9:16 source unchanged",
+        "ok": true,
+        "value": "MD5=d02a6ac86d5c81854f5ab4c092c7a20f"
+      },
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "bytes": 5456479,
+    "bitrate_kbps": 1455,
+    "video": {
+      "codec": "h264",
+      "profile": "High",
+      "level": 41,
+      "pix_fmt": "yuv420p"
+    }
+  },
+  "loudness": {
+    "file": "../out/v01/v01__4x5__en__li__music-s7.mp4",
+    "integrated_lufs": -14,
+    "integrated_lufs_bs1770": -14,
+    "loudness_range_lu": 1.2,
+    "true_peak_dbtp": -5.4,
+    "phone_lufs": -17.9,
+    "phone_loss_lu": 3.9,
+    "checks": [
+      {
+        "name": "integrated loudness -14 ± 0.5 LUFS (EBU R128, encoded file)",
+        "ok": true,
+        "value": "-14 LUFS (ebur128); -14.00 LUFS (BS.1770-4, 2 decimals)"
+      },
+      {
+        "name": "true peak <= -1 dBTP (encoded file)",
+        "ok": true,
+        "value": "-5.4 dBTP"
+      },
+      {
+        "name": "loudness range <= 4 LU",
+        "ok": true,
+        "value": "1.2 LU"
+      },
+      {
+        "name": "phone-speaker loss <= 4 LU (2 x 2-pole high-pass at 250 Hz)",
+        "ok": true,
+        "value": "-17.9 LUFS (-3.9 LU)"
+      }
+    ],
+    "ok": true
+  },
+  "contact": null
+}

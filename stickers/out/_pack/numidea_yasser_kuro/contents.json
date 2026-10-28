@@ -1,0 +1,119 @@
+{
+  "android_play_store_link": "",
+  "ios_app_store_link": "",
+  "sticker_packs": [
+    {
+      "identifier": "numidea_yasser_kuro",
+      "name": "Yasser & Kūro · Numidea",
+      "publisher": "Numidea Labs",
+      "tray_image_file": "tray.png",
+      "image_data_version": "1",
+      "avoid_cache": false,
+      "animated_sticker_pack": true,
+      "publisher_email": "",
+      "publisher_website": "",
+      "privacy_policy_website": "",
+      "license_agreement_website": "",
+      "stickers": [
+        {
+          "image_file": "01_yasser-salut.webp",
+          "emojis": [
+            "👋",
+            "😊"
+          ]
+        },
+        {
+          "image_file": "02_kuro-coucou.webp",
+          "emojis": [
+            "👋",
+            "🐈‍⬛"
+          ]
+        },
+        {
+          "image_file": "03_yasser-hmm.webp",
+          "emojis": [
+            "🤔",
+            "🧐"
+          ]
+        },
+        {
+          "image_file": "04_yasser-au-travail.webp",
+          "emojis": [
+            "💻",
+            "⌨️"
+          ]
+        },
+        {
+          "image_file": "05_kuro-clavier.webp",
+          "emojis": [
+            "⌨️",
+            "🐈‍⬛"
+          ]
+        },
+        {
+          "image_file": "06_yasser-euh.webp",
+          "emojis": [
+            "😅",
+            "❓"
+          ]
+        },
+        {
+          "image_file": "07_yasser-voila.webp",
+          "emojis": [
+            "🎉",
+            "✨"
+          ]
+        },
+        {
+          "image_file": "08_yasser-perdu.webp",
+          "emojis": [
+            "🤷",
+            "🗺️"
+          ]
+        },
+        {
+          "image_file": "09_kuro-quoi.webp",
+          "emojis": [
+            "😳",
+            "❗"
+          ]
+        },
+        {
+          "image_file": "10_kuro-vole.webp",
+          "emojis": [
+            "😼",
+            "🏃"
+          ]
+        },
+        {
+          "image_file": "11_kuro-dodo.webp",
+          "emojis": [
+            "😴",
+            "💤"
+          ]
+        },
+        {
+          "image_file": "12_flamme-humeur.webp",
+          "emojis": [
+            "🔥",
+            "😤"
+          ]
+        },
+        {
+          "image_file": "13_flamme-top.webp",
+          "emojis": [
+            "👍",
+            "🔥"
+          ]
+        },
+        {
+          "image_file": "14_flamme-go.webp",
+          "emojis": [
+            "🚀",
+            "🔥"
+          ]
+        }
+      ]
+    }
+  ]
+}

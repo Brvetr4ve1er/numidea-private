@@ -1,0 +1,193 @@
+/* Brand base for every video.
+   Tokens and faces come from the public site itself, read-only over HTTP
+   (lib/server.mjs mounts /home/user/STICKITTY.INC/assets at /site/), so a
+   change to a theme or a font on the site reaches the videos with no copy.
+   Nothing here is written back to the site. */
+@import url("/site/fonts.css");
+@import url("/site/themes.css");
+
+/* The font stacks live in the site's styles.css :root, which videos do not
+   load (it carries the whole page layout). Copied verbatim. */
+:root{
+  --font-display:"Geist", "Geist Fallback", system-ui, sans-serif;
+  --font-swash:"Geist", "Geist Fallback", system-ui, sans-serif;
+  --font-body:"Geist", "Geist Fallback", system-ui, sans-serif;
+  --font-mono:"Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-deco:"Cinzel", "Cinzel Fallback", Georgia, serif;
+  --font-deco-dec:"Cinzel Decorative", "Cinzel Decorative Fallback", Georgia, serif;
+  --font-ar-display:"IBM Plex Sans Arabic", "IBM Plex Sans Arabic Fallback", sans-serif;
+  --font-ar-body:"IBM Plex Sans Arabic", "IBM Plex Sans Arabic Fallback", sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:var(--void);color:var(--ice);font-family:var(--font-body);
+  text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased}
+body{width:var(--W);height:var(--H);overflow:hidden;background:var(--void)}
+
+/* Render mode: transitions run on the wall clock, so they are off. */
+html[data-render] *,html[data-render] *::before,html[data-render] *::after{transition:none!important;caret-color:transparent}
+
+/* ------------------------------------------------------------ stage */
+.stage{position:relative;width:var(--W);height:var(--H);overflow:hidden;background:var(--grad-noir);isolation:isolate}
+.stage::before{content:"";position:absolute;inset:0;background:var(--atmos);z-index:-1}
+html[dir="rtl"] .stage::before{transform:scaleX(-1)} /* site rule: glows mirror in RTL */
+.stage::after{content:"";position:absolute;inset:0;z-index:-1;opacity:var(--grid-opacity);
+  background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:var(--grid-size) var(--grid-size)}
+/* The safe area: put text and logos inside it, let backgrounds bleed. */
+.safe{position:absolute;inset:var(--safe-t) var(--safe-r) var(--safe-b) var(--safe-l)}
+
+/* ------------------------------------------------------------ Arabic */
+/* Site rule: never track Arabic (it breaks the joins), always Plex Arabic. */
+[lang="ar"]{font-family:var(--font-ar-display);letter-spacing:0!important;text-transform:none!important}
+html[dir="rtl"]{--font-mono:"Geist Mono", "IBM Plex Sans Arabic", "IBM Plex Sans Arabic Fallback", "Geist Mono Fallback", ui-monospace, monospace}
+
+/* ------------------------------------------------------------ plate */
+/* Same technique as the site's .ill rule: luminance mask over currentColor. */
+.plate{position:relative;color:var(--teal-text)}
+.plate-ink{position:absolute;inset:0;background:currentColor;transform-origin:50% 60%;
+  -webkit-mask-image:var(--mask);mask-image:var(--mask);
+  -webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:center;mask-position:center;
+  -webkit-mask-source-type:luminance;mask-mode:luminance}
+.plate-burin{position:absolute;top:-4%;bottom:-4%;width:2px;margin-left:-1px;background:var(--crimson);
+  box-shadow:0 0 18px var(--crimson);opacity:0}
+/* Captions are solid chips (site rule: small type on hatching fails contrast). */
+.pl-cap{display:inline-block;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.18em;
+  color:var(--muted);background:var(--void);padding:.45em .8em;border:1px solid var(--hairline-2)}
+
+/* ------------------------------------------------------------ guides */
+html[data-guides] .stage .safe{outline:3px dashed rgba(255,80,80,.85);outline-offset:-1px}
+
+/* ------------------------------------------------------------ preview */
+html[data-preview],html[data-preview] body{background:#000;width:auto;height:100vh}
+html[data-preview] .stage{transform:scale(var(--preview-scale,1));transform-origin:0 0}
+.preview-bar{position:fixed;left:0;right:0;bottom:0;height:40px;padding:0 12px;
+  font:13px/40px var(--font-mono);color:#ccc;background:#111;z-index:10;direction:ltr}
+
+/* ================================================================ atlas */
+/* Shared V01+ components (runtime/atlas.js, blueprint.js, components.js).
+   Every colour is a theme token; every engraving is a luminance mask over
+   currentColor, the site's own .ill / .v-ink technique. */
+
+/* The brass grid: the theme's own grid tokens (Arcanum: brass, 64 px, 7 %),
+   centred on the canvas. For video the lines are 2 px wide and start on EVEN
+   pixel coordinates (centred 64 px tiles on 1080, 1920 and 1350 canvases;
+   the 4:5 crop starts at y 90), so each line fills whole 2 x 2 chroma blocks
+   of H.264 4:2:0. The 1 px line decoded as a neutral grey (+3/+3/+3 on the
+   ground); with 2 px lines and the encoder's chroma QP lowered by 4
+   (lib/encode.mjs) it decodes as +7.75/+5.13/+1.0, the browser's brass
+   +8/+5.3/+1 (review of 2026-10-27, _review/v01-fix/gridprobe.mjs). 2 px at
+   the token's opacity is still lighter than the site on a phone, where its
+   1 CSS px line is 3 device px wide. */
+.grid{position:absolute;inset:0;pointer-events:none;opacity:var(--grid-opacity);
+  background-image:linear-gradient(var(--grid-color) 2px,transparent 2px),linear-gradient(90deg,var(--grid-color) 2px,transparent 2px);
+  background-size:var(--grid-size) var(--grid-size);background-position:center}
+
+/* Ink-in plate: .ink-plate > .ink (+ .burin). */
+.ink-plate{position:absolute;color:var(--teal-text)}
+.ink,.vista .v-ink{display:block;background:currentColor;
+  -webkit-mask-image:var(--mask);mask-image:var(--mask);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-source-type:luminance;mask-mode:luminance}
+.ink{position:absolute;inset:0;transform-origin:50% 60%}
+/* The burin: a brass rule that leads every entrance wipe. */
+.burin{position:absolute;top:-3%;bottom:-3%;left:0;width:2px;margin-left:-1px;background:var(--crimson);
+  box-shadow:0 0 18px var(--crimson);opacity:0;pointer-events:none}
+
+/* Plate I: three layers, each a skyline-clipped fill under its ink. The
+   clip-paths, fills and ink colours are read from the site's styles.css at
+   ready() (atlas.js readVistaStyles); nothing here duplicates them. .v-base
+   carries a layer's fill below its box down to the frame's edge. */
+.vista{position:absolute;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 var(--fade-sides,0%),#000 calc(100% - var(--fade-sides,0%)),transparent),linear-gradient(transparent,#000 var(--fade-top,0%));
+  mask-image:linear-gradient(90deg,transparent,#000 var(--fade-sides,0%),#000 calc(100% - var(--fade-sides,0%)),transparent),linear-gradient(transparent,#000 var(--fade-top,0%));
+  -webkit-mask-composite:source-in;mask-composite:intersect}
+.vista .v-l{position:absolute}
+.vista .v-l>i{position:absolute;display:block}
+.vista .v-fill,.vista .v-ink{inset:0}
+.vista .v-base{left:0;right:0;top:calc(100% - 1px);height:2400px}
+.vista .burin{top:0;bottom:0;-webkit-mask-image:linear-gradient(transparent,#000 35%);mask-image:linear-gradient(transparent,#000 35%)}
+
+/* The sky: seeded stars in --muted, the constellation in --teal-text (the
+   site's .v-sky colours). Per-star brightness is fill-opacity, so a fade-in
+   (inline opacity) ends exactly where the rest state is. */
+.sky{position:absolute;overflow:visible;pointer-events:none}
+.sky .star{fill:var(--muted)}
+.sky .const{fill:none;stroke:var(--teal-text);stroke-width:2;stroke-opacity:.55;stroke-linecap:round;stroke-linejoin:round}
+.sky .const-s{fill:var(--teal-text);fill-opacity:.85}
+
+/* Blueprint: 3 px strokes in --crimson (a fill token: strokes, rules, rings). */
+.bp{position:absolute;overflow:visible;fill:none;stroke:var(--crimson);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+/* Words that move one by one (typeMove): the transform pivots on the word's
+   top-left corner, in both reading directions. */
+.w{display:inline-block;transform-origin:0 0}
+
+/* Arabic draft stamp (only with &ardraft): a render that is not a deliverable. */
+.draft-stamp{position:absolute;top:28px;left:40px;right:40px;font:500 22px/1.4 var(--font-mono);color:var(--crimson-text);
+  letter-spacing:.06em;direction:ltr;text-align:left;z-index:50}
+
+/* « Votre site »: the mock-up (runtime/mockup.js; scripts-trailer.md §3.4).
+   Theme surfaces only: a --navy page under a --plum chrome bar, --plum cards
+   and image block (its hatching in --crimson, as the blueprint drew it), an
+   unlabeled --crimson button, grey text bars in --faint. Sizes scale with
+   --mk-s (the mock-up's width / 800). The text faces are set by class alone
+   (no ancestor), so fit-text's clones measure in the same face. */
+.mock{position:absolute;overflow:hidden;background:var(--navy)}
+.mk-chrome{position:absolute;left:0;top:0;right:0;height:var(--mk-chrome,48px);background:var(--plum)}
+.mk-leaf{position:absolute;display:block;margin:0;box-sizing:border-box}
+.mk-img{background:var(--plum);border:1px solid var(--hairline-2);border-radius:calc(8px * var(--mk-s,1));overflow:hidden}
+.mk-img::before{content:"";position:absolute;inset:0;opacity:.3;
+  background:repeating-linear-gradient(45deg,var(--crimson) 0 2px,transparent 2px 18px)}
+.mk-card{background:var(--plum);border:1px solid var(--hairline-2);border-radius:calc(10px * var(--mk-s,1))}
+.mk-btn{background:var(--crimson);border-radius:calc(24px * var(--mk-s,1))}
+.mk-bar{border-radius:999px}
+.mk-bar::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--faint);opacity:.42}
+.mk-text,.mk-tabs{white-space:normal;overflow-wrap:normal;hyphens:none;text-align:start;color:var(--ice)}
+.mk-logo{font-family:var(--font-display);font-weight:700;letter-spacing:.01em}
+.mk-head{font-family:var(--font-display);font-weight:700;letter-spacing:-.005em}
+.mk-tabs{font-family:var(--font-mono);font-weight:500;letter-spacing:.04em;color:var(--muted)}
+.mk-tabs .w.on{color:var(--crimson-text)}
+.mk-ul{position:absolute;display:block;border-radius:2px;background:var(--crimson)}
+.mk-text[lang="ar"],.mk-tabs[lang="ar"]{font-family:var(--font-ar-display);font-weight:600;letter-spacing:0}
+.mk-logo[lang="ar"],.mk-head[lang="ar"]{font-weight:700}
+
+/* Founder card, no face (runtime/founder.js; index.html:1050, styles.css
+   .fd-photo): a disc in --grad-noir with the site's brass highlight, the
+   ring stroked in --crimson (a fill token: rings), the monogram « Y » in
+   --crimson-text, Geist 700 as on the site. The roundel sits at the block's
+   inline start. */
+.founder{position:absolute}
+.fd-roundel{position:absolute;top:0;inset-inline-start:0;display:grid;place-items:center}
+.fd-disc{position:absolute;inset:0;border-radius:50%;background:var(--grad-noir);overflow:hidden}
+.fd-disc::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--crimson) 22%,transparent),transparent 60%)}
+.fd-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:var(--crimson);stroke-linecap:round}
+.fd-mono{position:relative;font-family:var(--font-display);font-weight:700;line-height:1;color:var(--crimson-text);letter-spacing:0;transform-origin:50% 55%}
+
+/* The wordmark (runtime/endcard.js; the site's .logo, styles.css:43,
+   :139-142, :2464): the theme's logo face, « idea » in the swash face and
+   --teal-text, the SOLID --crimson cursor (0.41 x 0.91 em, no blink), always
+   left to right. In an Arabic master it sits at the band's start (right). */
+.wordmark{margin:0;font-family:var(--font-logo);font-weight:var(--logo-weight);letter-spacing:var(--logo-tracking);
+  color:var(--ice);white-space:nowrap;direction:ltr;unicode-bidi:isolate;text-align:left}
+.wordmark i{font-family:var(--font-swash);font-style:normal;font-weight:600;color:var(--teal-text)}
+/* The site lowers the cursor 3 px at 22 px (translateY): here by
+   vertical-align, with no transform and no growth of the line box. */
+.wordmark .cursor{display:inline-block;width:.41em;height:.91em;margin-left:.227em;vertical-align:-.136em;
+  background:var(--crimson);box-shadow:var(--glow-crimson)}
+html[dir="rtl"] .wordmark{text-align:right}
+
+/* Plate V's beam (atlas.js lighthouse()): every property comes from the
+   site's .pi-light .beam at ready(); here only what makes it a block. */
+.ink-plate .beam{position:absolute;display:block;pointer-events:none}
+
+/* Copy segments kept on one line (copy.js, data-keep): a label that wraps
+   breaks at its own « · » separator, never inside a place name; the
+   separator left at such a break is hidden (copy.js markSeparatorBreaks),
+   with visibility so the line does not reflow. */
+.keep{white-space:nowrap}
+.sep.at-break{visibility:hidden}
+/* Fixed phrases that never break (copy.js NOBREAK, e.g. « sur mesure »). */
+.nobr{white-space:nowrap}

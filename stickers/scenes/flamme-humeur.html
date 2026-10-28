@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Flamme — humeur</title>
+<style>
+  html, body { margin: 0; background: transparent; }
+  .stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; }
+  /* the bust works in neutral-face asset px (box x -1..249, y 0..376) scaled by K;
+     the four faces were registered on glasses, ears and shoulders against f-neutral */
+  .fig { position: absolute; will-change: transform; }
+  .fig img { position: absolute; display: block; opacity: 0; }
+  svg.fx { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: visible; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <!-- behind the bust: the burnout puffs, so the painted smoke itself hides where they bud from -->
+  <svg class="fx" id="fxb" viewBox="0 0 1080 1080">
+    <defs>
+      <!-- one light field across the whole puff (puff px), so the lobes read as one painted billow, off-white
+           top-left greying to the lower right like the art, not as separate balls -->
+      <!-- stops sit a little over the painted smoke (#d7d2c5 body) because the grain below darkens slightly on
+           average; tuned by sampling rendered frames against the painting -->
+      <radialGradient id="lobe" gradientUnits="userSpaceOnUse" cx="-22" cy="-34" r="118">
+        <stop offset="0" stop-color="#e8e2d5"/>
+        <stop offset="0.55" stop-color="#dfd9cc"/>
+        <stop offset="1" stop-color="#d2ccbd"/>
+      </radialGradient>
+      <!-- the dissipation: a fade line (puff px, set per frame) sweeps down through the puff from above; the mask is
+           that ramp plus a soft noise drifting upward, minus a threshold, so the billow breaks up top-first into
+           soft patches that rise, while its base stays seated in the painted smoke -->
+      <linearGradient id="vgA" gradientUnits="userSpaceOnUse" x1="0" y1="-300" x2="0" y2="-250"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <linearGradient id="vgB" gradientUnits="userSpaceOnUse" x1="0" y1="-300" x2="0" y2="-250"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+      <filter id="mfA" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="31" result="t"/>
+        <feColorMatrix in="t" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="tg"/>
+        <feOffset in="tg" dy="0" result="to"/>
+        <feComposite in="SourceGraphic" in2="to" operator="arithmetic" k1="0" k2="2.8" k3="3" k4="-2.4"/>
+      </filter>
+      <filter id="mfB" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="43" result="t"/>
+        <feColorMatrix in="t" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1" result="tg"/>
+        <feOffset in="tg" dy="0" result="to"/>
+        <feComposite in="SourceGraphic" in2="to" operator="arithmetic" k1="0" k2="2.8" k3="3" k4="-2.4"/>
+      </filter>
+      <mask id="mkA" maskUnits="userSpaceOnUse" x="-400" y="-400" width="800" height="800">
+        <rect x="-300" y="-300" width="600" height="600" fill="url(#vgA)" filter="url(#mfA)"/>
+      </mask>
+      <mask id="mkB" maskUnits="userSpaceOnUse" x="-400" y="-400" width="800" height="800">
+        <rect x="-300" y="-300" width="600" height="600" fill="url(#vgB)" filter="url(#mfB)"/>
+      </mask>
+      <!-- the fill is feathered over a warm grey underlayer, so the edge is a soft graded rim, darkest at the very
+           outside like the painted smoke, not a drawn line; the deviation is set per frame to stay ~2 stage px -->
+      <filter id="feA" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+      <filter id="feB" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+      <!-- hand-painted edge: a fixed noise wobble. Then the thinning: a mask of the puff's own alpha blurred
+           (high in the core, low at the rim) plus a second noise, offset by k4 per frame, so the puff frays from
+           its outline inward and its light core goes last; the colour lifts toward bone as it thins so it stays
+           light on dark chats too; a soft blur on top -->
+      <filter id="wbA" x="-60%" y="-60%" width="220%" height="220%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="3" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n2"/>
+        <feGaussianBlur in="d" stdDeviation="30" result="core"/>
+        <feComposite in="core" in2="n2" operator="arithmetic" k1="0" k2="8" k3="4" k4="-2.5" result="m"/>
+        <feComposite in="d" in2="m" operator="in" result="e"/>
+        <feColorMatrix in="e" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="c"/>
+        <!-- paper grain like the painting: colour x (0.84 + 0.16 grain), alpha untouched -->
+        <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="2" seed="5" result="g0"/>
+        <feColorMatrix in="g0" type="matrix" values="3 0 0 0 -1  3 0 0 0 -1  3 0 0 0 -1  0 0 0 0 1" result="gr"/>
+        <feComposite in="c" in2="gr" operator="arithmetic" k1="0.16" k2="0.84" k3="0" k4="0" result="cg"/>
+        <feGaussianBlur in="cg" stdDeviation="0.8"/>
+      </filter>
+      <filter id="wbB" x="-60%" y="-60%" width="220%" height="220%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="3" seed="11" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="19" result="n2"/>
+        <feGaussianBlur in="d" stdDeviation="30" result="core"/>
+        <feComposite in="core" in2="n2" operator="arithmetic" k1="0" k2="8" k3="4" k4="-2.5" result="m"/>
+        <feComposite in="d" in2="m" operator="in" result="e"/>
+        <feColorMatrix in="e" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="c"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="2" seed="23" result="g0"/>
+        <feColorMatrix in="g0" type="matrix" values="3 0 0 0 -1  3 0 0 0 -1  3 0 0 0 -1  0 0 0 0 1" result="gr"/>
+        <feComposite in="c" in2="gr" operator="arithmetic" k1="0.16" k2="0.84" k3="0" k4="0" result="cg"/>
+        <feGaussianBlur in="cg" stdDeviation="0.8"/>
+      </filter>
+    </defs>
+    <!-- each puff: back lobes, then front lobes; each tier is its circles once in a warm grey (stroked, so the
+         union gets a rim) and again, a little smaller and feathered, in the light field on top, so the rim is a
+         soft graded edge and the front tier's rim becomes the inner billow contour over the back tier, the way
+         the painted smoke is drawn -->
+    <g id="pfA" opacity="0" filter="url(#wbA)" mask="url(#mkA)">
+      <g class="tier"><g class="ol" fill="#aaa394" stroke="#aaa394"></g><g class="fl" fill="url(#lobe)" filter="url(#feA)"></g></g>
+      <g class="tier"><g class="ol" fill="#aaa394" stroke="#aaa394"></g><g class="fl" fill="url(#lobe)" filter="url(#feA)"></g></g>
+    </g>
+    <g id="pfB" opacity="0" filter="url(#wbB)" mask="url(#mkB)">
+      <g class="tier"><g class="ol" fill="#aaa394" stroke="#aaa394"></g><g class="fl" fill="url(#lobe)" filter="url(#feB)"></g></g>
+      <g class="tier"><g class="ol" fill="#aaa394" stroke="#aaa394"></g><g class="fl" fill="url(#lobe)" filter="url(#feB)"></g></g>
+    </g>
+  </svg>
+  <div class="fig" id="fig">
+    <img id="f-happy" src="../assets/f-happy.png" alt="">
+    <img id="f-angry" src="../assets/f-angry.png" alt="">
+    <img id="f-burnout" src="../assets/f-burnout.png" alt="">
+    <img id="f-neutral" src="../assets/f-neutral.png" alt="">
+  </div>
+  <svg class="fx" viewBox="0 0 1080 1080">
+    <defs>
+      <!-- four-point sparkle, centred on 0,0 -->
+      <path id="star" d="M0 -46 C6 -12 12 -6 46 0 C12 6 6 12 0 46 C-6 12 -12 6 -46 0 C-12 -6 -6 -12 0 -46 Z"/>
+      <!-- pop ticks: three short strokes radiating up-left from 0,0 (mirrored for the right side) -->
+      <g id="ticks" fill="none" stroke-linecap="round">
+        <g stroke="#1b1712" stroke-width="17"><path d="M-6 -6 L-44 -44"/><path d="M14 -18 L4 -64"/><path d="M-18 14 L-64 4"/></g>
+        <g class="tk" stroke="#efe6d6" stroke-width="7"><path d="M-6 -6 L-44 -44"/><path d="M14 -18 L4 -64"/><path d="M-18 14 L-64 4"/></g>
+      </g>
+      <!-- shake marks: two short arcs, bracket-like, opening toward the head on the right -->
+      <g id="shake" fill="none" stroke-linecap="round">
+        <g stroke="#1b1712" stroke-width="15"><path d="M0 -46 Q-22 0 0 46"/><path d="M-34 -30 Q-50 0 -34 30"/></g>
+        <g stroke="#efe6d6" stroke-width="6"><path d="M0 -46 Q-22 0 0 46"/><path d="M-34 -30 Q-50 0 -34 30"/></g>
+      </g>
+    </defs>
+    <g id="tkL" opacity="0"><use href="#ticks"/></g>
+    <g id="tkR" opacity="0"><g transform="scale(-1 1)"><use href="#ticks"/></g></g>
+    <g id="shL" opacity="0"><use href="#shake"/></g>
+    <g id="shR" opacity="0"><g transform="scale(-1 1)"><use href="#shake"/></g></g>
+    <g id="sp1" opacity="0"><use href="#star" fill="#e6b450" stroke="#1b1712" stroke-width="13" stroke-linejoin="round" style="paint-order: stroke"/></g>
+    <g id="sp2" opacity="0"><use href="#star" fill="#e6b450" stroke="#1b1712" stroke-width="13" stroke-linejoin="round" style="paint-order: stroke"/></g>
+    <g id="sp3" opacity="0"><use href="#star" fill="#34d0e8" stroke="#1b1712" stroke-width="13" stroke-linejoin="round" style="paint-order: stroke"/></g>
+  </svg>
+</div>
+<script src="../runtime.js"></script>
+<script>
+  const { ease, win } = Motion;
+  const F = 96;            // 3.2 s at 30 fps; every key below is in frames
+  const SEG = 24;          // each mood: a 0.17 s pop, ~0.5 s hold, a 0.1 s squash into the next
+  const START = 16;        // frame where the happy face pops; neutral pops at 88 so frame 0 rests on neutral
+  const ORDER = ['f-happy', 'f-angry', 'f-burnout', 'f-neutral'];
+  const K = 2.07;          // asset px to stage px
+  const BOX = { x: -1, w: 250, h: 376 };            // union of the four faces, neutral-asset px
+  const PIV = { x: 120, y: 376 };                    // shoulder-line centre, neutral-asset px
+  const STAGE = { x: 540, y: 1010 };                 // where that pivot sits on the stage
+  // offsets of each face against f-neutral (registered on glasses, ears and shoulders) and widths
+  const FACES = { 'f-neutral': [0, 0, 241], 'f-happy': [0, 11, 240], 'f-angry': [0, 14, 244], 'f-burnout': [-1, 23, 249] };
+
+  const fig = document.getElementById('fig');
+  fig.style.width = BOX.w * K + 'px';
+  fig.style.height = BOX.h * K + 'px';
+  fig.style.left = STAGE.x - (PIV.x - BOX.x) * K + 'px';
+  fig.style.top = STAGE.y - PIV.y * K + 'px';
+  fig.style.transformOrigin = `${(PIV.x - BOX.x) * K}px ${PIV.y * K}px`;
+  const faces = ORDER.map((id) => {
+    const el = document.getElementById(id), [dx, dy, w] = FACES[id];
+    el.style.left = (dx - BOX.x) * K + 'px'; el.style.top = dy * K + 'px'; el.style.width = w * K + 'px';
+    return el;
+  });
+  const $ = (id) => document.getElementById(id);
+  const tkL = $('tkL'), tkR = $('tkR'), shL = $('shL'), shR = $('shR');
+  const sps = [$('sp1'), $('sp2'), $('sp3')];
+
+  // burnout puffs. Lobes in puff px (x, y, r). The back tier starts with two root circles that join the
+  // billow to the painted lobe it swells from and pinch off as it rises; the front tier sits over it.
+  const NS = 'http://www.w3.org/2000/svg';
+  const BACK = [[4, 30, 36], [-44, 16, 27], [42, 18, 25]];
+  const FRONT = [[-8, -10, 44], [34, -14, 28]];
+  // a: the lobe top it buds from (burnout-asset px); d: drift side; size; t0/life in frames of the mood
+  // (A lives on frames 66-81, B on 68.5-83: both gone before the squash at 84.5 and the neutral cut at 88)
+  const PUFFS = [
+    { id: 'pfA', wb: 'wbA', fe: 'feA', vg: 'vgA', mf: 'mfA', a: [56, 31], d: -1, size: 1.15, t0: 2, life: 15 },
+    { id: 'pfB', wb: 'wbB', fe: 'feB', vg: 'vgB', mf: 'mfB', a: [205, 4], d: 1, size: 1, t0: 4.5, life: 14.5 },
+  ].map((pf) => {
+    const el = $(pf.id), filt = $(pf.wb), feather = $(pf.fe).querySelector('feGaussianBlur');
+    const fade = $(pf.vg), drift = $(pf.mf).querySelector('feOffset');
+    const tiers = [...el.querySelectorAll('.tier')].map((tier, ti) => {
+      const n = ti ? FRONT.length : BACK.length + 2;
+      const mk = (layer) => Array.from({ length: n }, () => layer.appendChild(document.createElementNS(NS, 'circle')));
+      return { ol: tier.querySelector('.ol'), cOl: mk(tier.querySelector('.ol')), cFl: mk(tier.querySelector('.fl')) };
+    });
+    return { ...pf, el, tiers, feather, fade, drift, disp: filt.querySelector('feDisplacementMap'), eat: filt.querySelector('feComposite[operator="arithmetic"]'), tint: filt.querySelector('feColorMatrix'),
+      blur: filt.querySelector('feGaussianBlur[in="cg"]') };
+  });
+  // burnout-asset px to stage px under the bust's current transform (translate, skewX, scale about the shoulder pivot)
+  const BO = FACES['f-burnout'];
+  function onHead(ax, ay, x, y, k, sx, sy) {
+    const px = STAGE.x - (PIV.x - BOX.x) * K + (BO[0] - BOX.x + ax) * K - STAGE.x;
+    const py = STAGE.y - PIV.y * K + (BO[1] + ay) * K - STAGE.y;
+    return [STAGE.x + x + px * sx + Math.tan(k * Math.PI / 180) * py * sy, STAGE.y + y + py * sy];
+  }
+
+  // keyframes: [[frame, value, easeIntoThisKey], ...]
+  function kf(f, keys) {
+    if (f <= keys[0][0]) return keys[0][1];
+    for (let i = 1; i < keys.length; i++) {
+      if (f <= keys[i][0]) {
+        const [t0, v0] = keys[i - 1], [t1, v1, e = ease.inOut] = keys[i];
+        return v0 + (v1 - v0) * e((f - t0) / (t1 - t0));
+      }
+    }
+    return keys[keys.length - 1][1];
+  }
+  function g(el, x, y, s, r, o) {
+    el.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${Math.max(s, 0.001).toFixed(3)})`);
+    el.setAttribute('opacity', o.toFixed(3));
+  }
+  const hide = (el) => el.setAttribute('opacity', '0');
+
+  // a per-frame shake on ones that dies out (stage px), for the angry face
+  const SHAKE = [0, 0, 13, -12, 11, -9, 7, -6, 4, -3, 2, -1, 0];
+  const shakeAt = (f) => { if (f <= 0 || f >= SHAKE.length - 1) return 0; const i = Math.floor(f); return SHAKE[i] + (SHAKE[i + 1] - SHAKE[i]) * (f - i); };
+
+  Sticker({
+    seconds: 3.2, fps: 30, poster: 26,
+    draw(p) {
+      const fr = p * F;
+      const u = (((fr - START) % F) + F) % F;
+      const idx = Math.floor(u / SEG), lf = u - idx * SEG;   // which mood, and frame inside it
+      const mood = ORDER[idx];
+      faces.forEach((el, i) => { el.style.opacity = i === idx ? '1' : '0'; });
+
+      // the switch: the new face cuts in squashed at 0.92, snaps to 1.05 with a stretch, settles at 1;
+      // the last 3.5 frames of every mood squash down into the next switch
+      const s = kf(lf, [[0, 0.92], [2, 1.05, ease.out], [5, 1]]);
+      let q = kf(lf, [[0, -0.045], [1, 0.035, ease.out], [2.5, 0], [20.5, 0], [24, -0.045, ease.in]]);
+      let x = 0, y = 0, k = 0;   // k: skewX lean in degrees around the shoulder line, so the cut stays level
+
+      if (mood === 'f-neutral') {
+        // deadpan: one small tilt, held
+        k = kf(lf, [[9, 0], [11, -2, ease.out], [19, -2], [22, 0]]);
+      } else if (mood === 'f-happy') {
+        // two head-bops on a beat, each with a little hop
+        k = kf(lf, [[5, 0], [7, -5, ease.out], [11, -5], [13, 5, ease.out], [18, 5], [21, 0]]);
+        y = kf(lf, [[5, 0], [6.5, -12, ease.out], [8.5, 0, ease.in], [11, 0], [12.5, -12, ease.out], [14.5, 0, ease.in]]);
+        q += kf(lf, [[7.5, 0], [8.5, -0.02, ease.out], [10, 0], [13.5, 0], [14.5, -0.02, ease.out], [16, 0]]);
+      } else if (mood === 'f-angry') {
+        x = shakeAt(lf);
+        k = shakeAt(lf) * 0.22;
+      } else {
+        // burnout: deflates, sinks and slumps, then straightens for the switch
+        y = kf(lf, [[4, 0], [11, 10, ease.out], [19, 10], [22.5, 0]]);
+        k = kf(lf, [[4, 0], [11, 3, ease.out], [19, 3], [22.5, 0]]);
+        q += kf(lf, [[4, 0], [11, -0.02, ease.out], [19, -0.02], [22, 0]]);
+      }
+      fig.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) skewX(${k.toFixed(3)}deg) scale(${(s * (1 - q * 0.6)).toFixed(4)}, ${(s * (1 + q)).toFixed(4)})`;
+
+      // pop ticks at the neutral and happy switches (teal for neutral, brass for happy)
+      if ((mood === 'f-neutral' || mood === 'f-happy') && lf > 0.5 && lf < 7) {
+        const t = ease.out(win(lf, 0.5, 5)), o = 1, sc = kf(lf, [[0.5, 0.55], [2.5, 1.05, ease.out], [4, 1], [7, 0, ease.in]]);
+        const col = mood === 'f-neutral' ? '#34d0e8' : '#e6b450';
+        document.querySelectorAll('#ticks .tk').forEach((n) => n.setAttribute('stroke', col));
+        g(tkL, 300 - 26 * t, 310 - 26 * t, sc, 0, o);
+        g(tkR, 780 + 26 * t, 310 - 26 * t, sc, 0, o);
+      } else { hide(tkL); hide(tkR); }
+
+      // happy: three sparkles pop in and out around the flames, staggered
+      [[5, 290, 290, 1], [8, 820, 360, 0.85], [12, 215, 560, 0.8]].forEach(([t0, sx, sy, k], i) => {
+        const t = lf - t0;
+        if (mood !== 'f-happy' || t <= 0 || t >= 9) { hide(sps[i]); return; }
+        const sc = kf(t, [[0, 0], [2, 1.2, ease.out], [4, 1], [6.5, 1], [9, 0, ease.in]]);
+        g(sps[i], sx, sy, sc * k, 12 * t, 1);
+      });
+
+      // angry: shake marks flicker either side of the head while the shake runs
+      if (mood === 'f-angry' && lf >= 2 && lf < 12) {
+        const j = Math.floor(lf) % 2 ? 4 : -4, o = 1;
+        g(shL, 228 + j, 620, 1.3, 0, o);
+        g(shR, 852 - j, 620, 1.3, 0, o);
+      } else { hide(shL); hide(shR); }
+
+      // burnout: two billows swell out of the tops of the painted smoke lobes (from behind them) and rise a little,
+      // then thin top-first into wisps that stream up while the base stays seated in the smoke, so no solid piece
+      // ever floats free; both are gone by frame 83, before the squash and the neutral cut at 88
+      const SX = s * (1 - q * 0.6), SY = s * (1 + q);
+      PUFFS.forEach((pf) => {
+        const t = lf - pf.t0;
+        if (mood !== 'f-burnout' || t <= 0 || t >= pf.life) { hide(pf.el); return; }
+        const u = t / pf.life;
+        const [ax, ay] = onHead(pf.a[0], pf.a[1], x, y, k, SX, SY);
+        const cx = ax + pf.d * (16 * u + 4 * Math.sin(u * Math.PI * 2));
+        const cy = ay + 52 - 115 * ease.inOut(u);                        // the base never clears the painted lobe
+        // fade line in puff px: from above the top (-110) to below the base (+95); 45 px soft each side, and the
+        // noise breaking it up drifts upward, so the patches it leaves rise as they go
+        const fl = -110 + 205 * ease.inOut(win(u, 0.35, 1));
+        pf.fade.setAttribute('y1', (fl - 45).toFixed(2)); pf.fade.setAttribute('y2', (fl + 45).toFixed(2));
+        pf.drift.setAttribute('dy', (-150 * u).toFixed(2));
+        const sc = pf.size * kf(u, [[0, 0.5], [0.4, 1, ease.out], [1, 1.3, (v) => v]]);
+        const thin = ease.inOut(win(u, 0.3, 0.95));                     // 0 while whole, 1 when gone
+        const spread = 1 + 0.35 * thin;
+        const rot = pf.d * 6 * u, ca = Math.cos(-rot * Math.PI / 180), sa = Math.sin(-rot * Math.PI / 180);
+        // the join pinches off late: one root stays on the painted lobe and sinks back behind it,
+        // the other hangs under the billow and retracts into its belly
+        const nk = 1 - ease.inOut(win(u, 0.55, 0.9));
+        const vx = (ax - cx) / sc, vy = (ay + 10 - cy) / sc;
+        const roots = [[vx * ca - vy * sa, vx * sa + vy * ca, 34 * nk / sc], [2, 50, 28 * nk]];
+        const lobe = ([lx, ly, r]) => [lx * spread, ly * (spread + 0.25 * thin) - 10 * thin, r];   // thins upward
+        // rim: the grey underlayer reaches 3 stage px past each lobe, the fill stops 3 px inside it and is
+        // feathered 2 px, so the edge grades from grey to the body over ~8 px like the painted smoke
+        const rimOut = 3 / sc, rimIn = 3 / sc;
+        pf.feather.setAttribute('stdDeviation', (2 / sc).toFixed(2));
+        [[...roots, ...BACK.map(lobe)], FRONT.map(lobe)].forEach((cs, ti) => {
+          const tier = pf.tiers[ti];
+          tier.ol.setAttribute('stroke-width', (2 * rimOut).toFixed(2));
+          cs.forEach(([lx, ly, r], i) => {
+            const o = tier.cOl[i], f = tier.cFl[i];
+            for (const c of [o, f]) { c.setAttribute('cx', lx.toFixed(2)); c.setAttribute('cy', ly.toFixed(2)); }
+            o.setAttribute('r', Math.max(r, 0).toFixed(2));
+            f.setAttribute('r', Math.max(r - rimIn, 0).toFixed(2));
+          });
+        });
+        pf.disp.setAttribute('scale', (12 + 4 * thin).toFixed(2));
+        pf.eat.setAttribute('k4', (-2.5 - 4.5 * thin).toFixed(3));
+        pf.blur.setAttribute('stdDeviation', (0.8 + 0.9 * thin).toFixed(2));
+        // lift the colour a little toward bone #efe6d6 as it thins: c' = c * (1 - w) + bone * w
+        const w = 0.25 * thin, kc = (1 - w).toFixed(3);
+        pf.tint.setAttribute('values', `${kc} 0 0 0 ${(w * 0xef / 255).toFixed(3)}  0 ${kc} 0 0 ${(w * 0xe6 / 255).toFixed(3)}  0 0 ${kc} 0 ${(w * 0xd6 / 255).toFixed(3)}  0 0 0 1 0`);
+        g(pf.el, cx, cy, sc, rot, 1 - ease.inOut(win(u, 0.82, 1)));
+      });
+    },
+  });
+</script>
+</body>
+</html>
