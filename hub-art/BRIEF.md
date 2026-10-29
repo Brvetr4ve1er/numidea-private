@@ -19,10 +19,10 @@ DESIGN-PLAN.md is the detailed design (sections, tokens, motion, pipeline, gates
 - All lettering generated into the art has been painted out (coat badge text, cup sleeve, wall notes). The hexagon N badge stays as a costume detail.
 - Masters: campaign/hub-art/masters (MASTERS.json lists sizes; MASTERS.sha256 pins them). Sources: campaign/hub-art/src. Tools: campaign/hub-art/tools (masters.py, loops.py). campaign/ is git-ignored and never deployed.
 
-## Diary titles (drafts, owner to approve at review)
+## Diary titles (approved by the owner, 28 Oct 2026)
 4 a.m. · Buried · Art director · The second brain · A world in miniature · Morning light · Wandering · tr4veler.exe
 
 ## Process
-- Commit locally on claude/numidea-labs-landing-c4jokc; DO NOT PUSH (the owner reviews first; GitHub Actions is billing-blocked anyway).
+- Reviewed by the owner on 28 Oct (screenshots); pushed to claude/numidea-labs-landing-c4jokc the same day. Still open: what the page says of Kuro, the N badge, the symbols on "A world in miniature". The deploy waits on GitHub Actions billing.
 - Every commit message ends with the two attribution lines given in the session (Co-Authored-By and Claude-Session).
 - npm run build must leave no diff; npm run verify must be green before the final commit.

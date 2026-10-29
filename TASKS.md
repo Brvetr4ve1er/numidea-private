@@ -1,4 +1,4 @@
-# Open work, 28 October 2026
+# Open work, 29 October 2026
 
 Private checkpoint of everything in progress for Numidea Labs and the personal hub. Kit layout: `marketing/` (plan, scripts, pipeline, stickers), `magnific/` (catalogue and renders), `ds/` (design-system source), `carousel/`, `tools/`. Site work lives in the public repository and its `IMPROVEMENTS.md`.
 
@@ -16,9 +16,10 @@ Private checkpoint of everything in progress for Numidea Labs and the personal h
 | 10 | Cut-outs | Local rembg (isnet-anime for Yasser, general for Kūro), fixes: coat lettering painted out, eye holes filled, paper cleared from fingers and hair | Reuse for the hub masters | — | `magnific/cut*`, `tools/cutout.py`, `marketing/stickers/assets/_orig` |
 | 11 | Magnific hero clips (image-to-video) | Not started | Quote each run before generating | Owner OK per run | — |
 | 12 | Design System « Numidea Labs » | Published in Claude; still bans generated images and faces | Update its imagery rules to the owner's 27 Oct decisions (renders allowed, the founder as a character) | Owner OK | claude.ai artifact MdZgybSoEWEnRRw3byBDd7, `ds/` |
-| 13 | Personal hub rebuild (VOIDSPLUNKER.std) | Planned 28 Oct: Yasser and Kūro (set C), start over; answers: keep « agency of one », drop Etsy, no AI credit | Build: art masters, build-hub-art, gates, page, docs, review, push | Private repo name; review of titles | repo `hub/`, plan in `/root/.claude/plans/foamy-skipping-meerkat.md` |
-| 14 | Private toolkit repository | Owner chose a private GitHub repo for this kit | Owner creates it and gives the name; then attach and push | Owner | — |
-| 15 | Owner answers still open on the site | Legal identity, terms after the yes, client permissions, AlmaFlowClim's site status, the lawyer on the Aperçu (Gate B), the Arabic reviewer, decision #11 (founder-card link), A3 (team wording) | — | Owner | repo `IMPROVEMENTS.md`, `OWNER-CONTENT.md` |
+| 13 | Personal hub rebuild (VOIDSPLUNKER.std) | Built, reviewed by the owner (titles approved 28 Oct), pushed 28 Oct; not deployed (billing) | Owner answers: what the page says of Kūro, the N badge, the symbols on « A world in miniature »; refresh the knowledge-base graph | Owner; GitHub billing | repo `hub/`; masters in `hub-art/` here (synced 29 Oct) |
+| 14 | Private toolkit repository | Pushed to Brvetr4ve1er/numidea-private (main) on 28 Oct | Push updates when the kit changes | — | GitHub `numidea-private` |
+| 15 | Owner answers still open on the site | Legal identity, terms after the yes, client permissions (case studies: given 29 Oct for four clients), AlmaFlowClim's site status, the lawyer on the Aperçu (Gate B), the Arabic reviewer, decision #11 (founder-card link), A3 (team wording) | — | Owner | repo `IMPROVEMENTS.md`, `OWNER-CONTENT.md` |
+| 16 | Case studies on the hub (Claude Design project e95bba9b…) | Owner asked 29 Oct: Heetch first, then Alliance Travel, AlmaFlow, Bordj Steel, Traveler, the Studio page and the hub in the Numidea system; the four clients agreed in writing; the owner holds the font licences | A session with the Claude Design connector reads `CaseHeetch.dc.html` and builds `hub/work/heetch/` | Claude Design connector (new session) | `handoff/2026-10-29-studio-hub.md` |
 
 ## How to resume
 - Stickers: `cd marketing/stickers && node render.mjs scenes/<name>.html` (needs a Chromium and the pipeline's ffmpeg-static), then `node pack.mjs pack.json`.

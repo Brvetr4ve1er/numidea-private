@@ -15,7 +15,7 @@
   "w": 2528,
   "h": 1696,
   "alpha": false,
-  "kb": 6785
+  "kb": 6782
  },
  "diary-art-director.png": {
   "w": 1264,
@@ -45,7 +45,7 @@
   "w": 1264,
   "h": 848,
   "alpha": false,
-  "kb": 1993
+  "kb": 1985
  },
  "diary-traveler.png": {
   "w": 2528,
@@ -61,21 +61,21 @@
  },
  "hero-bg.png": {
   "w": 2752,
-  "h": 1536,
+  "h": 1674,
   "alpha": false,
-  "kb": 4500
+  "kb": 1424
  },
  "hero-kuro.png": {
   "w": 2752,
-  "h": 1536,
+  "h": 1674,
   "alpha": true,
-  "kb": 1233
+  "kb": 132
  },
  "hero-yasser.png": {
   "w": 2752,
-  "h": 1536,
+  "h": 1674,
   "alpha": true,
-  "kb": 1252
+  "kb": 966
  },
  "kuro-paw.png": {
   "w": 525,
@@ -93,7 +93,7 @@
   "w": 705,
   "h": 785,
   "alpha": true,
-  "kb": 357
+  "kb": 365
  },
  "loops/kuro-sleep.webp": {
   "w": 705,
@@ -105,13 +105,13 @@
   "w": 1080,
   "h": 994,
   "alpha": true,
-  "kb": 784
+  "kb": 787
  },
  "loops/yasser-lost.webp": {
   "w": 1080,
   "h": 994,
   "alpha": true,
-  "kb": 1642
+  "kb": 1669
  },
  "loops/yasser-wave-still.png": {
   "w": 517,

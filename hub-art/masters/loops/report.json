@@ -1,10 +1,12 @@
 {
  "yasser-wave": {
   "from": "yasser-salut",
+  "poster": 10,
   "frames": 49,
   "fps": 20,
   "plays": 2,
   "seconds_total": 4.8,
+  "edge_fade": null,
   "size": [
    517,
    963
@@ -13,26 +15,33 @@
  },
  "yasser-lost": {
   "from": "yasser-perdu",
+  "poster": 46,
   "frames": 81,
   "fps": 20,
   "plays": 1,
   "seconds_total": 4.0,
+  "edge_fade": [
+   64,
+   120
+  ],
   "size": [
    1080,
    994
   ],
-  "kb": 1642.1
+  "kb": 1668.5
  },
  "kuro-sleep": {
   "from": "kuro-dodo",
+  "poster": 28,
   "frames": 61,
   "fps": 20,
   "plays": 1,
   "seconds_total": 3.0,
+  "edge_fade": null,
   "size": [
    705,
    785
   ],
-  "kb": 1206.0
+  "kb": 1206.4
  }
 }
